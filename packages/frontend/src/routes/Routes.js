@@ -6,7 +6,6 @@ import {
   dashboardMaxContentLayoutRoutes,
   fullscreenMapRoutes,
   presentationLayoutRoutes,
-  protectedRoutes,
 } from "./index";
 
 import Auth0ProviderWithHistory from "../auth/auth0-provider-with-history";
@@ -121,7 +120,6 @@ const Routes = () => {
                 DashboardMaxContentLayout,
                 dashboardMaxContentLayoutRoutes
               )}
-              {ChildRoutes(DashboardLayout, protectedRoutes)}
               {ChildRoutes(AuthLayout, authLayoutRoutes)}
               {ChildRoutes(PresentationLayout, presentationLayoutRoutes)}
               {ChildRoutes(FullscreenMapLayout, fullscreenMapRoutes)}

@@ -1,8 +1,7 @@
 const express = require('express');
 const {checkAccessToken, checkRoles} = require('../../core/middleware/auth.js');
 const {
-  ui_list_wells_table,
-  list_aquifers,
+  locations_map,
   /*MJB hide aggregated system control per client (probably temporary)*/
   // list_aggregate_systems,
 } = require('../../core/models');
@@ -45,28 +44,52 @@ const cleanLayer = (layer) => {
 };
 
 // TODO move to DB and key off of index instead
-const wellUsesData = [
-  'Ag/Irrigation',
-  'Domestic',
-  'Industrial',
-  'Livestock/Poultry',
-  'Monitoring',
-  'Not Used',
-  'Other',
-  'Public Supply',
-  'Testing',
+const mediaData = [
+  '[not specified]',
+  'Wastewater Treatment Plant Effluent',
+  'Surface Water',
 ];
 
 // TODO move to DB and key off of index instead
-const wellStatusesData = [
-  'Abandoned',
-  'Active',
-  'Capped',
-  'Inactive',
-  'Never Drilled',
-  'Plugged',
-  'Proposed',
-  'Unknown',
+const locationTypesData = [
+  'Other-Surface Water',
+  'Mine/Mine Discharge Adit (Mine Entrance)',
+  'Channelized Stream',
+  'Mine/Mine Discharge',
+  'Facility Municipal Sewage (POTW)',
+  'Storm Sewer',
+  'Facility Public Water Supply (PWS)',
+  '[not specified]',
+  'Mine/Mine Discharge Tailings Pile',
+  'Facility Privately Owned Non-industrial',
+  'Mine/Mine Discharge Waste Rock Pile',
+  'Facility Industrial',
+  'Reservoir',
+  'Well',
+  'Canal Irrigation',
+  'River/Stream',
+  'Spring',
+  'Canal Transport',
+];
+
+// TODO move to DB and key off of index instead
+const organizationsData = [
+  'DRMS',
+  'CORIVWCH_WQX',
+  'THORNTON_WQX',
+  '21COL001_WQX',
+  'MWRD_WQX',
+  'DDEH_WQX',
+  'SUNENCO',
+  'CCWF',
+  'BLMRW',
+  'CDOT',
+  'CWSD_WQX',
+  'AURORA_WQX',
+  'SACWSD_WQX',
+  'BRIGHTON_WQX',
+  'GCWIN',
+  'LEWWTP_WQX',
 ];
 
 /**
@@ -104,9 +127,9 @@ const toGeoJSON = ({data, geometryField}) => {
  */
 router.get('/sources', async (req, res, next) => {
   try {
-    const wellsData = await ui_list_wells_table.findAll();
+    const wellsData = await locations_map.findAll();
     const finalSources = sources.map((source) => {
-      if (source.id === 'clearwater-wells') {
+      if (source.id === 'spwqat-locations') {
         return {
           ...source,
           data: toGeoJSON({
@@ -158,7 +181,7 @@ router.get(
  */
 router.get('/wells', async (req, res, next) => {
   try {
-    const wellsData = await ui_list_wells_table.findAll();
+    const wellsData = await locations_map.findAll();
     res.json(wellsData);
   } catch (err) {
     next(err);
@@ -175,32 +198,20 @@ router.get('/wells', async (req, res, next) => {
  */
 router.get('/filters', async (req, res, next) => {
   try {
-    const aquifers = await list_aquifers
-      .findAll({
-        order: [['aquifer_name', 'ASC']],
-      })
-      .map(({aquifer_name}) => ({display: aquifer_name, value: aquifer_name}));
-    const primaryUses = wellUsesData.map((use) => ({display: use, value: use}));
-    const wellStatus = wellStatusesData.map((use) => ({
+    const media = mediaData.map((use) => ({display: use, value: use}));
+    const locationTypes = locationTypesData.map((use) => ({
       display: use,
       value: use,
     }));
-    /*MJB hide aggregated system control per client (probably temporary)*/
-    // const aggregatedSystems = await list_aggregate_systems
-    //   .findAll({
-    //     order: [['agg_system_name', 'asc']],
-    //   })
-    //   .map(({agg_system_name}) => ({
-    //     display: agg_system_name,
-    //     value: agg_system_name,
-    //   }));
+    const organizations = organizationsData.map((use) => ({
+      display: use,
+      value: use,
+    }));
+
     res.json({
-      aquifers: aquifers || [],
-      primaryUses,
-      wellStatus,
-      /*MJB hide aggregated system control per client (probably temporary)*/
-      // aggregatedSystems:
-      //   [...aggregatedSystems, {display: '--', value: '--'}] || [],
+      media: media || [],
+      locationTypes: locationTypes || [],
+      organizations: organizations || [],
     });
   } catch (err) {
     next(err);

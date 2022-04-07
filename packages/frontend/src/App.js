@@ -31,7 +31,7 @@ function App() {
     <React.Fragment>
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
-          <Helmet titleTemplate="%s | CUWCD" defaultTitle="CUWCD Dashboard" />
+          <Helmet titleTemplate="%s | SPWQAT" defaultTitle="SPWQAT Dashboard" />
           <StylesProvider jss={jss}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <MuiThemeProvider theme={createTheme(theme.currentTheme)}>

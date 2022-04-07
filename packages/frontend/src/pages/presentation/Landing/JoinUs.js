@@ -11,11 +11,8 @@ import {
 import { spacing } from "@material-ui/system";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../../constants";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const Spacer = styled.div(spacing);
-
-const SpanSpacer = styled.span(spacing);
 
 const Typography = styled(MuiTypography)(spacing);
 
@@ -35,7 +32,6 @@ const Subtitle = styled(Typography)`
 `;
 
 function JoinUs() {
-  const { loginWithRedirect } = useAuth0();
   return (
     <Wrapper pt={16} pb={16}>
       <Container>
@@ -45,36 +41,22 @@ function JoinUs() {
               Access the Platform
             </Typography>
             <Subtitle variant="h5" gutterBottom>
-              Log in with user profile:
+              Cherry Creek Basin Water Quality Dashboard:
             </Subtitle>
             <Spacer mb={4} />
 
             <Button
               color="primary"
               variant="contained"
-              onClick={() =>
-                loginWithRedirect({
-                  appState: { returnTo: ROUTES.PAGE_DASHBOARD },
-                })
-              }
+              component={Link}
+              to={ROUTES.PAGE_DASHBOARD}
             >
               View Dashboard
             </Button>
-            <SpanSpacer ml={4} />
-            <Button
-              color="primary"
-              variant="outlined"
-              onClick={() =>
-                loginWithRedirect({
-                  appState: { returnTo: ROUTES.PAGE_PRODUCTION },
-                })
-              }
-            >
-              Enter Production Data
-            </Button>
+
             <Spacer mb={10} />
             <Subtitle variant="h5" gutterBottom>
-              View public resources:
+              Go Directly to the Interactive Map:
             </Subtitle>
             <Spacer mb={4} />
             <Button
@@ -84,7 +66,7 @@ function JoinUs() {
               to={ROUTES.PUBLIC_MAP}
               ml={50}
             >
-              Public Access
+              Interactive Map
             </Button>
           </Grid>
         </Grid>

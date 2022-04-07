@@ -2,53 +2,50 @@ import { useState } from "react";
 import { scaleOrdinal } from "d3-scale";
 import { schemePaired } from "d3-scale-chromatic";
 
-const aquiferValues = [
-  "Middle Trinity",
-  "Pecan",
-  "Alluvium",
-  "Lower Trinity",
-  "Edwards (BFZ)",
-  "Edwards Equivalent",
-  "Ozan",
-  "Upper Trinity",
-  "Austin Chalk",
-  "Lake Waco",
-  "Kemp",
-  "Undeclared",
-  "Buda",
+const mediaValues = [
+  "[not specified]",
+  "Wastewater Treatment Plant Effluent",
+  "Surface Water",
 ];
 
-const primaryUseValues = [
-  "Other",
-  "Industrial",
-  "Ag/Irrigation",
-  "Testing",
-  "Livestock/Poultry",
-  "Domestic",
-  "Not Used",
-  "Public Supply",
-  "Monitoring",
+const locationTypesValues = [
+  "Other-Surface Water",
+  "Mine/Mine Discharge Adit (Mine Entrance)",
+  "Channelized Stream",
+  "Mine/Mine Discharge",
+  "Facility Municipal Sewage (POTW)",
+  "Storm Sewer",
+  "Facility Public Water Supply (PWS)",
+  "[not specified]",
+  "Mine/Mine Discharge Tailings Pile",
+  "Facility Privately Owned Non-industrial",
+  "Mine/Mine Discharge Waste Rock Pile",
+  "Facility Industrial",
+  "Reservoir",
+  "Well",
+  "Canal Irrigation",
+  "River/Stream",
+  "Spring",
+  "Canal Transport",
 ];
 
-const wellStatusValues = [
-  "Abandoned",
-  "Unknown",
-  "Plugged",
-  "Proposed",
-  "Never Drilled",
-  "Capped",
-  "Active",
-  "Inactive",
-];
-
-const wellTypeValues = [
-  "permitted",
-  "exempt-permitted",
-  "exempt",
-  "monitoring",
-  "exempt-monitoring",
-  "monitoring-permitted",
-  "other",
+const organizationsValues = [
+  "DRMS",
+  "CORIVWCH_WQX",
+  "THORNTON_WQX",
+  "21COL001_WQX",
+  "MWRD_WQX",
+  "DDEH_WQX",
+  "SUNENCO",
+  "CCWF",
+  "BLMRW",
+  "CDOT",
+  "CWSD_WQX",
+  "AURORA_WQX",
+  "SACWSD_WQX",
+  "BRIGHTON_WQX",
+  "GCWIN",
+  "LEWWTP_WQX",
 ];
 
 const buildScale = (values) => {
@@ -60,7 +57,7 @@ const buildScale = (values) => {
   }, []);
 };
 
-const layerId = "clearwater-wells-circle";
+const layerId = "spwqat-locations-circle";
 const styleValues = {
   default: {
     id: "default",
@@ -71,67 +68,53 @@ const styleValues = {
       "circle-color": "#1e8dd2",
     },
   },
-  aquifers: {
-    id: "aquifers",
+  media: {
+    id: "media",
     layerId,
-    layerFieldName: "source_aquifer",
-    name: "Aquifers",
-    paint: {
-      "circle-color": [
-        "match",
-        ["get", "source_aquifer"],
-        ...buildScale(aquiferValues),
-        "#000000",
-      ],
-    },
-  },
-  primaryUses: {
-    id: "primaryUses",
-    layerId,
-    layerFieldName: "primary_use",
-    name: "Primary Uses",
+    layerFieldName: "media",
+    name: "Media",
     options: [],
     type: "multi-select",
     value: [],
     paint: {
       "circle-color": [
         "match",
-        ["get", "primary_use"],
-        ...buildScale(primaryUseValues),
+        ["get", "media"],
+        ...buildScale(mediaValues),
         "#000000",
       ],
     },
   },
-  wellStatus: {
-    id: "wellStatus",
+  locationTypes: {
+    id: "locationTypes",
     layerId,
-    layerFieldName: "well_status",
-    name: "Well Status",
+    layerFieldName: "locationtype",
+    name: "Location Types",
     options: [],
     type: "multi-select",
     value: [],
     paint: {
       "circle-color": [
         "match",
-        ["get", "well_status"],
-        ...buildScale(wellStatusValues),
+        ["get", "locationtype"],
+        ...buildScale(locationTypesValues),
         "#000000",
       ],
     },
   },
-  wellType: {
-    id: "wellType",
+  organizations: {
+    id: "organizations",
     layerId,
-    layerFieldName: "agg_system_name",
-    name: "Well Type",
+    layerFieldName: "organization",
+    name: "Organizations",
     options: [],
     type: "multi-select",
     value: [],
     paint: {
       "circle-color": [
         "match",
-        ["get", "well_type"],
-        ...buildScale(wellTypeValues),
+        ["get", "organization"],
+        ...buildScale(organizationsValues),
         "#000000",
       ],
     },

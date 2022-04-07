@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { spacing } from "@material-ui/system";
-import { useAuth0 } from "@auth0/auth0-react";
 import {
   AppBar,
   Button as MuiButton,
@@ -14,7 +13,8 @@ import {
 } from "@material-ui/core";
 
 import { ROUTES } from "../../../constants";
-import Link from "@material-ui/core/Link";
+import { Link as MuiLink } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const Button = styled(MuiButton)(spacing);
 
@@ -25,14 +25,13 @@ const BrandIcon = styled.img`
 `;
 
 function AppBarComponent({ width }) {
-  const { loginWithRedirect } = useAuth0();
   return (
     <AppBar position="absolute" color="transparent" elevation={0}>
       <Toolbar>
         <Container>
           <Grid container alignItems="center">
             <Grid item>
-              <Link
+              <MuiLink
                 href="https://lrewater.com"
                 target="_blank"
                 rel="noreferrer noopener"
@@ -45,7 +44,7 @@ function AppBarComponent({ width }) {
                     alt={"LREWater.com"}
                   />
                 </Tooltip>
-              </Link>
+              </MuiLink>
             </Grid>
 
             <Grid item xs />
@@ -54,13 +53,10 @@ function AppBarComponent({ width }) {
                 ml={2}
                 color="primary"
                 variant="contained"
-                onClick={() =>
-                  loginWithRedirect({
-                    appState: { returnTo: ROUTES.PAGE_DASHBOARD },
-                  })
-                }
+                component={Link}
+                to={ROUTES.PAGE_DASHBOARD}
               >
-                {isWidthDown("xs", width) ? "Login" : "Log in to Dashboard"}
+                {isWidthDown("xs", width) ? "Dashboard" : "View Dashboard"}
               </Button>
             </Grid>
           </Grid>

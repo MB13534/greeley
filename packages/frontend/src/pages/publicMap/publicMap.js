@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components/macro";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import {
   Box,
   MenuItem,
@@ -22,7 +23,6 @@ import { INIT_MAP_CONFIG, WELLS_SEARCH_OPTIONS } from "./constants";
 
 import DisclaimerDialog from "./components/DisclaimerDialog";
 import MeasurementsPopup from "../../components/map/components/MeasurementsPopup";
-import DataViz from "./components/DataViz";
 import MainControl from "./controls/mainControl/";
 import CommaSeparatedWellsSearch from "./filters/commaSeparatedWellsSearch";
 
@@ -31,8 +31,6 @@ import { useReactToPrint } from "react-to-print";
 import PrintMapFormat from "./components/PrintMapFormat";
 import SplitButton from "../../components/SplitButton";
 import MeasurementsControl from "./controls/MeasurementsControl";
-import VirtualBoreControl from "./controls/virtualBoreControl";
-import VirtualBore from "./components/VirtualBore";
 
 const FiltersBar = styled(Paper)`
   align-items: center;
@@ -71,12 +69,11 @@ const TextField = styled(MuiTextField)`
 
 const getMoreFiltersCount = (filterValues) => {
   const keys = [
-    "hasProduction",
-    "hasWaterLevels",
-    "hasWQData",
-    "isPermitted",
-    "isExempt",
-    "isMonitoring",
+    "moreThanA",
+    "moreThanB",
+    "moreThanC",
+    "dataRecentA",
+    "dataRecentB",
   ];
   return keys.filter((key) => filterValues[key].value).length;
 };
@@ -107,15 +104,7 @@ const PublicMap = () => {
     pointRef,
     lineRef,
     measurementsContainerRef,
-    dataVizVisible,
-    setDataVizVisible,
-    dataVizWellNumber,
-    dataVizGraphType,
     eventsRegistered,
-    virtualBoreVisible,
-    setVirtualBoreVisible,
-    virtualBoreCoordinates,
-    setVirtualBoreCoordinates,
   } = useMap(mapContainer, INIT_MAP_CONFIG);
   const {
     filterValues,
@@ -194,112 +183,89 @@ const PublicMap = () => {
           <FiltersSection>
             <FiltersContainer>
               <FilterControl
-                appliedCount={filterValues?.aquifers?.value?.length}
-                label="Aquifers"
+                appliedCount={filterValues?.media?.value?.length}
+                label="Media"
               >
                 <Filter
-                  label="Aquifers"
-                  name="aquifers"
+                  label="Media"
+                  name="media"
                   onChange={handleFilterValues}
                   onSelectAll={handleSelectAll}
                   onSelectNone={handleSelectNone}
-                  options={filterValues?.aquifers?.options}
-                  type={filterValues?.aquifers?.type}
-                  value={filterValues?.aquifers?.value}
+                  options={filterValues?.media?.options}
+                  type={filterValues?.media?.type}
+                  value={filterValues?.media?.value}
                 />
               </FilterControl>
               <FilterControl
-                appliedCount={filterValues?.primaryUses?.value?.length}
-                label="Primary Use"
+                appliedCount={filterValues?.locationTypes?.value?.length}
+                label="Location Types"
               >
                 <Filter
-                  label="Primary Use"
-                  name="primaryUses"
+                  label="Location Types"
+                  name="locationTypes"
                   onChange={handleFilterValues}
                   onSelectAll={handleSelectAll}
                   onSelectNone={handleSelectNone}
-                  options={filterValues?.primaryUses?.options}
-                  type={filterValues?.primaryUses?.type}
-                  value={filterValues?.primaryUses?.value}
+                  options={filterValues?.locationTypes?.options}
+                  type={filterValues?.locationTypes?.type}
+                  value={filterValues?.locationTypes?.value}
                 />
               </FilterControl>
               <FilterControl
-                appliedCount={filterValues?.wellStatus?.value?.length}
-                label="Well Status"
+                appliedCount={filterValues?.organizations?.value?.length}
+                label="Organizations"
               >
                 <Filter
-                  label="Well Status"
-                  name="wellStatus"
+                  label="Organizations"
+                  name="organizations"
                   onChange={handleFilterValues}
                   onSelectAll={handleSelectAll}
                   onSelectNone={handleSelectNone}
-                  options={filterValues?.wellStatus?.options}
-                  type={filterValues?.wellStatus?.type}
-                  value={filterValues?.wellStatus?.value}
+                  options={filterValues?.organizations?.options}
+                  type={filterValues?.organizations?.type}
+                  value={filterValues?.organizations?.value}
                 />
               </FilterControl>
-              {/*MJB hide aggregated system control per client (probably temporary)*/}
-              {/*<FilterControl*/}
-              {/*  appliedCount={filterValues?.aggregatedSystems?.value?.length}*/}
-              {/*  label="Aggregated System"*/}
-              {/*>*/}
-              {/*  <Filter*/}
-              {/*    label="Aggregated System"*/}
-              {/*    name="aggregatedSystems"*/}
-              {/*    onChange={handleFilterValues}*/}
-              {/*    onSelectAll={handleSelectAll}*/}
-              {/*    onSelectNone={handleSelectNone}*/}
-              {/*    options={filterValues?.aggregatedSystems?.options}*/}
-              {/*    type={filterValues?.aggregatedSystems?.type}*/}
-              {/*    value={filterValues?.aggregatedSystems?.value}*/}
-              {/*  />*/}
-              {/*</FilterControl>*/}
               <FilterControl
                 appliedCount={getMoreFiltersCount(filterValues)}
                 label="More Filters"
               >
                 <Box display="flex" flexDirection="column">
                   <Filter
-                    label="Has Production"
-                    name="hasProduction"
+                    label="More than 1 Result"
+                    name="moreThanA"
                     onChange={handleFilterValues}
                     type="boolean"
-                    value={filterValues?.hasProduction?.value}
+                    value={filterValues?.moreThanA?.value}
                   />
                   <Filter
-                    label="Has Water Levels"
-                    name="hasWaterLevels"
+                    label="More than 3 Results"
+                    name="moreThanB"
                     onChange={handleFilterValues}
                     type="boolean"
-                    value={filterValues?.hasWaterLevels?.value}
+                    value={filterValues?.moreThanB?.value}
                   />
                   <Filter
-                    label="Has Water Quality Data"
-                    name="hasWQData"
+                    label="More than 10 Results"
+                    name="moreThanC"
                     onChange={handleFilterValues}
                     type="boolean"
-                    value={filterValues?.hasWQData?.value}
+                    value={filterValues?.moreThanC?.value}
                   />
                   <Filter
-                    label="Is Permitted"
-                    name="isPermitted"
+                    label="Collected within Last 10 Years"
+                    name="dataRecentA"
                     onChange={handleFilterValues}
                     type="boolean"
-                    value={filterValues?.isPermitted?.value}
+                    value={filterValues?.dataRecentA?.value}
                   />
                   <Filter
-                    label="Is Exempt"
-                    name="isExempt"
+                    label="Collected within Last 5 Years"
+                    name="dataRecentB"
                     onChange={handleFilterValues}
                     type="boolean"
-                    value={filterValues?.isExempt?.value}
-                  />
-                  <Filter
-                    label="Is Monitoring"
-                    name="isMonitoring"
-                    onChange={handleFilterValues}
-                    type="boolean"
-                    value={filterValues?.isMonitoring?.value}
+                    value={filterValues?.dataRecentB?.value}
                   />
                 </Box>
               </FilterControl>
@@ -376,27 +342,6 @@ const PublicMap = () => {
         {process.env.NODE_ENV === "development" && (
           <ZoomInfo zoomLevel={zoomLevel} />
         )}
-        {/*<DataVizControl*/}
-        {/*  open={dataVizVisible}*/}
-        {/*  onClose={() => setDataVizVisible(!dataVizVisible)}*/}
-        {/*/>*/}
-        <VirtualBoreControl
-          open={virtualBoreVisible}
-          onClose={() => setVirtualBoreVisible(!virtualBoreVisible)}
-        />
-        <VirtualBore
-          open={virtualBoreVisible}
-          coordinates={virtualBoreCoordinates}
-          setCoordinates={setVirtualBoreCoordinates}
-          onClose={() => setVirtualBoreVisible(false)}
-          map={map}
-        />
-        <DataViz
-          open={dataVizVisible}
-          dataVizWellNumber={dataVizWellNumber}
-          dataVizGraphType={dataVizGraphType}
-          onClose={() => setDataVizVisible(false)}
-        />
 
         {!measurementsVisible && (
           <MeasurementsControl

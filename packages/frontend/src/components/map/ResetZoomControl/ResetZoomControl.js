@@ -1,5 +1,8 @@
 // Control implemented as ES6 class
-import { STARTING_LOCATION } from "../../../constants";
+import {
+  DEFAULT_MAP_CENTER,
+  INIT_MAP_CONFIG,
+} from "../../../pages/publicMap/constants";
 
 class ResetZoomControl {
   onAdd(map) {
@@ -15,8 +18,8 @@ class ResetZoomControl {
     this._container.appendChild(icon);
     this._container.addEventListener("click", () => {
       map.flyTo({
-        center: STARTING_LOCATION,
-        zoom: 9,
+        center: DEFAULT_MAP_CENTER,
+        zoom: INIT_MAP_CONFIG.zoom,
         padding: { bottom: 0 },
       });
     });

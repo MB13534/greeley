@@ -8,6 +8,7 @@ import "../vendor/perfect-scrollbar.css";
 import {
   Avatar,
   Badge,
+  Box,
   Chip,
   Collapse,
   Drawer as MuiDrawer,
@@ -328,11 +329,14 @@ const Sidebar = ({
         }}
       >
         <BrandIcon
-          src={`/static/img/clearwater-logo-simple.png`}
-          width="150"
-          height="48"
-          alt="Clearwater Icon"
+          src={`/static/img/spwqat-logo-square.png`}
+          width="47"
+          height="47"
+          alt="SPWQAT Logo"
         />
+        <Box ml={1} style={{ fontSize: "0.9rem", display: "flex" }}>
+          Denver Metro WQAT
+        </Box>
       </Brand>
       <Scrollbar
         style={{

@@ -16,16 +16,15 @@ const CommaSeparatedWellsSearch = ({ map }) => {
 
   //an unique set of the submitted wells, all caps and stripped
   const [wells, setWells] = useState([""]);
-
   //upon load, zoom to the center of the clearwater markers
   //draw a rectangle that represents the area of markers
   //**a marker must be on the screen in order for it to be in the query results
   useEffect(() => {
-    map?.flyTo({ center: [-97.99366949028948, 30.979780201064344], zoom: 8 });
-    const northEast = [-97.08729741997672, 31.447227501139395];
-    const southEast = [-97.08729741997672, 30.518054701366808];
-    const southWest = [-98.93184683603334, 30.518054701366808];
-    const northWest = [-98.93184683603334, 31.447227501139395];
+    map?.flyTo({ center: [-104.98518, 39.73871], zoom: 7.5 });
+    const northEast = [-103.87945, 40.4524];
+    const southEast = [-103.87945, 38.86938];
+    const southWest = [-106.20588, 38.86938];
+    const northWest = [-106.20588, 40.4524];
 
     if (!map.getSource("boundingBox")) {
       map.addSource("boundingBox", {
@@ -72,14 +71,14 @@ const CommaSeparatedWellsSearch = ({ map }) => {
     ) {
       map.setFilter(WELLS_LABELS_LAYER_ID, [
         "match",
-        ["get", "cuwcd_well_number"],
+        ["get", "station_id"],
         ...wells,
         true,
         false,
       ]);
       map.setFilter(WELLS_LAYER_ID, [
         "match",
-        ["get", "cuwcd_well_number"],
+        ["get", "station_id"],
         ...wells,
         true,
         false,
@@ -104,7 +103,7 @@ const CommaSeparatedWellsSearch = ({ map }) => {
   const handleChange = (event) => {
     setValue(event?.target?.value);
     if (event?.target?.value === "") {
-      map?.flyTo({ center: [-97.99366949028948, 30.979780201064344], zoom: 8 });
+      map?.flyTo({ center: [-104.98518, 39.73871], zoom: 8 });
     }
   };
 
@@ -115,20 +114,21 @@ const CommaSeparatedWellsSearch = ({ map }) => {
   //setWells to the original set to apply the filter
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const wellsArray = value.replaceAll(" ", "").toUpperCase().split(",");
     const uniqueWellsArray = [...new Set(wellsArray)];
 
-    const allWells = map.querySourceFeatures("clearwater-wells", {
-      sourceLayer: "clearwater",
+    const allWells = map.querySourceFeatures("spwqat-locations", {
+      sourceLayer: "spwqat-locations",
     });
 
     const filteredWells = allWells.filter((well) => {
-      return uniqueWellsArray.includes(well.properties.cuwcd_well_number);
+      return uniqueWellsArray.includes(well.properties.station_id);
     });
 
     const allCoords = filteredWells.map((item) => [
-      item.properties.longitude_dd,
-      item.properties.latitude_dd,
+      item.properties.y_lon,
+      item.properties.x_lat,
     ]);
 
     if (allCoords.length) {
@@ -150,7 +150,7 @@ const CommaSeparatedWellsSearch = ({ map }) => {
         <TextField
           style={{ width: "100%", minWidth: "162px" }}
           id="comma-separated-wells-search"
-          label="Multiple Wells Filter"
+          label="Multiple Locations Filter"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -160,7 +160,7 @@ const CommaSeparatedWellsSearch = ({ map }) => {
           }}
           autoComplete="off"
           onChange={handleChange}
-          placeholder="Filter by comma separated wells"
+          placeholder="Filter by comma separated locations"
           type="search"
           value={value}
           variant="outlined"

@@ -152,7 +152,7 @@ const LayerLegend = ({ item, open, onOpacityChange }) => {
  * [] Add support for layers search
  */
 const LayersControl = ({ items, onLayerChange, onOpacityChange }) => {
-  const [expandedItems, setExpandedItems] = useState(["Clearwater Wells"]);
+  const [expandedItems, setExpandedItems] = useState(["SPWQAT Locations"]);
 
   /**
    * Generate a unique list of items to display in the layer

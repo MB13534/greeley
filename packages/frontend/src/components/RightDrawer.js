@@ -96,10 +96,10 @@ export function RightDrawer() {
           }}
         >
           <BrandIcon
-            src={`/static/img/clearwater-logo-square.png`}
+            src={`/static/img/spwqat-logo-square.png`}
             width="40"
             height="40"
-            alt="Clearwater Icon"
+            alt="SPWQAT Icon"
           />
           Graph Options
         </Brand>
