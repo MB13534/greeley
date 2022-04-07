@@ -41,7 +41,7 @@ function JoinUs() {
               Access the Platform
             </Typography>
             <Subtitle variant="h5" gutterBottom>
-              Cherry Creek Basin Water Quality Dashboard:
+              Denver Metro Water Quality Assessment Tool Dashboard:
             </Subtitle>
             <Spacer mb={4} />
 

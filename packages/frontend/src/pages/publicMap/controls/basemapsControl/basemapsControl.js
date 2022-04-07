@@ -8,7 +8,7 @@ import styled from "styled-components/macro";
  * @returns {string} returns an api endpoint for an image of the specified style
  */
 const getBasemapImage = (style) => {
-  return `https://api.mapbox.com/styles/v1/mapbox/${style}/static/-97.4644,31.056,12.69,0/180x100@2x/?attribution=false&logo=false&access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`;
+  return `https://api.mapbox.com/styles/v1/mapbox/${style}/static/-104.98128, 39.73871,12.69,0/180x100@2x/?attribution=false&logo=false&access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`;
 };
 
 const BasemapItems = styled.div`
