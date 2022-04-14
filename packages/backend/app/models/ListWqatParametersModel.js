@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const {TEXT, INTEGER, BOOLEAN} = DataTypes;
   const ListWqatParameters = sequelize.define(
-    'module.exports = (sequelize, DataTypes) => {\n',
+    'list_wqat_parameters',
     {
       parameter_ndx: {
         type: INTEGER,

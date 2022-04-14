@@ -26,6 +26,13 @@ import PublicMap from "../pages/publicMap";
 import Default from "../pages/dashboards/Default";
 import AdminGuard from "../components/AdminGuard";
 import AdminVisibilityFilter from "../components/AdminVisibilityFilter";
+import ListWqatActivityTypes from "../pages/dataManagement/ListWqatActivityTypes";
+import ListWqatWaterbodies from "../pages/dataManagement/ListWqatWaterbodies";
+import ListWqatParameters from "../pages/dataManagement/ListWqatParameters";
+import ListWqatOrganizations from "../pages/dataManagement/ListWqatOrganizations";
+import ListWqatMediaTypes from "../pages/dataManagement/ListWqatMediaTypes";
+import ListWqatLocations from "../pages/dataManagement/ListWqatLocations";
+import ListWqatLocationTypes from "../pages/dataManagement/ListWqatLocationTypes";
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
@@ -88,15 +95,6 @@ const getCrudRoutes = (list) => {
 const crudSidebarMenu = [...getSidebarMenu(CRUD_MODELS)];
 const modelCrudRoutes = [...getCrudRoutes(CRUD_MODELS)];
 
-// const dataManagementRoutes = {
-//   header: "Data Management",
-//   id: "Rolodex",
-//   icon: <CreditCard />,
-//   path: "/data-access/rolodex",
-//   name: "Rolodex",
-//   component: Blank,
-// };
-
 const dataAccessRoutes = {
   header: "Data Access",
   id: "Time Series",
@@ -148,37 +146,37 @@ const dataScrubbingRoutes = {
     {
       path: "/data-management/activity-types",
       name: "Activity Types",
-      component: Blank,
+      component: ListWqatActivityTypes,
     },
     {
       path: "/data-management/location-types",
       name: "Location Types",
-      component: Blank,
+      component: ListWqatLocationTypes,
     },
     {
       path: "/data-management/locations",
       name: "Locations",
-      component: Blank,
+      component: ListWqatLocations,
     },
     {
       path: "/data-management/media-types",
       name: "Media Types",
-      component: Blank,
+      component: ListWqatMediaTypes,
     },
     {
       path: "/data-management/organizations",
       name: "Organizations",
-      component: Blank,
+      component: ListWqatOrganizations,
     },
     {
       path: "/data-management/parameters",
       name: "Parameters",
-      component: Blank,
+      component: ListWqatParameters,
     },
     {
       path: "/data-management/water-bodies",
       name: "Water Bodies",
-      component: Blank,
+      component: ListWqatWaterbodies,
     },
   ],
   guard: AdminGuard,
