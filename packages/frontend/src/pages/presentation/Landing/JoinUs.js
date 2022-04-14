@@ -11,6 +11,7 @@ import {
 import { spacing } from "@material-ui/system";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../../constants";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Spacer = styled.div(spacing);
 
@@ -32,6 +33,7 @@ const Subtitle = styled(Typography)`
 `;
 
 function JoinUs() {
+  const { loginWithRedirect } = useAuth0();
   return (
     <Wrapper pt={16} pb={16}>
       <Container>
@@ -56,17 +58,19 @@ function JoinUs() {
 
             <Spacer mb={10} />
             <Subtitle variant="h5" gutterBottom>
-              Go Directly to the Interactive Map:
+              Administrators, log in here:
             </Subtitle>
             <Spacer mb={4} />
             <Button
               color="primary"
               variant="outlined"
-              component={Link}
-              to={ROUTES.PUBLIC_MAP}
-              ml={50}
+              onClick={() =>
+                loginWithRedirect({
+                  appState: { returnTo: ROUTES.PAGE_DASHBOARD },
+                })
+              }
             >
-              Interactive Map
+              Admin Login
             </Button>
           </Grid>
         </Grid>

@@ -24,6 +24,8 @@ import { CrudProvider } from "../CrudProvider";
 // TODO MAYBE LAZY IMPORT
 import PublicMap from "../pages/publicMap";
 import Default from "../pages/dashboards/Default";
+import AdminGuard from "../components/AdminGuard";
+import AdminVisibilityFilter from "../components/AdminVisibilityFilter";
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
@@ -95,7 +97,7 @@ const modelCrudRoutes = [...getCrudRoutes(CRUD_MODELS)];
 //   component: Blank,
 // };
 
-const dataEntryRoutes = {
+const dataAccessRoutes = {
   header: "Data Access",
   id: "Time Series",
   icon: <Activity />,
@@ -136,6 +138,51 @@ const publicFilesRoutes = {
   path: "/data-access/documents/public-files",
   name: "Public Files",
   component: Blank,
+};
+
+const dataScrubbingRoutes = {
+  header: "Data Management",
+  id: "Data Scrubbing",
+  icon: <Database />,
+  children: [
+    {
+      path: "/data-management/activity-types",
+      name: "Activity Types",
+      component: Blank,
+    },
+    {
+      path: "/data-management/location-types",
+      name: "Location Types",
+      component: Blank,
+    },
+    {
+      path: "/data-management/locations",
+      name: "Locations",
+      component: Blank,
+    },
+    {
+      path: "/data-management/media-types",
+      name: "Media Types",
+      component: Blank,
+    },
+    {
+      path: "/data-management/organizations",
+      name: "Organizations",
+      component: Blank,
+    },
+    {
+      path: "/data-management/parameters",
+      name: "Parameters",
+      component: Blank,
+    },
+    {
+      path: "/data-management/water-bodies",
+      name: "Water Bodies",
+      component: Blank,
+    },
+  ],
+  guard: AdminGuard,
+  visibilityFilter: AdminVisibilityFilter,
 };
 
 const accountRoutes = {
@@ -184,7 +231,8 @@ const mainRoutes = {
 // Routes using the Dashboard layout
 export const dashboardLayoutRoutes = [
   mainRoutes,
-  dataEntryRoutes,
+  dataScrubbingRoutes,
+  dataAccessRoutes,
   reportsRoutes,
   publicFilesRoutes,
   accountRoutes,
@@ -209,7 +257,8 @@ export const fullscreenMapRoutes = [];
 export const sidebarRoutes = [
   mainRoutes,
   ...crudSidebarMenu,
-  dataEntryRoutes,
+  dataScrubbingRoutes,
+  dataAccessRoutes,
   reportsRoutes,
   publicMapRoutes,
   publicFilesRoutes,
