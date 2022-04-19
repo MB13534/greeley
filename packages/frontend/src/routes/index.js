@@ -147,21 +147,25 @@ const dataScrubbingRoutes = {
       path: "/data-management/activity-types",
       name: "Activity Types",
       component: ListWqatActivityTypes,
+      guard: AdminGuard,
     },
     {
       path: "/data-management/location-types",
       name: "Location Types",
       component: ListWqatLocationTypes,
+      guard: AdminGuard,
     },
     {
       path: "/data-management/locations",
       name: "Locations",
       component: ListWqatLocations,
+      guard: AdminGuard,
     },
     {
       path: "/data-management/media-types",
       name: "Media Types",
       component: ListWqatMediaTypes,
+      guard: AdminGuard,
     },
     {
       path: "/data-management/organizations",
@@ -172,14 +176,15 @@ const dataScrubbingRoutes = {
       path: "/data-management/parameters",
       name: "Parameters",
       component: ListWqatParameters,
+      guard: AdminGuard,
     },
     {
       path: "/data-management/water-bodies",
       name: "Water Bodies",
       component: ListWqatWaterbodies,
+      guard: AdminGuard,
     },
   ],
-  guard: AdminGuard,
   visibilityFilter: AdminVisibilityFilter,
 };
 
