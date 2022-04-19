@@ -36,6 +36,14 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
+      defaultScope: {
+        order: [
+          ['needs_review', 'desc'],
+          ['wqat_include', 'desc'],
+          ['display_order', 'asc'],
+          ['parameter_ndx', 'asc'],
+        ],
+      },
       schema: 'data',
       timestamps: false,
       paranoid: true,

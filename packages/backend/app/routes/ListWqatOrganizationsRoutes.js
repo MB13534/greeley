@@ -19,4 +19,21 @@ router.get('/', (req, res, next) => {
     });
 });
 
+router.patch('/:id', (req, res, next) => {
+  model
+    .update(req.body, {
+      where: {
+        organization_ndx: req.params.id,
+      },
+      returning: true,
+    })
+    .then((data) => {
+      const updatedRecord = data[1][0];
+      res.json(updatedRecord);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 module.exports = router;
