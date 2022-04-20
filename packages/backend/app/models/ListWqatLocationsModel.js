@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
           ['needs_review', 'desc'],
           ['wqat_include', 'desc'],
           ['display_order', 'asc'],
-          ['location_ndx', 'asc'],
+          ['location_id', 'asc'],
         ],
       },
       schema: 'data',

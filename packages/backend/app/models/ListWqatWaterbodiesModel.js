@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
           ['needs_review', 'desc'],
           ['wqat_include', 'desc'],
           ['display_order', 'asc'],
-          ['waterbody_ndx', 'asc'],
+          ['waterbody_name', 'asc'],
         ],
       },
       schema: 'data',

@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
           ['needs_review', 'desc'],
           ['wqat_include', 'desc'],
           ['display_order', 'asc'],
-          ['media_type_ndx', 'asc'],
+          ['media_name', 'asc'],
         ],
       },
       schema: 'data',

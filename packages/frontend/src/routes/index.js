@@ -179,7 +179,7 @@ const dataScrubbingRoutes = {
       guard: AdminGuard,
     },
     {
-      path: "/data-management/water-bodies",
+      path: "/data-management/waterbodies",
       name: "Water Bodies",
       component: ListWqatWaterbodies,
       guard: AdminGuard,

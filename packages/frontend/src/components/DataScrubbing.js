@@ -30,11 +30,10 @@ const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 const DataScrubbing = ({
   endpoint,
-  editableFields,
   title,
   indexField,
   tableMaxHeight,
-  columnDisplayFields,
+  columns,
 }) => {
   const { getAccessTokenSilently } = useAuth0();
 
@@ -93,8 +92,7 @@ const DataScrubbing = ({
                   lookupNdx={indexField}
                   pageSize={30}
                   updateHandler={setTableData}
-                  editableFields={editableFields}
-                  columnDisplayFields={columnDisplayFields}
+                  columns={columns}
                 />
               ) : (
                 <Loader />

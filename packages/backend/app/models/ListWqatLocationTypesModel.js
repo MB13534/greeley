@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
           ['needs_review', 'desc'],
           ['wqat_include', 'desc'],
           ['display_order', 'asc'],
-          ['location_type_ndx', 'asc'],
+          ['location_type_desc', 'asc'],
         ],
       },
       schema: 'data',

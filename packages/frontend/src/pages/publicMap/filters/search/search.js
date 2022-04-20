@@ -62,7 +62,7 @@ const SearchResults = ({
                       </Typography>
                     </Grid>
                     <Grid item xs={4}>
-                      <Typography variant="caption">Water Body</Typography>
+                      <Typography variant="caption">Waterbodies</Typography>
                       <Typography variant="body1">
                         {result?.item?.waterbody || "N/A"}
                       </Typography>

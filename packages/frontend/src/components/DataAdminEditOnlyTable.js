@@ -6,7 +6,6 @@ import MaterialTable from "material-table";
 import { useApp } from "../AppProvider";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import { titleize } from "inflected";
 
 const DataAdminTable = ({
   label,
@@ -18,26 +17,10 @@ const DataAdminTable = ({
   endpoint,
   lookupNdx,
   updateHandler,
-  editableFields,
-  columnDisplayFields,
+  columns,
 }) => {
   const { doToast } = useApp();
   const { getAccessTokenSilently } = useAuth0();
-
-  const columns = columnDisplayFields.map((item) => ({
-    title: item === "wqat_include" ? "Enabled" : titleize(item),
-    cellStyle: {
-      height: "40px",
-      minWidth: "140px",
-      ...(editableFields.includes(item) && {
-        width: "1%",
-        maxWidth: "1%",
-      }),
-    },
-    field: item,
-    type: editableFields.includes(item) ? "boolean" : null,
-    editable: editableFields.includes(item) ? "onAdd" : "never",
-  }));
 
   const handleUpdate = (newData, oldData, rowData, columnDef) => {
     return (async () => {
@@ -72,12 +55,17 @@ const DataAdminTable = ({
     })();
   };
 
+  console.log(data);
+
   return (
     <>
       <MaterialTable
         id={label}
         title={`${label} ${dateFormatter(new Date(), "MM/DD/YYYY, h:mm A")}`}
-        columns={columns}
+        //ensures the tableData property is not included in the columns
+        columns={columns.map(({ tableData, ...rest }) => {
+          return rest;
+        })}
         isLoading={isLoading}
         data={data}
         cellEditable={{
