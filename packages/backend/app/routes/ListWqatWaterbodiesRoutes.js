@@ -1,6 +1,7 @@
 const express = require('express');
 const {checkAccessToken} = require('../../core/middleware/auth.js');
 const {list_wqat_waterbodies: model} = require('../../core/models');
+const {Op} = require('sequelize');
 const router = express.Router();
 
 // Attach middleware to ensure that user is authenticated & has permissions
@@ -24,6 +25,25 @@ router.patch('/:id', (req, res, next) => {
     .update(req.body, {
       where: {
         waterbody_ndx: req.params.id,
+      },
+      returning: true,
+    })
+    .then((data) => {
+      const updatedRecord = data[1][0];
+      res.json(updatedRecord);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+router.patch('/reviewed/:ids', (req, res, next) => {
+  model
+    .update(req.body, {
+      where: {
+        waterbody_ndx: {
+          [Op.in]: req.params.ids.split(','),
+        },
       },
       returning: true,
     })

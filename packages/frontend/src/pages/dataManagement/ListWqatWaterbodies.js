@@ -36,7 +36,7 @@ const ListWqatWaterbodies = () => {
         converted[d.same_as_ndx] = d.item_name;
       });
     }
-    converted[0] = "-----";
+    converted[-999] = "-----";
     return converted;
   }, [WaterbodiesLookup]);
 

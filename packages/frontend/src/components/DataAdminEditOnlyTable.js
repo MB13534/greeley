@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 import CopyIcon from "@material-ui/icons/FileCopy";
+import CheckIcon from "@material-ui/icons/CheckBox";
 import { copyToClipboard, dateFormatter } from "../utils";
 import MaterialTable from "material-table";
 import { useApp } from "../AppProvider";
@@ -21,6 +22,21 @@ const DataAdminTable = ({
 }) => {
   const { doToast } = useApp();
   const { getAccessTokenSilently } = useAuth0();
+
+  const [excludeDisabled, setExcludeDisabled] = useState(false);
+
+  const handleToggle = () => {
+    setExcludeDisabled((prevState) => {
+      return !prevState;
+    });
+  };
+
+  const filterData = (data) => {
+    if (excludeDisabled) {
+      return data.filter((d) => d.wqat_include === true);
+    }
+    return data;
+  };
 
   const handleUpdate = (newData, oldData, rowData, columnDef) => {
     return (async () => {
@@ -55,7 +71,41 @@ const DataAdminTable = ({
     })();
   };
 
-  console.log(data);
+  const handleReview = (event, rowData) => {
+    const rowsToUpdate = rowData.map((row) => row[lookupNdx]);
+
+    rowData.forEach((row) => (row.tableData.checked = false));
+
+    return (async () => {
+      try {
+        if (rowData.length) {
+          const token = await getAccessTokenSilently();
+          const headers = { Authorization: `Bearer ${token}` };
+
+          await axios.patch(
+            `${process.env.REACT_APP_ENDPOINT}/api/${endpoint}/reviewed/${rowsToUpdate}`,
+            { needs_review: false },
+            { headers }
+          );
+          updateHandler((prevState) => {
+            const data = [...prevState];
+            rowData.forEach(
+              (row) => (data[data.indexOf(row)].needs_review = false)
+            );
+
+            return data;
+          });
+          doToast("success", "New data was updated to the database");
+        } else {
+          return null;
+        }
+      } catch (err) {
+        console.error(err);
+        const message = err?.message ?? "Something went wrong";
+        doToast("error", message);
+      }
+    })();
+  };
 
   return (
     <>
@@ -67,7 +117,7 @@ const DataAdminTable = ({
           return rest;
         })}
         isLoading={isLoading}
-        data={data}
+        data={filterData(data)}
         cellEditable={{
           onCellEditApproved: handleUpdate,
         }}
@@ -87,9 +137,26 @@ const DataAdminTable = ({
               }
             },
           },
+          {
+            icon: CheckIcon,
+            tooltip: "Mark as Reviewed",
+            onClick: handleReview,
+          },
+          {
+            icon: excludeDisabled ? "toggle_on" : "toggle_off",
+            iconProps: {
+              style: { color: excludeDisabled ? "#4CAF50" : "currentcolor" },
+            },
+            tooltip: excludeDisabled
+              ? "Show Disabled Records"
+              : "Hide Disabled Records",
+            isFreeAction: true,
+            onClick: handleToggle,
+          },
           ...actions,
         ]}
         options={{
+          selection: true,
           emptyRowsWhenPaging: false,
           columnsButton: true,
           exportButton: true,
