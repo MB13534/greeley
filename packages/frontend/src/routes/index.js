@@ -14,6 +14,7 @@ import {
   Monitor,
   Users,
   Map as MapIcon,
+  Book,
 } from "react-feather";
 
 import Blank from "../pages/pages/Blank";
@@ -33,6 +34,8 @@ import ListWqatOrganizations from "../pages/dataManagement/ListWqatOrganizations
 import ListWqatMediaTypes from "../pages/dataManagement/ListWqatMediaTypes";
 import ListWqatLocations from "../pages/dataManagement/ListWqatLocations";
 import ListWqatLocationTypes from "../pages/dataManagement/ListWqatLocationTypes";
+import StorylineBlank from "../pages/pages/StorylineBlank";
+import StorylinesHome from "../pages/pages/StorylinesHome";
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
@@ -221,6 +224,15 @@ const landingRoutes = {
   children: null,
 };
 
+const storylineHomeRoute = {
+  id: "Storylines",
+  path: "/storylines",
+  header: "Storylines",
+  icon: <Book />,
+  component: StorylinesHome,
+  children: null,
+};
+
 const mainRoutes = {
   header: "Dashboards",
   id: "Water Quality Dashboard",
@@ -231,6 +243,44 @@ const mainRoutes = {
   containsHome: true,
 };
 
+const storylinesRoutes = {
+  header: "Storylines",
+  id: "Storylines",
+  icon: <Book />,
+  children: [
+    {
+      path: "/storylines/water-quality",
+      name: "Water Quality",
+      component: StorylineBlank,
+    },
+    {
+      path: "/storylines/e-coli",
+      name: "E. coli",
+      component: StorylineBlank,
+    },
+    {
+      path: "/storylines/nutrients",
+      name: "Nutrients",
+      component: StorylineBlank,
+    },
+    {
+      path: "/storylines/contaminants-of-emerging-concern",
+      name: "Contaminants of Emerging Concern",
+      component: StorylineBlank,
+    },
+    {
+      path: "/storylines/total-dissolved-solids",
+      name: "Total Dissolved Solids",
+      component: StorylineBlank,
+    },
+    {
+      path: "/storylines/total-suspended-solids",
+      name: "Total Suspended Solids",
+      component: StorylineBlank,
+    },
+  ],
+};
+
 // Routes using the Dashboard layout
 export const dashboardLayoutRoutes = [
   mainRoutes,
@@ -239,6 +289,8 @@ export const dashboardLayoutRoutes = [
   reportsRoutes,
   publicFilesRoutes,
   accountRoutes,
+  storylinesRoutes,
+  storylineHomeRoute,
 ];
 
 export const dashboardMaxContentLayoutRoutes = [
@@ -265,4 +317,5 @@ export const sidebarRoutes = [
   reportsRoutes,
   publicMapRoutes,
   publicFilesRoutes,
+  storylinesRoutes,
 ];
