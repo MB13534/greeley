@@ -52,6 +52,9 @@ function StorylinesHome() {
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
+        <Link component={NavLink} exact to="/dashboard">
+          Dashboard
+        </Link>
         <Typography>Storylines</Typography>
       </Breadcrumbs>
 

@@ -19,6 +19,7 @@ import {
 
 import { spacing } from "@material-ui/system";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { RightDrawerInfo } from "../../components/RightDrawerInfo";
 
 const Card = styled(MuiCard)(spacing);
 
@@ -59,24 +60,101 @@ function EmptyCard() {
 }
 
 function StorylineBlank() {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState("");
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  const links = [
+    {
+      chapter: "Chapter 1",
+      links: [
+        { title: "Google", url: "https://www.google.com" },
+        { title: "Yahoo", url: "https://www.yahoo.com" },
+      ],
+    },
+    {
+      chapter: "Chapter 2",
+      links: [
+        { title: "Google", url: "https://www.google.com" },
+        { title: "Yahoo", url: "https://www.yahoo.com" },
+      ],
+    },
+    {
+      chapter: "Chapter 3",
+      links: [
+        { title: "Google", url: "https://www.google.com" },
+        { title: "Yahoo", url: "https://www.yahoo.com" },
+      ],
+    },
+    {
+      chapter: "Chapter 4",
+      links: [
+        { title: "Google", url: "https://www.google.com" },
+        { title: "Yahoo", url: "https://www.yahoo.com" },
+      ],
+    },
+    {
+      chapter: "Chapter 5",
+      links: [
+        { title: "Google", url: "https://www.google.com" },
+        { title: "Yahoo", url: "https://www.yahoo.com" },
+      ],
+    },
+    {
+      chapter: "Chapter 6",
+      links: [
+        { title: "Google", url: "https://www.google.com" },
+        { title: "Yahoo", url: "https://www.yahoo.com" },
+      ],
+    },
+    {
+      chapter: "Chapter 7",
+      links: [
+        { title: "Google", url: "https://www.google.com" },
+        { title: "Yahoo", url: "https://www.yahoo.com" },
+      ],
+    },
+    {
+      chapter: "Chapter 8",
+      links: [
+        { title: "Google", url: "https://www.google.com" },
+        { title: "Yahoo", url: "https://www.yahoo.com" },
+      ],
+    },
+    {
+      chapter: "Chapter 9",
+      links: [
+        { title: "Google", url: "https://www.google.com" },
+        { title: "Yahoo", url: "https://www.yahoo.com" },
+      ],
+    },
+    {
+      chapter: "Chapter 10",
+      links: [
+        { title: "Google", url: "https://www.google.com" },
+        { title: "Yahoo", url: "https://www.yahoo.com" },
+      ],
+    },
+  ];
+
   return (
     <React.Fragment>
+      <RightDrawerInfo links={links} />
       <Helmet title="Storyline Title" />
       <Typography variant="h3" gutterBottom display="inline">
         Storyline Title
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
+        <Link component={NavLink} exact to="/dashboard">
+          Dashboard
+        </Link>
         <Link component={NavLink} exact to="/storylines">
           Storylines
         </Link>
-        <Typography>Storyline TItle</Typography>
+        <Typography>Storyline Title</Typography>
       </Breadcrumbs>
 
       <Divider my={6} />
@@ -102,7 +180,11 @@ function StorylineBlank() {
               <AccordionDetails>
                 <Typography>
                   Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
-                  feugiat. Aliquam eget maximus est, id dignissim quam.
+                  feugiat. Aliquam eget maximus est, id dignissim quam.Nulla
+                  facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
+                  Aliquam eget maximus est, id dignissim quam. Nulla facilisi.
+                  Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam
+                  eget maximus est, id dignissim quam.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -124,7 +206,9 @@ function StorylineBlank() {
                 <Typography>
                   Donec placerat, lectus sed mattis semper, neque lectus feugiat
                   lectus, varius pulvinar diam eros in elit. Pellentesque
-                  convallis laoreet laoreet.
+                  convallis laoreet laoreet. Nulla facilisi. Phasellus
+                  sollicitudin nulla et quam mattis feugiat. Aliquam eget
+                  maximus est, id dignissim quam.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -168,7 +252,12 @@ function StorylineBlank() {
                 <Typography>
                   Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
                   Integer sit amet egestas eros, vitae egestas augue. Duis vel
-                  est augue.
+                  est augue. Nulla facilisi. Phasellus sollicitudin nulla et
+                  quam mattis feugiat. Aliquam eget maximus est, id dignissim
+                  quam. Nulla facilisi. Phasellus sollicitudin nulla et quam
+                  mattis feugiat. Aliquam eget maximus est, id dignissim quam.
+                  Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
+                  feugiat. Aliquam eget maximus est, id dignissim quam.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -190,7 +279,9 @@ function StorylineBlank() {
                 <Typography>
                   Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
                   Integer sit amet egestas eros, vitae egestas augue. Duis vel
-                  est augue.
+                  est augue. Nulla facilisi. Phasellus sollicitudin nulla et
+                  quam mattis feugiat. Aliquam eget maximus est, id dignissim
+                  quam.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -234,7 +325,18 @@ function StorylineBlank() {
                 <Typography>
                   Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
                   Integer sit amet egestas eros, vitae egestas augue. Duis vel
-                  est augue.
+                  est augue. Nulla facilisi. Phasellus sollicitudin nulla et
+                  quam mattis feugiat. Aliquam eget maximus est, id dignissim
+                  quam. Nulla facilisi. Phasellus sollicitudin nulla et quam
+                  mattis feugiat. Aliquam eget maximus est, id dignissim quam.
+                  Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
+                  feugiat. Aliquam eget maximus est, id dignissim quam. Nulla
+                  facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
+                  Aliquam eget maximus est, id dignissim quam. Nulla facilisi.
+                  Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam
+                  eget maximus est, id dignissim quam. Nulla facilisi. Phasellus
+                  sollicitudin nulla et quam mattis feugiat. Aliquam eget
+                  maximus est, id dignissim quam.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -256,7 +358,10 @@ function StorylineBlank() {
                 <Typography>
                   Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
                   Integer sit amet egestas eros, vitae egestas augue. Duis vel
-                  est augue.
+                  est augue. Nulla facilisi. Phasellus sollicitudin nulla et
+                  quam mattis feugiat. Aliquam eget maximus est, id dignissim
+                  quam. Nulla facilisi. Phasellus sollicitudin nulla et quam
+                  mattis feugiat. Aliquam eget maximus est, id dignissim quam.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -300,7 +405,22 @@ function StorylineBlank() {
                 <Typography>
                   Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
                   Integer sit amet egestas eros, vitae egestas augue. Duis vel
-                  est augue.
+                  est augue. Nulla facilisi. Phasellus sollicitudin nulla et
+                  quam mattis feugiat. Aliquam eget maximus est, id dignissim
+                  quam. Nulla facilisi. Phasellus sollicitudin nulla et quam
+                  mattis feugiat. Aliquam eget maximus est, id dignissim quam.
+                  Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
+                  feugiat. Aliquam eget maximus est, id dignissim quam. Nulla
+                  facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
+                  Aliquam eget maximus est, id dignissim quam. Nulla facilisi.
+                  Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam
+                  eget maximus est, id dignissim quam. Nulla facilisi. Phasellus
+                  sollicitudin nulla et quam mattis feugiat. Aliquam eget
+                  maximus est, id dignissim quam. Nulla facilisi. Phasellus
+                  sollicitudin nulla et quam mattis feugiat. Aliquam eget
+                  maximus est, id dignissim quam. Nulla facilisi. Phasellus
+                  sollicitudin nulla et quam mattis feugiat. Aliquam eget
+                  maximus est, id dignissim quam.
                 </Typography>
               </AccordionDetails>
             </Accordion>
