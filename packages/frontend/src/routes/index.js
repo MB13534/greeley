@@ -245,12 +245,12 @@ const mainRoutes = {
 
 const storylinesRoutes = {
   header: "Storylines",
-  id: "Storylines",
+  id: "Water Quality",
   icon: <Book />,
   children: [
     {
-      path: "/storylines/water-quality",
-      name: "Water Quality",
+      path: "/storylines/what-is-water-quality",
+      name: "What is Water Quality?",
       component: StorylineBlank,
     },
     {
