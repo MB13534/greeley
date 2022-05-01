@@ -65,7 +65,7 @@ function StorylinesHome() {
           <EmptyCard
             title="What is Water Quality?"
             description="Learn about the nexus between water between water quantity and quality and more."
-            url="/storylines/water-quality"
+            url="/storylines/what-is-water-quality"
           />
           <EmptyCard
             title="E. coli Storyline"
