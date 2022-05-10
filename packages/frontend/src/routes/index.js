@@ -34,8 +34,13 @@ import ListWqatOrganizations from "../pages/dataManagement/ListWqatOrganizations
 import ListWqatMediaTypes from "../pages/dataManagement/ListWqatMediaTypes";
 import ListWqatLocations from "../pages/dataManagement/ListWqatLocations";
 import ListWqatLocationTypes from "../pages/dataManagement/ListWqatLocationTypes";
-import StorylineBlank from "../pages/pages/StorylineBlank";
-import StorylinesHome from "../pages/pages/StorylinesHome";
+import WaterQualityStorylineHome from "../pages/storyLines/waterQuality/WaterQualityStorylineHome";
+import WhatIsWaterQuality from "../pages/storyLines/waterQuality/whatIsWaterQuality/WhatIsWaterQuality";
+import EColi from "../pages/storyLines/waterQuality/eColi/EColi";
+import Nutrients from "../pages/storyLines/waterQuality/nutrients/Nutrients";
+import ContaminantsOfEmergingConcern from "../pages/storyLines/waterQuality/contaminantsOfEmergingConcern/ContaminantsOfEmergingConcern";
+import TotalDissolvedSolids from "../pages/storyLines/waterQuality/totalDissolvedSolids/TotalDissolvedSolids";
+import TotalSuspendedSolids from "../pages/storyLines/waterQuality/totalSuspendedSolids/TotalSuspendedSolids";
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
@@ -226,10 +231,10 @@ const landingRoutes = {
 
 const storylineHomeRoute = {
   id: "Storylines",
-  path: "/storylines",
+  path: "/storylines/water-quality",
   header: "Storylines",
   icon: <Book />,
-  component: StorylinesHome,
+  component: WaterQualityStorylineHome,
   children: null,
 };
 
@@ -248,35 +253,40 @@ const storylinesRoutes = {
   id: "Water Quality",
   icon: <Book />,
   children: [
+    // {
+    //   path: "/storylines/water-quality",
+    //   name: "Water Quality Home",
+    //   component: WaterQualityStorylineHome,
+    // },
     {
-      path: "/storylines/what-is-water-quality",
+      path: "/storylines/water-quality/what-is-water-quality",
       name: "What is Water Quality?",
-      component: StorylineBlank,
+      component: WhatIsWaterQuality,
     },
     {
-      path: "/storylines/e-coli",
+      path: "/storylines/water-quality/e-coli",
       name: "E. coli",
-      component: StorylineBlank,
+      component: EColi,
     },
     {
-      path: "/storylines/nutrients",
+      path: "/storylines/water-quality/nutrients",
       name: "Nutrients",
-      component: StorylineBlank,
+      component: Nutrients,
     },
     {
-      path: "/storylines/contaminants-of-emerging-concern",
+      path: "/storylines/water-quality/contaminants-of-emerging-concern",
       name: "Contaminants of Emerging Concern",
-      component: StorylineBlank,
+      component: ContaminantsOfEmergingConcern,
     },
     {
-      path: "/storylines/total-dissolved-solids",
+      path: "/storylines/water-quality/total-dissolved-solids",
       name: "Total Dissolved Solids",
-      component: StorylineBlank,
+      component: TotalDissolvedSolids,
     },
     {
-      path: "/storylines/total-suspended-solids",
+      path: "/storylines/water-quality/total-suspended-solids",
       name: "Total Suspended Solids",
-      component: StorylineBlank,
+      component: TotalSuspendedSolids,
     },
   ],
 };

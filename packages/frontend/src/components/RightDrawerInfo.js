@@ -129,7 +129,14 @@ export function RightDrawerInfo({ links }) {
 
   const SidebarLink = ({ url, text }) => {
     return (
-      <Link button dense component="a" target="_blank" href={url}>
+      <Link
+        button
+        dense
+        rel="noreferrer noopener"
+        component="a"
+        target="_blank"
+        href={url}
+      >
         <StyledLinkIcon />
         <LinkText>{text}</LinkText>
       </Link>
