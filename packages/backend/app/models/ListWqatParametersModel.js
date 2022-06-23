@@ -1,11 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-  const {TEXT, INTEGER, BOOLEAN} = DataTypes;
+  const {TEXT, INTEGER, BOOLEAN, ARRAY, DATE} = DataTypes;
   const ListWqatParameters = sequelize.define(
     'list_wqat_parameters',
     {
       parameter_ndx: {
         type: INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       characteristic_name: {
         type: TEXT,
@@ -32,6 +33,18 @@ module.exports = (sequelize, DataTypes) => {
         type: BOOLEAN,
       },
       same_as_ndx: {
+        type: INTEGER,
+      },
+      created_timestamp: {
+        type: DATE,
+      },
+      assoc_parameter_group_ndx: {
+        type: ARRAY(INTEGER),
+      },
+      display_name: {
+        type: TEXT,
+      },
+      chem_conv_ndx: {
         type: INTEGER,
       },
     },

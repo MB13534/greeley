@@ -15,6 +15,7 @@ import {
   Users,
   Map as MapIcon,
   Book,
+  Share2,
 } from "react-feather";
 
 import Blank from "../pages/pages/Blank";
@@ -41,6 +42,7 @@ import Nutrients from "../pages/storyLines/waterQuality/nutrients/Nutrients";
 import ContaminantsOfEmergingConcern from "../pages/storyLines/waterQuality/contaminantsOfEmergingConcern/ContaminantsOfEmergingConcern";
 import TotalDissolvedSolids from "../pages/storyLines/waterQuality/totalDissolvedSolids/TotalDissolvedSolids";
 import TotalSuspendedSolids from "../pages/storyLines/waterQuality/totalSuspendedSolids/TotalSuspendedSolids";
+import ParameterGroupsToParameters from "../pages/dataManagement/associations";
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
@@ -196,6 +198,22 @@ const dataScrubbingRoutes = {
   visibilityFilter: AdminVisibilityFilter,
 };
 
+const associationsRoutes = {
+  id: "Associations",
+  icon: <Share2 />,
+  children: [
+    {
+      path: "/data-management/parameter-groups-to-parameters",
+      name: "Parameter Groups to Parameters",
+      component: ParameterGroupsToParameters,
+      guard: AdminGuard,
+      visibilityFilter: AdminVisibilityFilter,
+    },
+  ],
+  guard: AdminGuard,
+  visibilityFilter: AdminVisibilityFilter,
+};
+
 const accountRoutes = {
   id: "Account",
   path: "/account",
@@ -295,6 +313,7 @@ const storylinesRoutes = {
 export const dashboardLayoutRoutes = [
   mainRoutes,
   dataScrubbingRoutes,
+  associationsRoutes,
   dataAccessRoutes,
   reportsRoutes,
   publicFilesRoutes,
@@ -323,6 +342,7 @@ export const sidebarRoutes = [
   mainRoutes,
   ...crudSidebarMenu,
   dataScrubbingRoutes,
+  associationsRoutes,
   dataAccessRoutes,
   reportsRoutes,
   publicMapRoutes,

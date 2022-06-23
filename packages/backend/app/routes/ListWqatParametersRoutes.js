@@ -20,6 +20,19 @@ router.get('/', (req, res, next) => {
     });
 });
 
+router.post('/', (req, res, next) => {
+  model
+    .bulkCreate(req.body, {
+      updateOnDuplicate: ['assoc_parameter_group_ndx'],
+    })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 router.patch('/:id', (req, res, next) => {
   model
     .update(req.body, {
