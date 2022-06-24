@@ -21,7 +21,7 @@ const SecondaryHeading = styled(Typography)`
   color: ${(props) => props.theme.text};
 `;
 
-const PageBreadcrumbs = ({ id, expanded, handleChange, content }) => {
+const PageChapter = ({ id, expanded, handleChange, content }) => {
   return (
     <>
       <Accordion expanded={expanded === id} onChange={handleChange(id)}>
@@ -30,8 +30,10 @@ const PageBreadcrumbs = ({ id, expanded, handleChange, content }) => {
           aria-controls={`${id}-content`}
           id={`${id}-header`}
         >
-          <Heading variant="overline">Chapter {content.number}</Heading>
-          <SecondaryHeading variant="subtitle2">
+          <Heading variant="h2" color="primary">
+            Chapter {content.number}
+          </Heading>
+          <SecondaryHeading variant="h3" color="secondary">
             {content.description}
           </SecondaryHeading>
         </AccordionSummary>
@@ -43,4 +45,4 @@ const PageBreadcrumbs = ({ id, expanded, handleChange, content }) => {
   );
 };
 
-export default PageBreadcrumbs;
+export default PageChapter;

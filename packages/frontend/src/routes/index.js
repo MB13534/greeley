@@ -35,7 +35,6 @@ import ListWqatOrganizations from "../pages/dataManagement/ListWqatOrganizations
 import ListWqatMediaTypes from "../pages/dataManagement/ListWqatMediaTypes";
 import ListWqatLocations from "../pages/dataManagement/ListWqatLocations";
 import ListWqatLocationTypes from "../pages/dataManagement/ListWqatLocationTypes";
-import WaterQualityStorylineHome from "../pages/storyLines/waterQuality/WaterQualityStorylineHome";
 import WhatIsWaterQuality from "../pages/storyLines/waterQuality/whatIsWaterQuality/WhatIsWaterQuality";
 import EColi from "../pages/storyLines/waterQuality/eColi/EColi";
 import Nutrients from "../pages/storyLines/waterQuality/nutrients/Nutrients";
@@ -43,6 +42,8 @@ import ContaminantsOfEmergingConcern from "../pages/storyLines/waterQuality/cont
 import TotalDissolvedSolids from "../pages/storyLines/waterQuality/totalDissolvedSolids/TotalDissolvedSolids";
 import TotalSuspendedSolids from "../pages/storyLines/waterQuality/totalSuspendedSolids/TotalSuspendedSolids";
 import ParameterGroupsToParameters from "../pages/dataManagement/associations";
+import WaterQualityStorylineHome from "../pages/storyLines/waterQuality/WaterQualityStorylineHome";
+import MetalsAndOtherTraceElements from "../pages/storyLines/waterQuality/metalsAndOtherTraceElements/MetalsAndOtherTraceElements";
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
@@ -258,7 +259,7 @@ const storylineHomeRoute = {
 
 const mainRoutes = {
   header: "Dashboards",
-  id: "Water Quality Dashboard",
+  id: "Water Quality Assessment Tool",
   path: "/dashboard",
   icon: <Home />,
   component: Default,
@@ -305,6 +306,11 @@ const storylinesRoutes = {
       path: "/storylines/water-quality/total-suspended-solids",
       name: "Total Suspended Solids",
       component: TotalSuspendedSolids,
+    },
+    {
+      path: "/storylines/water-quality/metals-and-other-trace-elements",
+      name: "Metals and Other Trace Elements",
+      component: MetalsAndOtherTraceElements,
     },
   ],
 };

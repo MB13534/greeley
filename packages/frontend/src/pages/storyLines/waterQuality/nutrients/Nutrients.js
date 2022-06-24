@@ -214,7 +214,7 @@ function Nutrients() {
   const title = "Nutrients";
 
   const description =
-    "Learn not only what nutrients are, but additionally what can be done to reduce its pollutant load in the South Platte River and its tributaries.";
+    "Learn not only what Nutrients are, but additionally what can be done to reduce its pollutant load in the South Platte River and its tributaries.";
 
   const chapters = [
     {

@@ -23,7 +23,7 @@ function PageHeader({ title, description }) {
   return (
     <Card mb={6}>
       <CardContent>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h3" gutterBottom>
           {title}
         </Typography>
         <Typography variant="body2" gutterBottom>
@@ -35,7 +35,7 @@ function PageHeader({ title, description }) {
 }
 
 function WaterQualityPage({ links, title, description, chapters }) {
-  const [expanded, setExpanded] = React.useState("");
+  const [expanded, setExpanded] = React.useState("1");
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
