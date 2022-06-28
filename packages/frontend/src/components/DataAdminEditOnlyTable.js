@@ -20,20 +20,38 @@ const DataAdminTable = ({
   updateHandler,
   columns,
 }) => {
+  const shouldShowSameAsNdxToggle = [
+    "list-wqat-parameters",
+    "list-wqat-locations",
+  ].includes(endpoint);
+
   const { doToast } = useApp();
   const { getAccessTokenSilently } = useAuth0();
 
   const [excludeDisabled, setExcludeDisabled] = useState(false);
+  const [excludeSameAsNdx, setExcludeSameAsNdx] = useState(false);
 
-  const handleToggle = () => {
+  const handleToggleExcludeDisabled = () => {
     setExcludeDisabled((prevState) => {
       return !prevState;
     });
   };
 
+  const handleToggleExcludeSameAsNdx = () => {
+    setExcludeSameAsNdx((prevState) => {
+      return !prevState;
+    });
+  };
+
   const filterData = (data) => {
-    if (excludeDisabled) {
+    if (excludeDisabled && excludeSameAsNdx) {
+      return data.filter(
+        (d) => d.wqat_include === true && d.same_as_ndx === -999
+      );
+    } else if (excludeDisabled) {
       return data.filter((d) => d.wqat_include === true);
+    } else if (excludeSameAsNdx) {
+      return data.filter((d) => d.same_as_ndx === -999);
     }
     return data;
   };
@@ -151,8 +169,23 @@ const DataAdminTable = ({
               ? "Show Disabled Records"
               : "Hide Disabled Records",
             isFreeAction: true,
-            onClick: handleToggle,
+            onClick: handleToggleExcludeDisabled,
           },
+          shouldShowSameAsNdxToggle
+            ? {
+                icon: excludeSameAsNdx ? "toggle_on" : "toggle_off",
+                iconProps: {
+                  style: {
+                    color: excludeSameAsNdx ? "#4CAF50" : "currentcolor",
+                  },
+                },
+                tooltip: excludeSameAsNdx
+                  ? "Show Same As Records"
+                  : "Hide Same As Records",
+                isFreeAction: true,
+                onClick: handleToggleExcludeSameAsNdx,
+              }
+            : null,
           ...actions,
         ]}
         options={{

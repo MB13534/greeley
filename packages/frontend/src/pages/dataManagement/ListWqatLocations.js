@@ -51,28 +51,6 @@ const ListWqatLocations = () => {
     }
   );
 
-  const { data: WaterbodiesLookup } = useQuery(
-    ["lookup-waterbodies"],
-    async () => {
-      try {
-        const token = await getAccessTokenSilently();
-        const headers = { Authorization: `Bearer ${token}` };
-
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_ENDPOINT}/api/lookup-waterbodies`,
-          { headers }
-        );
-        return data;
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    {
-      keepPreviousData: true,
-      refetchOnWindowFocus: false,
-    }
-  );
-
   const FormattedLocationsLookup = useMemo(() => {
     let converted = {};
     if (LocationsLookup?.length) {
@@ -93,16 +71,6 @@ const ListWqatLocations = () => {
     }
     return converted;
   }, [LocationTypesLookup]);
-
-  const FormattedWaterbodiesLookup = useMemo(() => {
-    let converted = {};
-    if (WaterbodiesLookup?.length) {
-      WaterbodiesLookup.forEach((d) => {
-        converted[d.ndx] = d.item_name;
-      });
-    }
-    return converted;
-  }, [WaterbodiesLookup]);
 
   const columns = [
     {
@@ -128,13 +96,6 @@ const ListWqatLocations = () => {
       cellStyle: {
         height: "40px",
       },
-    },
-    {
-      title: "Waterbody Name",
-      field: "waterbody_ndx",
-      editable: "never",
-      lookup: FormattedWaterbodiesLookup,
-      cellStyle: { height: "40px" },
     },
     {
       title: "Location Type",

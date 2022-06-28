@@ -47,6 +47,15 @@ module.exports = (sequelize, DataTypes) => {
       chem_conv_ndx: {
         type: INTEGER,
       },
+      official_name: {
+        type: BOOLEAN,
+      },
+      display_abbrev: {
+        type: TEXT,
+      },
+      allow_zeros: {
+        type: BOOLEAN,
+      },
     },
     {
       defaultScope: {

@@ -98,6 +98,28 @@ const ListWqatParameters = () => {
       },
     },
     {
+      title: "Display Name",
+      field: "display_name",
+      cellStyle: {
+        height: "40px",
+      },
+    },
+    {
+      title: "Display Abbreviation",
+      field: "display_abbrev",
+      cellStyle: {
+        height: "40px",
+      },
+    },
+    {
+      title: "Official Name",
+      field: "official_name",
+      type: "boolean",
+      cellStyle: {
+        height: "40px",
+      },
+    },
+    {
       title: "Method Speciation",
       field: "method_speciation",
       editable: "never",

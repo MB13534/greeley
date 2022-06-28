@@ -29,7 +29,6 @@ import Default from "../pages/dashboards/Default";
 import AdminGuard from "../components/AdminGuard";
 import AdminVisibilityFilter from "../components/AdminVisibilityFilter";
 import ListWqatActivityTypes from "../pages/dataManagement/ListWqatActivityTypes";
-import ListWqatWaterbodies from "../pages/dataManagement/ListWqatWaterbodies";
 import ListWqatParameters from "../pages/dataManagement/ListWqatParameters";
 import ListWqatOrganizations from "../pages/dataManagement/ListWqatOrganizations";
 import ListWqatMediaTypes from "../pages/dataManagement/ListWqatMediaTypes";
@@ -189,12 +188,12 @@ const dataScrubbingRoutes = {
       component: ListWqatParameters,
       guard: AdminGuard,
     },
-    {
-      path: "/data-management/waterbodies",
-      name: "Water Bodies",
-      component: ListWqatWaterbodies,
-      guard: AdminGuard,
-    },
+    // {
+    //   path: "/data-management/waterbodies",
+    //   name: "Water Bodies",
+    //   component: ListWqatWaterbodies,
+    //   guard: AdminGuard,
+    // },
   ],
   visibilityFilter: AdminVisibilityFilter,
 };
