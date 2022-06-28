@@ -29,6 +29,28 @@ const ListWqatParameters = () => {
     }
   );
 
+  const { data: ChemicalConversionsLookup } = useQuery(
+    ["list-chemical-form-conversions"],
+    async () => {
+      try {
+        const token = await getAccessTokenSilently();
+        const headers = { Authorization: `Bearer ${token}` };
+
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_ENDPOINT}/api/list-chemical-form-conversions`,
+          { headers }
+        );
+        return data;
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    {
+      keepPreviousData: true,
+      refetchOnWindowFocus: false,
+    }
+  );
+
   const FormattedParametersLookup = useMemo(() => {
     let converted = {};
     if (ParametersLookup?.length) {
@@ -39,6 +61,16 @@ const ListWqatParameters = () => {
     converted[-999] = "-----";
     return converted;
   }, [ParametersLookup]);
+
+  const FormattedChemicalConversionsLookup = useMemo(() => {
+    let converted = {};
+    if (ChemicalConversionsLookup?.length) {
+      ChemicalConversionsLookup.forEach((d) => {
+        converted[d.chem_conv_ndx] = `${d.chem_form_1} to ${d.chem_form_2}`;
+      });
+    }
+    return converted;
+  }, [ChemicalConversionsLookup]);
 
   const columns = [
     {
@@ -77,6 +109,12 @@ const ListWqatParameters = () => {
       title: "Same As",
       field: "same_as_ndx",
       lookup: FormattedParametersLookup,
+      cellStyle: { height: "40px" },
+    },
+    {
+      title: "Chemical Conversion",
+      field: "chem_conv_ndx",
+      lookup: FormattedChemicalConversionsLookup,
       cellStyle: { height: "40px" },
     },
   ];
