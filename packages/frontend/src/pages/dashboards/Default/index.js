@@ -154,7 +154,7 @@ function Default() {
             <Description>
               <Typography
                 variant="h3"
-                style={{ fontWeight: "100", fontSize: "30px", padding: "15px" }}
+                style={{ fontWeight: "100", fontSize: "30px" }}
               >
                 Welcome to the Dashboard!
               </Typography>
@@ -199,7 +199,7 @@ function Default() {
             <DescriptionBottom>
               <Typography
                 variant="h3"
-                style={{ fontWeight: "100", fontSize: "30px", padding: "15px" }}
+                style={{ fontWeight: "100", fontSize: "30px" }}
               >
                 About the Tool
               </Typography>
@@ -353,7 +353,7 @@ function Default() {
             <DescriptionBottom>
               <Typography
                 variant="h3"
-                style={{ fontWeight: "100", fontSize: "30px", padding: "15px" }}
+                style={{ fontWeight: "100", fontSize: "30px" }}
               >
                 Partners
               </Typography>
