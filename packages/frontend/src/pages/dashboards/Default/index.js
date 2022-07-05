@@ -118,7 +118,7 @@ function Default() {
 
   return (
     <React.Fragment>
-      <Helmet title="Default Dashboard" />
+      <Helmet title="Water Quality Assessment Tool Dashboard" />
       <Hero>
         <Welcome>
           <Typography variant="h3" gutterBottom style={{ color: "white" }}>
@@ -232,16 +232,13 @@ function Default() {
                 are the perfect place to start. If you are looking to explore
                 spatial trends in water quality data or know a particular stream
                 you are interested in, then the{" "}
-                <AboutLink component={NavLink} to="/map">
+                <AboutLink component={NavLink} to="/data-access/map-explorer">
                   Map Explorer
                 </AboutLink>{" "}
                 will give you exactly what you need. Lastly, if you are
                 interested in visualizing the data in a variety of ways or
                 downloading the data, then take a look at the{" "}
-                <AboutLink
-                  component={NavLink}
-                  to="/data-access/time-series/a-time-series"
-                >
+                <AboutLink component={NavLink} to="/data-access/graph-explorer">
                   Graph Analyzer
                 </AboutLink>{" "}
                 page.

@@ -1,6 +1,6 @@
 const express = require('express');
 const {checkAccessToken} = require('../../core/middleware/auth.js');
-const {lookup_location_types: model} = require('../../core/models');
+const {list_location_types: model} = require('../../core/models');
 const router = express.Router();
 
 // Attach middleware to ensure that user is authenticated & has permissions

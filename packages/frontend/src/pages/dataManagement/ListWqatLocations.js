@@ -37,7 +37,7 @@ const ListWqatLocations = () => {
         const headers = { Authorization: `Bearer ${token}` };
 
         const { data } = await axios.get(
-          `${process.env.REACT_APP_ENDPOINT}/api/lookup-location-types`,
+          `${process.env.REACT_APP_ENDPOINT}/api/list-location-types`,
           { headers }
         );
         return data;
@@ -66,7 +66,7 @@ const ListWqatLocations = () => {
     let converted = {};
     if (LocationTypesLookup?.length) {
       LocationTypesLookup.forEach((d) => {
-        converted[d.ndx] = d.item_name;
+        converted[d.location_type_ndx] = d.location_type_desc;
       });
     }
     return converted;

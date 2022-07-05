@@ -7,7 +7,6 @@ import async from "../components/Async";
 
 import {
   Activity,
-  Archive,
   Database,
   FileText,
   Home,
@@ -105,46 +104,28 @@ const getCrudRoutes = (list) => {
 const crudSidebarMenu = [...getSidebarMenu(CRUD_MODELS)];
 const modelCrudRoutes = [...getCrudRoutes(CRUD_MODELS)];
 
-const dataAccessRoutes = {
-  header: "Data Access",
-  id: "Time Series",
-  icon: <Activity />,
-  children: [
-    {
-      path: "/data-access/time-series/a-time-series",
-      name: "A Time Series",
-      component: Blank,
-    },
-  ],
-};
-
-const reportsRoutes = {
-  id: "Reports",
-  icon: <FileText />,
-  children: [
-    {
-      path: "/data-access/reports/a-report",
-      name: "A report",
-      component: Blank,
-    },
-  ],
-};
-
 const publicMapRoutes = {
-  header: "Map Resources",
-  id: "Interactive Map",
+  header: "Data Access",
+  id: "Map Explorer",
   icon: <MapIcon />,
-  path: ROUTES.PUBLIC_MAP,
-  name: "Interactive Map",
+  path: "/data-access/map-explorer",
+  name: "Map Explore",
   component: PublicMap,
 };
 
-const publicFilesRoutes = {
-  id: "Public Files",
-  header: "Documents",
-  icon: <Archive />,
-  path: "/data-access/documents/public-files",
-  name: "Public Files",
+const dataAccessRoutes = {
+  id: "Graph Explorer",
+  icon: <Activity />,
+  path: "/data-access/graph-explorer",
+  name: "Graph Explorer",
+  component: Blank,
+};
+
+const reportsRoutes = {
+  id: "Query & Download",
+  icon: <FileText />,
+  path: "/data-access/query-&-download",
+  name: "Query & Download",
   component: Blank,
 };
 
@@ -181,6 +162,7 @@ const dataScrubbingRoutes = {
       path: "/data-management/organizations",
       name: "Organizations",
       component: ListWqatOrganizations,
+      guard: AdminGuard,
     },
     {
       path: "/data-management/parameters",
@@ -270,6 +252,7 @@ const storylinesRoutes = {
   header: "Storylines",
   id: "Water Quality",
   icon: <Book />,
+  open: true,
   children: [
     // {
     //   path: "/storylines/water-quality",
@@ -321,7 +304,6 @@ export const dashboardLayoutRoutes = [
   associationsRoutes,
   dataAccessRoutes,
   reportsRoutes,
-  publicFilesRoutes,
   accountRoutes,
   storylinesRoutes,
   storylineHomeRoute,
@@ -348,9 +330,8 @@ export const sidebarRoutes = [
   ...crudSidebarMenu,
   dataScrubbingRoutes,
   associationsRoutes,
+  publicMapRoutes,
   dataAccessRoutes,
   reportsRoutes,
-  publicMapRoutes,
-  publicFilesRoutes,
   storylinesRoutes,
 ];

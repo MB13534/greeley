@@ -1,26 +1,26 @@
 module.exports = (sequelize, DataTypes) => {
   const {TEXT, INTEGER} = DataTypes;
-  const LookupLocationTypes = sequelize.define(
-    'lookup_location_types',
+  const ListLocationTypes = sequelize.define(
+    'list_location_types',
     {
-      ndx: {
+      location_type_ndx: {
         type: INTEGER,
         primaryKey: true,
       },
-      item_name: {
+      location_type_desc: {
         type: TEXT,
       },
     },
     {
       defaultScope: {
-        order: [['item_name', 'asc']],
+        order: [['location_type_desc', 'asc']],
       },
-      schema: 'data',
+      schema: 'ui',
       timestamps: false,
       paranoid: true,
       freezeTableName: true,
     }
   );
 
-  return LookupLocationTypes;
+  return ListLocationTypes;
 };
