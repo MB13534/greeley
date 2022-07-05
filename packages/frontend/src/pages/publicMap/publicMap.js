@@ -183,33 +183,18 @@ const PublicMap = () => {
           <FiltersSection>
             <FiltersContainer>
               <FilterControl
-                appliedCount={filterValues?.media?.value?.length}
-                label="Media"
+                appliedCount={filterValues?.reach?.value?.length}
+                label="Reach"
               >
                 <Filter
-                  label="Media"
-                  name="media"
+                  label="Reach"
+                  name="reach"
                   onChange={handleFilterValues}
                   onSelectAll={handleSelectAll}
                   onSelectNone={handleSelectNone}
-                  options={filterValues?.media?.options}
-                  type={filterValues?.media?.type}
-                  value={filterValues?.media?.value}
-                />
-              </FilterControl>
-              <FilterControl
-                appliedCount={filterValues?.locationTypes?.value?.length}
-                label="Location Types"
-              >
-                <Filter
-                  label="Location Types"
-                  name="locationTypes"
-                  onChange={handleFilterValues}
-                  onSelectAll={handleSelectAll}
-                  onSelectNone={handleSelectNone}
-                  options={filterValues?.locationTypes?.options}
-                  type={filterValues?.locationTypes?.type}
-                  value={filterValues?.locationTypes?.value}
+                  options={filterValues?.reach?.options}
+                  type={filterValues?.reach?.type}
+                  value={filterValues?.reach?.value}
                 />
               </FilterControl>
               <FilterControl

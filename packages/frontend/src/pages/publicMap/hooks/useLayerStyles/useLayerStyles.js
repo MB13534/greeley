@@ -2,50 +2,29 @@ import { useState } from "react";
 import { scaleOrdinal } from "d3-scale";
 import { schemePaired } from "d3-scale-chromatic";
 
-const mediaValues = [
-  "[not specified]",
-  "Wastewater Treatment Plant Effluent",
-  "Surface Water",
-];
-
-const locationTypesValues = [
-  "Other-Surface Water",
-  "Mine/Mine Discharge Adit (Mine Entrance)",
-  "Channelized Stream",
-  "Mine/Mine Discharge",
-  "Facility Municipal Sewage (POTW)",
-  "Storm Sewer",
-  "Facility Public Water Supply (PWS)",
-  "[not specified]",
-  "Mine/Mine Discharge Tailings Pile",
-  "Facility Privately Owned Non-industrial",
-  "Mine/Mine Discharge Waste Rock Pile",
-  "Facility Industrial",
-  "Reservoir",
-  "Well",
-  "Canal Irrigation",
-  "River/Stream",
-  "Spring",
-  "Canal Transport",
+const reachValues = [
+  "South Platte Headwaters",
+  "Middle South Platte-Cherry Creek",
+  "Upper South Platte",
+  "Clear Creek",
 ];
 
 const organizationsValues = [
   "DRMS",
-  "CORIVWCH_WQX",
-  "THORNTON_WQX",
-  "21COL001_WQX",
-  "MWRD_WQX",
-  "DDEH_WQX",
+  "Denver Department of Environmental Health",
+  "South Adams County Water and Sanitation District (Colorado)",
+  "River Watch",
   "SUNENCO",
   "CCWF",
-  "BLMRW",
-  "CDOT",
-  "CWSD_WQX",
-  "AURORA_WQX",
-  "SACWSD_WQX",
-  "BRIGHTON_WQX",
-  "GCWIN",
-  "LEWWTP_WQX",
+  "Metro Waste Water Reclamation District (Colorado)",
+  "Standley Lake Watershed Group (Volunteer)",
+  "Littleton/Englewood Wastewater Treatment Plant (Colorado)",
+  "EPA National Aquatic Resource Survey Data",
+  "CWSD",
+  "City of Thornton (Colorado)",
+  "Groundwater Colorado",
+  "City of Aurora (Colorado)",
+  "Colorado Dept. of Public Health & Environment",
 ];
 
 const buildScale = (values) => {
@@ -68,36 +47,19 @@ const styleValues = {
       "circle-color": "#1e8dd2",
     },
   },
-  media: {
-    id: "media",
+  reach: {
+    id: "reach",
     layerId,
-    layerFieldName: "media",
-    name: "Media",
+    layerFieldName: "reach",
+    name: "Reach",
     options: [],
     type: "multi-select",
     value: [],
     paint: {
       "circle-color": [
         "match",
-        ["get", "media"],
-        ...buildScale(mediaValues),
-        "#000000",
-      ],
-    },
-  },
-  locationTypes: {
-    id: "locationTypes",
-    layerId,
-    layerFieldName: "locationtype",
-    name: "Location Types",
-    options: [],
-    type: "multi-select",
-    value: [],
-    paint: {
-      "circle-color": [
-        "match",
-        ["get", "locationtype"],
-        ...buildScale(locationTypesValues),
+        ["get", "reach"],
+        ...buildScale(reachValues),
         "#000000",
       ],
     },

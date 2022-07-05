@@ -26,7 +26,6 @@ import { handleCopyCoords, updateArea } from "../../../../utils/map";
 import ResetZoomControl from "../../../../components/map/ResetZoomControl";
 import { isTouchScreenDevice } from "../../../../utils";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-import { useApp } from "../../../../AppProvider";
 
 const mapLogger = new MapLogger({
   enabled: process.env.NODE_ENV === "development",
@@ -51,15 +50,11 @@ const jss = create({
  * see https://docs.mapbox.com/mapbox-gl-js/api/map/
  */
 const useMap = (ref, mapConfig) => {
-  const { currentUser } = useApp();
   const theme = useSelector((state) => state.themeReducer);
   const [map, setMap] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(0);
   const [activeBasemap, setActiveBasemap] = useState(BASEMAP_STYLES[0].style);
   const [dataAdded, setDataAdded] = useState(false);
-  const [dataVizVisible, setDataVizVisible] = useState(false);
-  const [dataVizWellNumber, setDataVizWellNumber] = useState(null);
-  const [dataVizGraphType, setDataVizGraphType] = useState(null);
   const [measurementsVisible, setMeasurementsVisible] = useState(false);
   const [virtualBoreCoordinates, setVirtualBoreCoordinates] = useState(null);
   const [virtualBoreVisible, setVirtualBoreVisible] = useState(false);
@@ -338,14 +333,7 @@ const useMap = (ref, mapConfig) => {
             <StylesProvider jss={jss}>
               <MuiThemeProvider theme={createTheme(theme.currentTheme)}>
                 <ThemeProvider theme={createTheme(theme.currentTheme)}>
-                  <Popup
-                    currentUser={currentUser}
-                    layers={layers}
-                    setDataVizVisible={setDataVizVisible}
-                    setDataVizWellNumber={setDataVizWellNumber}
-                    setDataVizGraphType={setDataVizGraphType}
-                    features={myFeatures}
-                  />
+                  <Popup layers={layers} features={myFeatures} />
                 </ThemeProvider>
               </MuiThemeProvider>
             </StylesProvider>,
@@ -376,7 +364,6 @@ const useMap = (ref, mapConfig) => {
     eventsRegistered,
     theme.currentTheme,
     addBuffersToMap,
-    currentUser,
   ]);
 
   /**
@@ -601,12 +588,6 @@ const useMap = (ref, mapConfig) => {
     lineRef,
     measurementsContainerRef,
     handleClearMeasurements,
-    dataVizVisible,
-    setDataVizVisible,
-    dataVizWellNumber,
-    setDataVizWellNumber,
-    dataVizGraphType,
-    setDataVizGraphType,
     eventsRegistered,
     virtualBoreCoordinates,
     setVirtualBoreCoordinates,

@@ -62,7 +62,7 @@ const FilterControl = ({ appliedCount, children, label }) => {
         open={open}
         anchorEl={buttonRef?.current}
         placement="bottom-start"
-        style={{ zIndex: 2, border: "1px solid #ddd" }}
+        style={{ zIndex: 4, border: "1px solid #ddd" }}
         transition
       >
         {({ TransitionProps }) => (

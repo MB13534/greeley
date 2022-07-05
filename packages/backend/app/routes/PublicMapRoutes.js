@@ -44,52 +44,30 @@ const cleanLayer = (layer) => {
 };
 
 // TODO move to DB and key off of index instead
-const mediaData = [
-  '[not specified]',
-  'Wastewater Treatment Plant Effluent',
-  'Surface Water',
-];
-
-// TODO move to DB and key off of index instead
-const locationTypesData = [
-  'Other-Surface Water',
-  'Mine/Mine Discharge Adit (Mine Entrance)',
-  'Channelized Stream',
-  'Mine/Mine Discharge',
-  'Facility Municipal Sewage (POTW)',
-  'Storm Sewer',
-  'Facility Public Water Supply (PWS)',
-  '[not specified]',
-  'Mine/Mine Discharge Tailings Pile',
-  'Facility Privately Owned Non-industrial',
-  'Mine/Mine Discharge Waste Rock Pile',
-  'Facility Industrial',
-  'Reservoir',
-  'Well',
-  'Canal Irrigation',
-  'River/Stream',
-  'Spring',
-  'Canal Transport',
+const reachData = [
+  'South Platte Headwaters',
+  'Middle South Platte-Cherry Creek',
+  'Upper South Platte',
+  'Clear Creek',
 ];
 
 // TODO move to DB and key off of index instead
 const organizationsData = [
   'DRMS',
-  'CORIVWCH_WQX',
-  'THORNTON_WQX',
-  '21COL001_WQX',
-  'MWRD_WQX',
-  'DDEH_WQX',
+  'Denver Department of Environmental Health',
+  'South Adams County Water and Sanitation District (Colorado)',
+  'River Watch',
   'SUNENCO',
   'CCWF',
-  'BLMRW',
-  'CDOT',
-  'CWSD_WQX',
-  'AURORA_WQX',
-  'SACWSD_WQX',
-  'BRIGHTON_WQX',
-  'GCWIN',
-  'LEWWTP_WQX',
+  'Metro Waste Water Reclamation District (Colorado)',
+  'Standley Lake Watershed Group (Volunteer)',
+  'Littleton/Englewood Wastewater Treatment Plant (Colorado)',
+  'EPA National Aquatic Resource Survey Data',
+  'CWSD',
+  'City of Thornton (Colorado)',
+  'Groundwater Colorado',
+  'City of Aurora (Colorado)',
+  'Colorado Dept. of Public Health & Environment',
 ];
 
 /**
@@ -198,19 +176,14 @@ router.get('/wells', async (req, res, next) => {
  */
 router.get('/filters', async (req, res, next) => {
   try {
-    const media = mediaData.map((use) => ({display: use, value: use}));
-    const locationTypes = locationTypesData.map((use) => ({
-      display: use,
-      value: use,
-    }));
+    const reach = reachData.map((use) => ({display: use, value: use}));
     const organizations = organizationsData.map((use) => ({
       display: use,
       value: use,
     }));
 
     res.json({
-      media: media || [],
-      locationTypes: locationTypes || [],
+      reach: reach || [],
       organizations: organizations || [],
     });
   } catch (err) {

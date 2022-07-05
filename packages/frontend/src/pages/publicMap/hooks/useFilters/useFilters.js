@@ -44,15 +44,10 @@ const useFilters = ({ onFilterChange }) => {
   useEffect(() => {
     setFilterValues((prevState) => ({
       ...prevState,
-      media: {
-        ...prevState.media,
-        options: data?.data?.media || [],
-        value: data?.data?.media.map(({ value }) => value) || [],
-      },
-      locationTypes: {
-        ...prevState.locationTypes,
-        options: data?.data?.locationTypes || [],
-        value: data?.data?.locationTypes.map(({ value }) => value) || [],
+      reach: {
+        ...prevState.reach,
+        options: data?.data?.reach || [],
+        value: data?.data?.reach.map(({ value }) => value) || [],
       },
       organizations: {
         ...prevState.organizations,

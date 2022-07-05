@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-// import "./styles.css";
-import parse from "html-react-parser";
 import styled from "styled-components/macro";
 import { isNullOrUndef } from "chart.js/helpers";
-import { formatBooleanTrueFalse } from "../../../utils";
-import Button from "@material-ui/core/Button";
 import { Pagination } from "@material-ui/lab";
 import { titleize } from "inflected";
+import { formatBooleanTrueFalse } from "../../../utils";
 
 const PopupWrap = styled.div`
   height: 200px;
@@ -33,26 +30,7 @@ const PopupCell = styled.td`
   margin: 0;
 `;
 
-const PopupUl = styled.ul`
-  list-style-type: none;
-  margin: 0 !important;
-  padding: 3px 0;
-`;
-
-const Popup = ({
-  setDataVizVisible,
-  setDataVizWellNumber,
-  setDataVizGraphType,
-  features,
-  layers,
-  currentUser,
-}) => {
-  const dataVizTypes = {
-    count_production: "Production Graph",
-    count_waterlevels: "Water Levels Graph",
-    count_wqdata: "Water Quality Graph",
-  };
-
+const Popup = ({ features, layers }) => {
   function getUniqueFeatures(array, comparatorProperty1, comparatorProperty2) {
     const existingFeatureKeys = {};
     // Because features come from tiled vector data, feature geometries may be split
@@ -98,140 +76,61 @@ const Popup = ({
     setExcludeFields(excludedFields || []);
   }, [feature, layers]);
 
-  const addViewDataVizButtons = (key, value) => {
-    if (value && Object.keys(dataVizTypes).includes(key)) {
-      return (
-        <>
-          <span
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            {value + " "}
-            <Button
-              size="small"
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                setDataVizVisible(true);
-                setDataVizWellNumber(feature.properties.cuwcd_well_number);
-                setDataVizGraphType(key);
-              }}
-            >
-              {dataVizTypes[key]}
-            </Button>
-          </span>
-        </>
-      );
-    }
-    return value;
-  };
+  let popupData;
+  if (feature?.layer?.id === "spwqat-locations-circle") {
+    popupData = [
+      [
+        "Period of Record",
+        `${new Date(feature?.properties.por_start).getFullYear()} - ${new Date(
+          feature?.properties.por_end
+        ).getFullYear()}`,
+      ],
+      ["Reach", feature?.properties.reach],
+      ["Organization", feature?.properties.organization],
+      ["Record Count", feature?.properties.resultcount],
+      ["Huc8", feature?.properties.huc8],
+      ["Huc12", feature?.properties.huc12 || "N/A"],
+      ["Latitude", feature?.properties.x_lat],
+      ["Longitude", feature?.properties.y_lon],
+    ];
+  } else {
+    popupData = excludeFields
+      ? Object.entries(feature?.properties).reduce((acc, [key, value]) => {
+          //MJB also removing entry if the value is an empty string, null, or undefined
+          if (
+            !excludeFields.includes(key) &&
+            value !== "" &&
+            !isNullOrUndef(value)
+          ) {
+            acc.push([key, value]);
+          }
+          return acc;
+        }, [])
+      : Object.entries(feature?.properties);
+  }
 
-  const popupData = excludeFields
-    ? Object.entries(feature?.properties).reduce((acc, [key, value]) => {
-        //MJB also removing entry if the value is an empty string, null, or undefined
-        if (
-          !excludeFields.includes(key) &&
-          value !== "" &&
-          !isNullOrUndef(value)
-        ) {
-          acc.push([key, value]);
-        }
-        return acc;
-      }, [])
-    : Object.entries(feature?.properties);
   if (!popupData) return null;
   return (
     <>
-      <h2>{titleize(feature?.layer?.id)}</h2>
+      <h2 style={{ marginBottom: 0 }}>
+        {feature?.layer?.id === "spwqat-locations-circle"
+          ? feature?.properties.station_name
+          : titleize(feature?.layer?.id)}
+      </h2>
+      <h3 style={{ marginTop: 0 }}>
+        {feature?.layer?.id === "spwqat-locations-circle" &&
+          feature?.properties.station_id}
+      </h3>
       <PopupWrap>
         <PopupTable>
           <tbody>
-            {currentUser?.isAdmin && feature.source === "clearwater-wells" && (
-              <PopupRow>
-                <PopupCell>
-                  <strong>Edit Well</strong>
-                </PopupCell>
-                <PopupCell>
-                  <a
-                    href={`/models/dm-wells/${feature?.properties?.id}`}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Link
-                  </a>
-                </PopupCell>
-              </PopupRow>
-            )}
             {popupData?.map(([key, value]) => {
               return (
                 <PopupRow key={key}>
                   <PopupCell>
                     <strong>{titleize(key)}</strong>
                   </PopupCell>
-                  <PopupCell>
-                    {/*MJB temporary logic to render links
-              PROP_ID from Bell CAD Parcels for external id
-              list_of_attachments from Clearwater Wells to link attachments
-              parse renders string html element into
-              */}
-                    {feature?.source === "bell-parcels" && key === "PROP_ID" ? (
-                      <a
-                        target="_blank"
-                        href={`https://esearch.bellcad.org/Property/View/${value}`}
-                        rel="noreferrer"
-                      >
-                        <>{value}</>
-                      </a>
-                    ) : feature?.source === "twdb-groundwater-wells" &&
-                      key === "StateWellNumber" ? (
-                      <div>
-                        <a
-                          target="_blank"
-                          href={`https://www3.twdb.texas.gov/apps/waterdatainteractive//GetReports.aspx?Num=${value}&Type=GWDB`}
-                          rel="noreferrer"
-                        >
-                          <>{value}</>
-                        </a>
-                        {" - "}
-                        <a
-                          target="_blank"
-                          href={`http://s3.amazonaws.com/wellpdfs/documents/${value}/${value}.pdf`}
-                          rel="noreferrer"
-                        >
-                          <>Scanned Documents</>
-                        </a>
-                      </div>
-                    ) : feature?.source === "twdb-well-reports" &&
-                      key === "WellInfoId" ? (
-                      <a
-                        target="_blank"
-                        href={`https://www3.twdb.texas.gov/apps/waterdatainteractive//GetReports.aspx?Num=${value}&Type=SDR-Well`}
-                        rel="noreferrer"
-                      >
-                        <>{value}</>
-                      </a>
-                    ) : feature?.source === "twdb-plugging-reports" &&
-                      key === "PluggingReportTrackingNumber" ? (
-                      <a
-                        target="_blank"
-                        href={`https://www3.twdb.texas.gov/apps/waterdatainteractive//GetReports.aspx?Num=${value}&Type=SDR-Plug`}
-                        rel="noreferrer"
-                      >
-                        <>{value}</>
-                      </a>
-                    ) : typeof value === "string" && value.startsWith("<a ") ? (
-                      <PopupUl>
-                        {value.split(",").map((item) => (
-                          <li key={item}>{parse(item)}</li>
-                        ))}
-                      </PopupUl>
-                    ) : (
-                      formatBooleanTrueFalse(addViewDataVizButtons(key, value))
-                    )}
-                  </PopupCell>
+                  <PopupCell>{formatBooleanTrueFalse(value)}</PopupCell>
                 </PopupRow>
               );
             })}

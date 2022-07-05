@@ -38,16 +38,9 @@ export const INIT_MAP_CONFIG = {
 export const WELLS_LAYER_ID = "spwqat-locations-circle";
 export const WELLS_LABELS_LAYER_ID = "spwqat-locations-symbol";
 export const INIT_FILTER_VALUES = {
-  media: {
+  reach: {
     layerId: WELLS_LAYER_ID,
-    layerFieldName: "media",
-    options: [],
-    type: "multi-select",
-    value: [],
-  },
-  locationTypes: {
-    layerId: WELLS_LAYER_ID,
-    layerFieldName: "locationtype",
+    layerFieldName: "reach",
     options: [],
     type: "multi-select",
     value: [],

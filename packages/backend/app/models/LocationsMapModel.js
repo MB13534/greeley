@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
       waterbody: {
         type: TEXT,
       },
+      reach: {
+        type: TEXT,
+      },
       county: {
         type: TEXT,
       },
