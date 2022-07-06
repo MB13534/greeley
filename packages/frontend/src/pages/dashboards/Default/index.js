@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardMedia,
   Tooltip,
+  Box,
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
@@ -24,6 +25,7 @@ import WaterQualityStorylineSummary from "../../storyLines/waterQuality/WaterQua
 import { NavLink } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import { customSecondary, customHighlight } from "../../../theme/variants";
+import { Search } from "@material-ui/icons";
 
 const Typography = styled(MuiTypography)(spacing);
 
@@ -47,34 +49,29 @@ const Hero = styled.div`
 
 const Recap = styled.section`
   border-top: 5px solid ${() => customHighlight[500]};
-  margin-bottom: 140px;
+  margin-bottom: 24px;
   margin-top: 24px;
 `;
 
 const About = styled.section`
   border-top: 5px solid #424242;
-  margin-top: 140px;
+  margin-top: 12px;
   margin-bottom: 24px;
+  background-color: ${() => customHighlight[500]};
 `;
 
 const Partners = styled.section`
-  margin-top: 140px;
   border-right: 5px solid ${() => customHighlight[500]};
 `;
 
 const Description = styled.div`
-  background-color: #424242;
-  color: white;
-  padding: 20px 40px;
-`;
-
-const DescriptionBottom = styled.div`
-  background-color: ${() => customHighlight[500]};
+  background-color: ${({ color = customHighlight[500] }) => color};
   color: white;
   padding: 20px 40px;
 `;
 
 const Welcome = styled.div`
+  height: 250px;
   background-color: rgba(249, 246, 241, 0.3);
   display: flex;
   flex-direction: column;
@@ -90,7 +87,6 @@ const StoryCard = styled(Card)`
   box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35) !important;
 
   &:hover {
-    background-color: #f6f6f6;
     outline: 4px solid ${() => customSecondary[500]};
     & .title-highlight {
       color: ${() => customSecondary[500]};
@@ -151,7 +147,7 @@ function Default() {
           </Grid>
 
           <Grid item xs={12} lg={8}>
-            <Description>
+            <Description color="#424242">
               <Typography
                 variant="h3"
                 style={{ fontWeight: "100", fontSize: "30px" }}
@@ -161,7 +157,11 @@ function Default() {
               <Typography
                 variant="body2"
                 component="p"
-                style={{ padding: "15px", lineHeight: "1.8", fontSize: "1rem" }}
+                style={{
+                  padding: "15px",
+                  lineHeight: "1.8",
+                  fontSize: ".95rem",
+                }}
               >
                 The South Platte Urban Waters Partnership is excited to present
                 the updated water quality assessment tool for exploring the
@@ -176,7 +176,11 @@ function Default() {
               <Typography
                 variant="body2"
                 component="p"
-                style={{ padding: "15px", lineHeight: "1.8", fontSize: "1rem" }}
+                style={{
+                  padding: "15px",
+                  lineHeight: "1.8",
+                  fontSize: ".95rem",
+                }}
               >
                 Continued population and water use growth in the Denver metro
                 area impact water quality in streams and rivers. Water pollution
@@ -193,78 +197,63 @@ function Default() {
         </Grid>
       </Recap>
 
-      <About>
-        <Grid container style={{ alignItems: "center" }}>
-          <Grid item xs={12} lg={8}>
-            <DescriptionBottom>
-              <Typography
-                variant="h3"
-                style={{ fontWeight: "100", fontSize: "30px" }}
+      <Grid container spacing={6}>
+        <Grid item xs={12}>
+          <StoryCard mb={3}>
+            <Accordion>
+              <AccordionSummary
+                style={{ paddingLeft: 0 }}
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
               >
-                About the Tool
-              </Typography>
-              <Typography
-                variant="body2"
-                component="p"
-                style={{ padding: "15px", lineHeight: "1.8", fontSize: "1rem" }}
-              >
-                The Denver Metro Water Quality Assessment Tool (WQAT) represents
-                the successful colaboration of federal, state, local
-                governments, and non-profits to pool resources to make water
-                quality data more accessible to decision-makers and general
-                public. This tool seeks to provide both context and direct
-                access to publically available water quality data for the metro
-                area.
-              </Typography>
-              <Typography
-                variant="body2"
-                component="p"
-                style={{ padding: "15px", lineHeight: "1.8", fontSize: "1rem" }}
-              >
-                This tool represents a snapshot of conditions for the metro area
-                between 2009 and 2015 for a variety of water quality parameters
-                including <em>E. coli</em>. , contaminants of emerging concern,
-                total dissolved solids, total suspended solids and nutrients. If
-                you are not overly familiar with these pollutants, the{" "}
-                <AboutLink component={NavLink} to="/storylines/water-quality">
-                  Storylines
-                </AboutLink>{" "}
-                are the perfect place to start. If you are looking to explore
-                spatial trends in water quality data or know a particular stream
-                you are interested in, then the{" "}
-                <AboutLink component={NavLink} to="/data-access/map-explorer">
-                  Map Explorer
-                </AboutLink>{" "}
-                will give you exactly what you need. Lastly, if you are
-                interested in visualizing the data in a variety of ways or
-                downloading the data, then take a look at the{" "}
-                <AboutLink component={NavLink} to="/data-access/graph-explorer">
-                  Graph Analyzer
-                </AboutLink>{" "}
-                page.
-              </Typography>
-            </DescriptionBottom>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            lg={4}
-            style={{
-              backgroundColor: `${() => customSecondary[500]}`,
-            }}
-            align="center"
-          >
-            <img
-              src={"/static/img/wqat-logo.png"}
-              style={{
-                margin: "auto",
-                display: "block",
-              }}
-              alt="Water Drop Logo"
-            />
-          </Grid>
+                <CardHeader
+                  titleTypographyProps={{ variant: "h3" }}
+                  // style={{ margin }}
+                  title={
+                    <>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        className="title-highlight"
+                      >
+                        <Typography
+                          variant="h3"
+                          style={{ fontSize: "1.75rem" }}
+                        >
+                          Check Out Our Water Quality Storylines!{" "}
+                        </Typography>
+                        <Search style={{ height: "60px", width: "60px" }} />
+                      </Box>
+                      <Typography
+                        variant="body2"
+                        style={{ fontSize: ".9rem" }}
+                        gutterBottom
+                      >
+                        Water quality is complex. Take a dive into the prepared
+                        storylines to emerse yourself in comprehensive
+                        introduction. From <em>E. coli</em>, to nutrients, to
+                        emerging contaminants, learn not only how these
+                        constiuents impact water quality, but additionally how
+                        they get into the river and how they are regulated. Then
+                        take this knowledge and use it to help keep our rivers
+                        and streams healthy!
+                      </Typography>
+                    </>
+                  }
+                />
+              </AccordionSummary>
+
+              <CardContent>
+                <AccordionDetails>
+                  <WaterQualityStorylineSummary />
+                </AccordionDetails>
+              </CardContent>
+            </Accordion>
+          </StoryCard>
         </Grid>
-      </About>
+      </Grid>
 
       <Grid container spacing={6}>
         <Grid item xs={12} lg={6}>
@@ -297,14 +286,14 @@ function Default() {
               <CardHeader
                 titleTypographyProps={{ variant: "h3" }}
                 className="title-highlight"
-                title="Graph Analyzer"
+                title="Graph Explorer"
               />
               <CardContent>
                 <ChartWrapper>
                   <CardMedia
                     style={{ height: "100%" }}
                     image="/static/img/graph.png"
-                    title="Graph Analyzer"
+                    title="Graph Explorer"
                   />
                 </ChartWrapper>
               </CardContent>
@@ -312,49 +301,91 @@ function Default() {
           </Link>
         </Grid>
       </Grid>
-      <Grid container spacing={6}>
-        <Grid item xs={12}>
-          <Accordion defaultExpanded>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Card>
-                <CardContent>
-                  <Typography variant="h3" gutterBottom>
-                    Check Out Our Water Quality Storylines!
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    Water quality is complex. Take a dive into the prepared
-                    storylines to emerse yourself in comprehensive introduction.
-                    From <em>E. coli</em>, to nutrients, to emerging
-                    contaminants, learn not only how these constiuents impact
-                    water quality, but additionally how they get into the river
-                    and how they are regulated. Then take this knowledge and use
-                    it to help keep our rivers and streams healthy!
-                  </Typography>
-                </CardContent>
-              </Card>
-            </AccordionSummary>
-            <AccordionDetails>
-              <WaterQualityStorylineSummary />
-            </AccordionDetails>
-          </Accordion>
+
+      <About>
+        <Grid container style={{ alignItems: "center" }}>
+          <Grid item xs={12} lg={8}>
+            <Description color={customHighlight[500]}>
+              <Typography
+                variant="h3"
+                style={{ fontWeight: "100", fontSize: "30px" }}
+              >
+                About the Tool
+              </Typography>
+              <Typography
+                variant="body2"
+                component="p"
+                style={{
+                  padding: "15px",
+                  lineHeight: "1.8",
+                  fontSize: ".95rem",
+                }}
+              >
+                The Denver Metro Water Quality Assessment Tool (WQAT) represents
+                the successful colaboration of federal, state, local
+                governments, and non-profits to pool resources to make water
+                quality data more accessible to decision-makers and general
+                public. This tool seeks to provide both context and direct
+                access to publically available water quality data for the metro
+                area.
+              </Typography>
+              <Typography
+                variant="body2"
+                component="p"
+                style={{
+                  padding: "15px",
+                  lineHeight: "1.8",
+                  fontSize: ".95rem",
+                }}
+              >
+                This tool represents a snapshot of conditions for the metro area
+                between 2009 and 2015 for a variety of water quality parameters
+                including <em>E. coli</em>. , contaminants of emerging concern,
+                total dissolved solids, total suspended solids and nutrients. If
+                you are not overly familiar with these pollutants, the{" "}
+                <AboutLink component={NavLink} to="/storylines/water-quality">
+                  Storylines
+                </AboutLink>{" "}
+                are the perfect place to start. If you are looking to explore
+                spatial trends in water quality data or know a particular stream
+                you are interested in, then the{" "}
+                <AboutLink component={NavLink} to="/data-access/map-explorer">
+                  Map Explorer
+                </AboutLink>{" "}
+                will give you exactly what you need. Lastly, if you are
+                interested in visualizing the data in a variety of ways or
+                downloading the data, then take a look at the{" "}
+                <AboutLink component={NavLink} to="/data-access/graph-explorer">
+                  Graph Explorer
+                </AboutLink>{" "}
+                page.
+              </Typography>
+            </Description>
+          </Grid>
+          <Grid item xs={12} lg={4} align="center">
+            <img
+              src={"/static/img/wqat-logo.png"}
+              style={{
+                margin: "auto",
+                display: "block",
+              }}
+              alt="Water Drop Logo"
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </About>
 
       <Partners>
         <Grid container>
           <Grid item xs={12}>
-            <DescriptionBottom>
+            <Description color="#424242">
               <Typography
                 variant="h3"
                 style={{ fontWeight: "100", fontSize: "30px" }}
               >
                 Partners
               </Typography>
-            </DescriptionBottom>
+            </Description>
           </Grid>
         </Grid>
 
@@ -433,7 +464,7 @@ function Default() {
 
         <Grid container>
           <Grid item xs={12}>
-            <Description>
+            <Description color="#424242">
               <Typography
                 variant="h3"
                 style={{ color: "white", marginTop: "20px" }}
@@ -446,7 +477,7 @@ function Default() {
                 style={{
                   padding: "15px",
                   lineHeight: "1.8",
-                  fontSize: "1rem",
+                  fontSize: ".95rem",
                 }}
               >
                 The{" "}
@@ -476,7 +507,11 @@ function Default() {
               <Typography
                 variant="body2"
                 component="p"
-                style={{ padding: "15px", lineHeight: "1.8", fontSize: "1rem" }}
+                style={{
+                  padding: "15px",
+                  lineHeight: "1.8",
+                  fontSize: ".95rem",
+                }}
               >
                 The Water Quality Assessment Tool is the product of a small
                 group of members of the South Platte River Urban Waters
