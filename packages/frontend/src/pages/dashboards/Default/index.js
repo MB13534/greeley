@@ -257,7 +257,11 @@ function Default() {
 
       <Grid container spacing={6}>
         <Grid item xs={12} lg={6}>
-          <Link component={NavLink} to="/map" underline="none">
+          <Link
+            component={NavLink}
+            to="/data-access/map-explorer"
+            underline="none"
+          >
             <StoryCard mb={3}>
               <CardHeader
                 titleTypographyProps={{ variant: "h3" }}
@@ -279,7 +283,7 @@ function Default() {
         <Grid item xs={12} lg={6}>
           <Link
             component={NavLink}
-            to="/data-access/time-series/a-time-series"
+            to="/data-access/graph-explorer"
             underline="none"
           >
             <StoryCard mb={3}>
