@@ -17,6 +17,6 @@ module.exports = {
     visibility: 'visible',
   },
   lreProperties: {
-    layerGroup: 'Search Radius Rings',
+    layerGroup: 'Search Circle Radius',
   },
 };

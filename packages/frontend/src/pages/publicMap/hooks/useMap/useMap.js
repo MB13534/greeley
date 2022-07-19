@@ -58,6 +58,8 @@ const useMap = (ref, mapConfig) => {
   const [measurementsVisible, setMeasurementsVisible] = useState(false);
   const [virtualBoreCoordinates, setVirtualBoreCoordinates] = useState(null);
   const [virtualBoreVisible, setVirtualBoreVisible] = useState(false);
+  const [dataVizVisible, setDataVizVisible] = useState(false);
+  const [lastLocationIdClicked, setLastLocationIdClicked] = useState(null);
 
   const [eventsRegistered, setEventsRegistered] = useState(false);
   const popUpRef = useRef(
@@ -300,6 +302,10 @@ const useMap = (ref, mapConfig) => {
         });
 
         const features = map.queryRenderedFeatures(e.point);
+
+        setLastLocationIdClicked(features[0]?.properties.ndx);
+
+        setDataVizVisible(true);
 
         addBuffersToMap({
           map: map,
@@ -593,6 +599,10 @@ const useMap = (ref, mapConfig) => {
     setVirtualBoreCoordinates,
     virtualBoreVisible,
     setVirtualBoreVisible,
+    lastLocationIdClicked,
+    setLastLocationIdClicked,
+    dataVizVisible,
+    setDataVizVisible,
   };
 };
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { IconButton, Box, Tooltip } from "@material-ui/core";
-import GraphIcon from "@material-ui/icons/List";
+import GraphIcon from "@material-ui/icons/BarChart";
 
-const DataVizControl = ({ open = false, handleClick }) => {
+const GraphModeToggle = ({ open = false, handleClick }) => {
   return (
     <Box
       bgcolor="#ffffff"
@@ -10,12 +10,12 @@ const DataVizControl = ({ open = false, handleClick }) => {
       borderRadius={4}
       position="absolute"
       zIndex={1}
-      top={98}
+      top={58}
       right={10}
       display="flex"
       flexDirection="column"
     >
-      <Tooltip title="Detailed Results">
+      <Tooltip title="Graph Mode" placement="left">
         <IconButton
           size="small"
           color={open ? "secondary" : "default"}
@@ -28,4 +28,4 @@ const DataVizControl = ({ open = false, handleClick }) => {
   );
 };
 
-export default DataVizControl;
+export default GraphModeToggle;

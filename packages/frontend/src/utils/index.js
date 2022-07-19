@@ -112,6 +112,18 @@ export const downloadRef = (title, extension, ref) => {
   });
 };
 
+export const groupByValue = (array, key) => {
+  const convertedObject = {};
+  array.forEach((item) => {
+    if (convertedObject[item[key]]) {
+      convertedObject[item[key]].push(item);
+    } else {
+      convertedObject[item[key]] = [item];
+    }
+  });
+  return convertedObject;
+};
+
 // const saveAs = (uri, filename) => {
 //   let link = document.createElement("a");
 //

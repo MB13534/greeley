@@ -152,7 +152,10 @@ const LayerLegend = ({ item, open, onOpacityChange }) => {
  * [] Add support for layers search
  */
 const LayersControl = ({ items, onLayerChange, onOpacityChange }) => {
-  const [expandedItems, setExpandedItems] = useState(["SPWQAT Locations"]);
+  const [expandedItems, setExpandedItems] = useState([
+    "SPWQAT Locations",
+    "Search Circle Radius",
+  ]);
 
   /**
    * Generate a unique list of items to display in the layer
@@ -164,9 +167,17 @@ const LayersControl = ({ items, onLayerChange, onOpacityChange }) => {
   const uniqueItems = useMemo(() => {
     const uniqueItemIds = [
       ...new Set(
-        items.map((item) => {
-          return item?.lreProperties?.layerGroup || item.id;
-        })
+        items
+          .filter(
+            (i) =>
+              ![
+                "spwqat-locations-graph-mode-circle",
+                "spwqat-locations-graph-mode-symbol",
+              ].includes(i.id)
+          )
+          .map((item) => {
+            return item?.lreProperties?.layerGroup || item.id;
+          })
       ),
     ];
 

@@ -37,7 +37,7 @@ const buildScale = (values) => {
 };
 
 const layerId = "spwqat-locations-circle";
-const styleValues = {
+export const styleValues = {
   default: {
     id: "default",
     layerId,

@@ -1,7 +1,7 @@
 const express = require('express');
 const {checkAccessToken, checkRoles} = require('../../core/middleware/auth.js');
 const {
-  locations_map,
+  locations_map_mjb,
   /*MJB hide aggregated system control per client (probably temporary)*/
   // list_aggregate_systems,
 } = require('../../core/models');
@@ -105,7 +105,7 @@ const toGeoJSON = ({data, geometryField}) => {
  */
 router.get('/sources', async (req, res, next) => {
   try {
-    const wellsData = await locations_map.findAll();
+    const wellsData = await locations_map_mjb.findAll();
     const finalSources = sources.map((source) => {
       if (source.id === 'spwqat-locations') {
         return {
@@ -159,7 +159,7 @@ router.get(
  */
 router.get('/wells', async (req, res, next) => {
   try {
-    const wellsData = await locations_map.findAll();
+    const wellsData = await locations_map_mjb.findAll();
     res.json(wellsData);
   } catch (err) {
     next(err);

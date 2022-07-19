@@ -1,7 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
-  const {TEXT, GEOMETRY, BOOLEAN, DOUBLE, REAL, BIGINT, DATE} = DataTypes;
+  const {TEXT, GEOMETRY, BOOLEAN, DOUBLE, REAL, BIGINT, DATE, INTEGER} =
+    DataTypes;
   const MapLocationsAll = sequelize.define(
-    'locations_map',
+    'locations_map_mjb',
     {
       resultcount: {
         type: BIGINT,
@@ -14,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       station_id: {
         type: TEXT,
+      },
+      location_ndx: {
+        type: INTEGER,
+      },
+      ndx: {
+        type: INTEGER,
         primaryKey: true,
       },
       station_name: {

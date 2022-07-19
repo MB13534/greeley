@@ -1,38 +1,36 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components/macro";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import {
-  Box,
-  MenuItem,
-  Paper,
-  TextField as MuiTextField,
-  Typography,
-} from "@material-ui/core";
+import { MenuItem, Paper, TextField as MuiTextField } from "@material-ui/core";
 
 import Map from "./map";
-import WellStylesControl from "./controls/wellStylesControl";
 import ZoomInfo from "./controls/zoomInfo";
-import Search from "./filters/search";
-import FilterControl from "./filters/filterControl";
-import Filter from "./filters/filter";
-
 import { useMap } from "./hooks/useMap";
 import useFilters from "./hooks/useFilters";
-import useLayerStyles from "./hooks/useLayerStyles";
+
 import { INIT_MAP_CONFIG, WELLS_SEARCH_OPTIONS } from "./constants";
 
 import DisclaimerDialog from "./components/DisclaimerDialog";
 import MeasurementsPopup from "../../components/map/components/MeasurementsPopup";
 import MainControl from "./controls/mainControl/";
-import CommaSeparatedWellsSearch from "./filters/commaSeparatedWellsSearch";
 
 import PrintReportDialog from "./components/PrintReportDialog";
 import { useReactToPrint } from "react-to-print";
 import PrintMapFormat from "./components/PrintMapFormat";
 import SplitButton from "../../components/SplitButton";
 import MeasurementsControl from "./controls/MeasurementsControl";
+import GraphModeToggle from "./controls/graphModeToggle";
 
-const FiltersBar = styled(Paper)`
+import FiltersBar from "./components/FiltersBar";
+import FiltersBarGraphMode from "./components/FiltersBarGraphMode";
+import GraphModeControl from "./controls/graphModeControl";
+import Search from "./filters/search";
+import CommaSeparatedWellsSearch from "./filters/commaSeparatedWellsSearch";
+import useGraphMode from "./hooks/useGraphMode";
+import DataViz from "./components/DataViz";
+import DataVizControl from "./controls/dataVizControl";
+
+const FiltersBarRoot = styled(Paper)`
   align-items: center;
   border-bottom: 1px solid #ddd;
   display: flex;
@@ -47,13 +45,6 @@ const FiltersSection = styled.div`
   gap: ${({ theme }) => theme.spacing(2)}px;
 `;
 
-const FiltersSectionRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: ${({ theme }) => theme.spacing(2)}px;
-  flex-grow: 100;
-`;
-
 const FiltersContainer = styled.div`
   display: flex;
   align-items: center;
@@ -61,22 +52,18 @@ const FiltersContainer = styled.div`
   flex: 1 1 0;
 `;
 
+const FiltersSectionRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: ${({ theme }) => theme.spacing(2)}px;
+  flex-grow: 100;
+`;
+
 const TextField = styled(MuiTextField)`
   width: 125px;
   min-width: 125px;
   display: flex;
 `;
-
-const getMoreFiltersCount = (filterValues) => {
-  const keys = [
-    "moreThanA",
-    "moreThanB",
-    "moreThanC",
-    "dataRecentA",
-    "dataRecentB",
-  ];
-  return keys.filter((key) => filterValues[key].value).length;
-};
 
 const PublicMap = () => {
   const mapContainer = useRef(null);
@@ -105,6 +92,10 @@ const PublicMap = () => {
     lineRef,
     measurementsContainerRef,
     eventsRegistered,
+    lastLocationIdClicked,
+    setLastLocationIdClicked,
+    dataVizVisible,
+    setDataVizVisible,
   } = useMap(mapContainer, INIT_MAP_CONFIG);
   const {
     filterValues,
@@ -112,12 +103,34 @@ const PublicMap = () => {
     handleSelectAll,
     handleSelectNone,
   } = useFilters({ onFilterChange: updateLayerFilters });
-  const { activeStyle, handleActiveStyle, styleOptions } = useLayerStyles({
-    onLayerStyleChange: updateLayerStyles,
+
+  const {
+    filterValuesGraphMode,
+    periodOfRecords,
+    analysisTypes,
+    parameterGroups,
+    parameters,
+    handleFilterValuesGraphMode,
+    onSelectAllParameters,
+    onSelectNoneParameters,
+    graphModeVisible,
+    handleGraphModeClick,
+    hasGraphDataLoaded,
+    analyticsResults,
+    timeSeriesResults,
+    isTimeSeriesResultsLoading,
+    getHexColorForScore,
+    isAnalyticsTableDataLoading,
+  } = useGraphMode({
+    map,
+    updateLayerFilters,
+    updateLayerStyles,
+    filterValues,
+    layers,
+    setDataVizVisible,
+    lastLocationIdClicked,
+    setLastLocationIdClicked,
   });
-  const handleSearchSelect = (result) => {
-    map?.flyTo({ center: result?.location_geometry?.coordinates, zoom: 16 });
-  };
 
   const printRef = useRef();
   const [printReportDialogOpen, setPrintReportDialogOpen] = useState(false);
@@ -145,10 +158,19 @@ const PublicMap = () => {
     }
   };
 
+  const handleSearchSelect = (result) => {
+    map?.flyTo({ center: result?.location_geometry?.coordinates, zoom: 16 });
+  };
+
   return (
     <>
       {process.env.NODE_ENV !== "development" && <DisclaimerDialog />}
-      <FiltersBar>
+
+      {process.env.NODE_ENV === "development" && (
+        <ZoomInfo zoomLevel={zoomLevel} />
+      )}
+
+      <FiltersBarRoot>
         <FiltersContainer>
           <TextField
             variant="outlined"
@@ -178,103 +200,22 @@ const PublicMap = () => {
             </FiltersSectionRow>
           )}
         </FiltersContainer>
-
-        {filterValues?.search?.value === "attributes_search" && (
-          <FiltersSection>
-            <FiltersContainer>
-              <FilterControl
-                appliedCount={filterValues?.reach?.value?.length}
-                label="Reach"
-              >
-                <Filter
-                  label="Reach"
-                  name="reach"
-                  onChange={handleFilterValues}
-                  onSelectAll={handleSelectAll}
-                  onSelectNone={handleSelectNone}
-                  options={filterValues?.reach?.options}
-                  type={filterValues?.reach?.type}
-                  value={filterValues?.reach?.value}
-                />
-              </FilterControl>
-              <FilterControl
-                appliedCount={filterValues?.organizations?.value?.length}
-                label="Organizations"
-              >
-                <Filter
-                  label="Organizations"
-                  name="organizations"
-                  onChange={handleFilterValues}
-                  onSelectAll={handleSelectAll}
-                  onSelectNone={handleSelectNone}
-                  options={filterValues?.organizations?.options}
-                  type={filterValues?.organizations?.type}
-                  value={filterValues?.organizations?.value}
-                />
-              </FilterControl>
-              <FilterControl
-                appliedCount={getMoreFiltersCount(filterValues)}
-                label="More Filters"
-              >
-                <Box display="flex" flexDirection="column">
-                  <Filter
-                    label="More than 1 Result"
-                    name="moreThanA"
-                    onChange={handleFilterValues}
-                    type="boolean"
-                    value={filterValues?.moreThanA?.value}
-                  />
-                  <Filter
-                    label="More than 3 Results"
-                    name="moreThanB"
-                    onChange={handleFilterValues}
-                    type="boolean"
-                    value={filterValues?.moreThanB?.value}
-                  />
-                  <Filter
-                    label="More than 10 Results"
-                    name="moreThanC"
-                    onChange={handleFilterValues}
-                    type="boolean"
-                    value={filterValues?.moreThanC?.value}
-                  />
-                  <Filter
-                    label="Collected within Last 10 Years"
-                    name="dataRecentA"
-                    onChange={handleFilterValues}
-                    type="boolean"
-                    value={filterValues?.dataRecentA?.value}
-                  />
-                  <Filter
-                    label="Collected within Last 5 Years"
-                    name="dataRecentB"
-                    onChange={handleFilterValues}
-                    type="boolean"
-                    value={filterValues?.dataRecentB?.value}
-                  />
-                </Box>
-              </FilterControl>
-            </FiltersContainer>
-          </FiltersSection>
+        {graphModeVisible ? (
+          <FiltersBarGraphMode
+            filterValues={filterValuesGraphMode}
+            periodOfRecords={periodOfRecords}
+            analysisTypes={analysisTypes}
+            handleFilterValues={handleFilterValuesGraphMode}
+          />
+        ) : (
+          <FiltersBar
+            filterValues={filterValues}
+            handleFilterValues={handleFilterValues}
+            handleSelectAll={handleSelectAll}
+            handleSelectNone={handleSelectNone}
+            updateLayerStyles={updateLayerStyles}
+          />
         )}
-
-        <FiltersSection>
-          <FiltersContainer>
-            <FilterControl label={`Color wells by ${activeStyle.name}`}>
-              <Typography variant="subtitle1" gutterBottom>
-                Color wells by
-              </Typography>
-              <WellStylesControl
-                label="Color wells by"
-                name="wellStyles"
-                onChange={handleActiveStyle}
-                options={styleOptions}
-                value={activeStyle.id}
-              />
-            </FilterControl>
-          </FiltersContainer>
-        </FiltersSection>
-
         <FiltersSection>
           <FiltersContainer>
             <>
@@ -292,7 +233,8 @@ const PublicMap = () => {
             </>
           </FiltersContainer>
         </FiltersSection>
-      </FiltersBar>
+      </FiltersBarRoot>
+
       <Map ref={mapContainer}>
         <MeasurementsPopup
           measurementsContainerRef={measurementsContainerRef}
@@ -303,12 +245,16 @@ const PublicMap = () => {
           onHide={() => setMeasurementsVisible(false)}
           onClear={handleClearMeasurements}
         />
-        {/*<AddressSearchControl*/}
-        {/*  onSelect={(coordinates) =>*/}
-        {/*    map?.flyTo({ center: coordinates, zoom: 16 })*/}
-        {/*  }*/}
-        {/*/>*/}
-        {eventsRegistered && (
+        {eventsRegistered && graphModeVisible ? (
+          <GraphModeControl
+            filterValues={filterValuesGraphMode}
+            handleFilterValues={handleFilterValuesGraphMode}
+            parameterGroups={parameterGroups}
+            parameters={parameters}
+            onSelectAllParameters={onSelectAllParameters}
+            onSelectNoneParameters={onSelectNoneParameters}
+          />
+        ) : (
           <MainControl
             activeBasemap={activeBasemap}
             basemaps={basemaps}
@@ -324,8 +270,38 @@ const PublicMap = () => {
             value={filterValues?.search?.value}
           />
         )}
-        {process.env.NODE_ENV === "development" && (
-          <ZoomInfo zoomLevel={zoomLevel} />
+        {graphModeVisible && (
+          <DataViz
+            open={dataVizVisible}
+            onClose={() => setDataVizVisible(false)}
+            analyticsResults={analyticsResults}
+            timeSeriesResults={timeSeriesResults}
+            filterValues={filterValuesGraphMode}
+            isTimeSeriesResultsLoading={isTimeSeriesResultsLoading}
+            getHexColorForScore={getHexColorForScore}
+            isAnalyticsTableDataLoading={isAnalyticsTableDataLoading}
+          />
+        )}
+
+        {eventsRegistered && hasGraphDataLoaded && (
+          <GraphModeToggle
+            open={graphModeVisible}
+            handleClick={handleGraphModeClick}
+          />
+        )}
+
+        {graphModeVisible && (
+          <>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: "<style>.mapboxgl-popup { display: none; }</style>",
+              }}
+            />
+            <DataVizControl
+              open={dataVizVisible}
+              handleClick={() => setDataVizVisible(!dataVizVisible)}
+            />
+          </>
         )}
 
         {!measurementsVisible && (
