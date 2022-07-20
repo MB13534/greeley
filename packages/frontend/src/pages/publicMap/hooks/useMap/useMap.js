@@ -417,9 +417,9 @@ const useMap = (ref, mapConfig) => {
           }
         }
       });
-      map.setFilter("spwqat-locations-circle", mapFilterExpression);
-      map.setFilter("spwqat-locations-symbol", mapFilterExpression);
-      mapLogger.log("Filters updated on the spwqat-locations-circle layer");
+      map.setFilter("greeley-locations-circle", mapFilterExpression);
+      map.setFilter("greeley-locations-symbol", mapFilterExpression);
+      mapLogger.log("Filters updated on the greeley-locations-circle layer");
     }
   };
 
@@ -449,7 +449,7 @@ const useMap = (ref, mapConfig) => {
         });
       });
       mapLogger.log(
-        "Paint styles updated on the spwqat-locations-circle layer"
+        "Paint styles updated on the greeley-locations-circle layer"
       );
     }
   };

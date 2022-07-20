@@ -190,9 +190,9 @@ const VirtualBore = ({
                 <Grid container justify={"space-between"} alignItems={"center"}>
                   <Grid item xs={3} style={{ textAlign: "center" }}>
                     <img
-                      src="/static/img/spwqat-logo-square.png"
+                      src="/static/img/greeley-logo-square.jpg"
                       width="150px"
-                      alt={"Denver Metro Water Quality Assessment Tool"}
+                      alt="Greeley Water Quality Dashboard"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -332,9 +332,8 @@ const VirtualBore = ({
                 this virtual bore represent only the approximate relative depths
                 and thicknesses based on geological interpretation and
                 extrapolation of available well data. Additional data may modify
-                one or more of these formation surfaces. The South Platte Urban
-                Waters Partnership and The Water Quality Assessment Tool Working
-                Group expressly disclaims any and all liability in connection
+                one or more of these formation surfaces. The city of Greeley
+                expressly disclaims any and all liability in connection
                 herewith.
               </Typography>
             </CardContent>

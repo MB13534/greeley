@@ -124,7 +124,6 @@ const Typography = styled(MuiTypography)(spacing);
 
 const CustomizedDot = (props) => {
   const { cx, cy, payload } = props;
-
   return (
     <circle
       cx={cx}
@@ -335,7 +334,6 @@ const DataViz = ({
                             `Date: ${dateFormatter(unixTime, "MM-DD-YYYY")}`
                           }
                         />
-
                         <ReferenceArea
                           y1={0}
                           fill={
@@ -402,9 +400,7 @@ const DataViz = ({
                           }
                           fillOpacity={1}
                         />
-
                         <CartesianGrid strokeDasharray="1 6" stroke="white" />
-
                         <ReferenceLine
                           y={formatStatistic(row)}
                           stroke="white"
@@ -421,12 +417,15 @@ const DataViz = ({
                             stroke="white"
                           />
                         </ReferenceLine>
-                        {/* this line is just responsible for adding info to the tooltip without having to create a custom tooltip */}
-                        <Line
-                          dataKey="organization"
-                          stroke="black"
-                          name="Organization"
-                        />
+                        {/*this line is just responsible for adding info to the*/}
+                        {/*tooltip without having to create a custom tooltip*/}
+                        {/*//TODO mjb organization glitches the graph for some*/}
+                        {/*reason*/}
+                        {/*<Line*/}
+                        {/*  dataKey="organization"*/}
+                        {/*  stroke="black"*/}
+                        {/*  name="Organization"*/}
+                        {/*/>*/}
                         <Line
                           type="monotone"
                           dataKey="result"
@@ -436,7 +435,6 @@ const DataViz = ({
                           isAnimationActive={false}
                           dot={<CustomizedDot />}
                         />
-
                         <XAxis
                           dataKey="collect_date"
                           type="number"
@@ -457,7 +455,7 @@ const DataViz = ({
                     </ResponsiveContainer>
                   </Card>
 
-                  <Card>
+                  <Card style={{ margin: "12px" }}>
                     <ResponsiveContainer height={dataVizHeight.chart}>
                       <BarChart
                         // barGap={10}
@@ -672,7 +670,7 @@ const DataViz = ({
                             Period of Record
                           </TableCell>
                           <TableCell style={{ fontWeight: 600 }} align="center">
-                            Organizations
+                            Organization
                           </TableCell>
                           <TableCell style={{ fontWeight: 600 }} align="center">
                             Visualizations

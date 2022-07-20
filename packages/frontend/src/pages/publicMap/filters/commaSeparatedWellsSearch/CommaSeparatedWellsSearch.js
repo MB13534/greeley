@@ -118,8 +118,8 @@ const CommaSeparatedWellsSearch = ({ map }) => {
     const wellsArray = value.replaceAll(" ", "").toUpperCase().split(",");
     const uniqueWellsArray = [...new Set(wellsArray)];
 
-    const allWells = map.querySourceFeatures("spwqat-locations", {
-      sourceLayer: "spwqat-locations",
+    const allWells = map.querySourceFeatures("greeley-locations", {
+      sourceLayer: "greeley-locations",
     });
 
     const filteredWells = allWells.filter((well) => {

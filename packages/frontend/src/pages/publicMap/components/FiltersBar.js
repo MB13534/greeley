@@ -47,18 +47,18 @@ const FiltersBar = ({
         <FiltersSection>
           <FiltersContainer>
             <FilterControl
-              appliedCount={filterValues?.reach?.value?.length}
-              label="Reach"
+              appliedCount={filterValues?.locationTypes?.value?.length}
+              label="Location Types"
             >
               <Filter
-                label="Reach"
-                name="reach"
+                label="Location Types"
+                name="locationTypes"
                 onChange={handleFilterValues}
                 onSelectAll={handleSelectAll}
                 onSelectNone={handleSelectNone}
-                options={filterValues?.reach?.options}
-                type={filterValues?.reach?.type}
-                value={filterValues?.reach?.value}
+                options={filterValues?.locationTypes?.options}
+                type={filterValues?.locationTypes?.type}
+                value={filterValues?.locationTypes?.value}
               />
             </FilterControl>
             <FilterControl

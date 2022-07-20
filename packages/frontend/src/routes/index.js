@@ -13,8 +13,6 @@ import {
   Monitor,
   Users,
   Map as MapIcon,
-  Book,
-  Share2,
 } from "react-feather";
 
 import Blank from "../pages/pages/Blank";
@@ -25,23 +23,6 @@ import { CrudProvider } from "../CrudProvider";
 // TODO MAYBE LAZY IMPORT
 import PublicMap from "../pages/publicMap";
 import Default from "../pages/dashboards/Default";
-import AdminGuard from "../components/AdminGuard";
-import AdminVisibilityFilter from "../components/AdminVisibilityFilter";
-import ListWqatActivityTypes from "../pages/dataManagement/ListWqatActivityTypes";
-import ListWqatParameters from "../pages/dataManagement/ListWqatParameters";
-import ListWqatOrganizations from "../pages/dataManagement/ListWqatOrganizations";
-import ListWqatMediaTypes from "../pages/dataManagement/ListWqatMediaTypes";
-import ListWqatLocations from "../pages/dataManagement/ListWqatLocations";
-import ListWqatLocationTypes from "../pages/dataManagement/ListWqatLocationTypes";
-import WhatIsWaterQuality from "../pages/storyLines/waterQuality/whatIsWaterQuality/WhatIsWaterQuality";
-import EColi from "../pages/storyLines/waterQuality/eColi/EColi";
-import Nutrients from "../pages/storyLines/waterQuality/nutrients/Nutrients";
-import ContaminantsOfEmergingConcern from "../pages/storyLines/waterQuality/contaminantsOfEmergingConcern/ContaminantsOfEmergingConcern";
-import TotalDissolvedSolids from "../pages/storyLines/waterQuality/totalDissolvedSolids/TotalDissolvedSolids";
-import TotalSuspendedSolids from "../pages/storyLines/waterQuality/totalSuspendedSolids/TotalSuspendedSolids";
-import ParameterGroupsToParameters from "../pages/dataManagement/associations";
-import WaterQualityStorylineHome from "../pages/storyLines/waterQuality/WaterQualityStorylineHome";
-import MetalsAndOtherTraceElements from "../pages/storyLines/waterQuality/metalsAndOtherTraceElements/MetalsAndOtherTraceElements";
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
@@ -129,73 +110,6 @@ const reportsRoutes = {
   component: Blank,
 };
 
-const dataScrubbingRoutes = {
-  header: "Data Management",
-  id: "Data Scrubbing",
-  icon: <Database />,
-  children: [
-    {
-      path: "/data-management/activity-types",
-      name: "Activity Types",
-      component: ListWqatActivityTypes,
-      guard: AdminGuard,
-    },
-    {
-      path: "/data-management/location-types",
-      name: "Location Types",
-      component: ListWqatLocationTypes,
-      guard: AdminGuard,
-    },
-    {
-      path: "/data-management/locations",
-      name: "Locations",
-      component: ListWqatLocations,
-      guard: AdminGuard,
-    },
-    {
-      path: "/data-management/media-types",
-      name: "Media Types",
-      component: ListWqatMediaTypes,
-      guard: AdminGuard,
-    },
-    {
-      path: "/data-management/organizations",
-      name: "Organizations",
-      component: ListWqatOrganizations,
-      guard: AdminGuard,
-    },
-    {
-      path: "/data-management/parameters",
-      name: "Parameters",
-      component: ListWqatParameters,
-      guard: AdminGuard,
-    },
-    // {
-    //   path: "/data-management/waterbodies",
-    //   name: "Water Bodies",
-    //   component: ListWqatWaterbodies,
-    //   guard: AdminGuard,
-    // },
-  ],
-  visibilityFilter: AdminVisibilityFilter,
-};
-
-const associationsRoutes = {
-  id: "Associations",
-  icon: <Share2 />,
-  children: [
-    {
-      path: "/data-management/parameter-groups-to-parameters",
-      name: "Parameter Groups to Parameters",
-      component: ParameterGroupsToParameters,
-      guard: AdminGuard,
-      visibilityFilter: AdminVisibilityFilter,
-    },
-  ],
-  guard: AdminGuard,
-  visibilityFilter: AdminVisibilityFilter,
-};
-
 const accountRoutes = {
   id: "Account",
   path: "/account",
@@ -229,18 +143,9 @@ const landingRoutes = {
   children: null,
 };
 
-const storylineHomeRoute = {
-  id: "Storylines",
-  path: "/storylines/water-quality",
-  header: "Storylines",
-  icon: <Book />,
-  component: WaterQualityStorylineHome,
-  children: null,
-};
-
 const mainRoutes = {
   header: "Dashboards",
-  id: "Water Quality Assessment Tool",
+  id: "Greeley Water Quality Dashboard",
   path: "/dashboard",
   icon: <Home />,
   component: Default,
@@ -248,65 +153,12 @@ const mainRoutes = {
   containsHome: true,
 };
 
-const storylinesRoutes = {
-  header: "Storylines",
-  id: "Water Quality",
-  icon: <Book />,
-  open: true,
-  children: [
-    // {
-    //   path: "/storylines/water-quality",
-    //   name: "Water Quality Home",
-    //   component: WaterQualityStorylineHome,
-    // },
-    {
-      path: "/storylines/water-quality/what-is-water-quality",
-      name: "What is Water Quality?",
-      component: WhatIsWaterQuality,
-    },
-    {
-      path: "/storylines/water-quality/e-coli",
-      name: "E. coli",
-      component: EColi,
-    },
-    {
-      path: "/storylines/water-quality/nutrients",
-      name: "Nutrients",
-      component: Nutrients,
-    },
-    {
-      path: "/storylines/water-quality/contaminants-of-emerging-concern",
-      name: "Contaminants of Emerging Concern",
-      component: ContaminantsOfEmergingConcern,
-    },
-    {
-      path: "/storylines/water-quality/total-dissolved-solids",
-      name: "Total Dissolved Solids",
-      component: TotalDissolvedSolids,
-    },
-    {
-      path: "/storylines/water-quality/total-suspended-solids",
-      name: "Total Suspended Solids",
-      component: TotalSuspendedSolids,
-    },
-    {
-      path: "/storylines/water-quality/metals-and-other-trace-elements",
-      name: "Metals and Other Trace Elements",
-      component: MetalsAndOtherTraceElements,
-    },
-  ],
-};
-
 // Routes using the Dashboard layout
 export const dashboardLayoutRoutes = [
   mainRoutes,
-  dataScrubbingRoutes,
-  associationsRoutes,
   dataAccessRoutes,
   reportsRoutes,
   accountRoutes,
-  storylinesRoutes,
-  storylineHomeRoute,
 ];
 
 export const dashboardMaxContentLayoutRoutes = [
@@ -328,10 +180,7 @@ export const fullscreenMapRoutes = [];
 export const sidebarRoutes = [
   mainRoutes,
   ...crudSidebarMenu,
-  dataScrubbingRoutes,
-  associationsRoutes,
   publicMapRoutes,
   dataAccessRoutes,
   reportsRoutes,
-  storylinesRoutes,
 ];

@@ -43,7 +43,7 @@ function JoinUs() {
               Access the Platform
             </Typography>
             <Subtitle variant="h5" gutterBottom>
-              Denver Metro Water Quality Assessment Tool Dashboard:
+              Greeley Water Quality Dashboard:
             </Subtitle>
             <Spacer mb={4} />
 

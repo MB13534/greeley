@@ -20,8 +20,8 @@ const useGraphMode = ({
   const initFilterValues = {
     periodOfRecord: "full",
     analysis: "benchmark_scale_median",
-    parameterGroups: ["Pathogens"],
-    parameters: ["Ecoli"],
+    parameterGroups: ["Bacteria", "Metals", "Nutrient", "Other", "Physical"],
+    parameters: ["E. Coli"],
   };
   const [filterValuesGraphMode, setFilterValuesGraphMode] =
     useState(initFilterValues);
@@ -98,7 +98,7 @@ const useGraphMode = ({
     if (!graphModeVisible) {
       layers.forEach((layer) => {
         if (
-          ["spwqat-locations-circle", "spwqat-locations-symbol"].includes(
+          ["greeley-locations-circle", "greeley-locations-symbol"].includes(
             layer.id
           )
         ) {
@@ -118,11 +118,11 @@ const useGraphMode = ({
 
       setDataVizVisible(false);
 
-      map.setFilter("spwqat-locations-circle", null);
-      map.setFilter("spwqat-locations-symbol", null);
+      map.setFilter("greeley-locations-circle", null);
+      map.setFilter("greeley-locations-symbol", null);
     } else {
-      map.setFilter("spwqat-locations-circle", null);
-      map.setFilter("spwqat-locations-symbol", null);
+      map.setFilter("greeley-locations-circle", null);
+      map.setFilter("greeley-locations-symbol", null);
 
       updateLayerFilters(filterValues);
       updateLayerStyles(styleValues.default);
@@ -269,7 +269,7 @@ const useGraphMode = ({
   //   });
   //
   //   let features = map.queryRenderedFeatures({
-  //     layers: ["spwqat-locations-circle"],
+  //     layers: ["greeley-locations-circle"],
   //     filter: [
   //       "match",
   //       ["get", "ndx"],
@@ -297,7 +297,7 @@ const useGraphMode = ({
   // };
 
   const recolorPointsForLayers = (data = null) => {
-    const layerIds = ["spwqat-locations-circle"];
+    const layerIds = ["greeley-locations-circle"];
 
     // if (data === null) {
     //   data = monitoringPointData;
@@ -479,7 +479,7 @@ const useGraphMode = ({
       async function send() {
         try {
           const { data: line } = await axios.post(
-            `${process.env.REACT_APP_ENDPOINT}/api/ts-daily-for-map-display/${location_index}`,
+            `${process.env.REACT_APP_ENDPOINT}/api/ts-daily-table-for-map-display/${location_index}`,
             {
               parameters: cleanParams(filterValuesGraphMode.parameters).map(
                 (x) => getParameterIndexByName(x)
@@ -490,7 +490,7 @@ const useGraphMode = ({
           const groupedLineArray = groupByValue(line, "parameter");
 
           const { data: bar } = await axios.post(
-            `${process.env.REACT_APP_ENDPOINT}/api/ts-annual-for-map-display/${location_index}`,
+            `${process.env.REACT_APP_ENDPOINT}/api/ts-annual-table-for-map-display/${location_index}`,
             {
               parameters: cleanParams(filterValuesGraphMode.parameters).map(
                 (x) => getParameterIndexByName(x)

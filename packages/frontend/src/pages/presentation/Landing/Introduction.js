@@ -48,7 +48,7 @@ const BrandLogo = styled.img`
   max-height: 100%;
   max-width: 100%;
   margin-bottom: 20px;
-  width: 720px;
+  width: 332px;
 `;
 
 function Introduction() {
@@ -65,8 +65,8 @@ function Introduction() {
               {/*  rel="noreferrer noopener"*/}
               {/*>*/}
               <BrandLogo
-                src="/static/img/spwqat-logo-full.png"
-                alt="SPWQAT Logo"
+                src="/static/img/greeley-logo-full.png"
+                alt="Greeley Logo"
               />
               {/*</Link>*/}
               <Grid container justify="center" spacing={4}>

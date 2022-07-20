@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const {TEXT, GEOMETRY, BOOLEAN, DOUBLE, REAL, BIGINT, DATE, INTEGER} =
     DataTypes;
   const MapLocationsAll = sequelize.define(
-    'locations_map_mjb',
+    'locations_map',
     {
       resultcount: {
         type: BIGINT,
@@ -76,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      schema: 'ui',
+      schema: 'ui_endpoints',
       timestamps: false,
       paranoid: true,
       freezeTableName: true,

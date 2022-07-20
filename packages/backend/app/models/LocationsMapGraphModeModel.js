@@ -85,7 +85,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      schema: 'ui',
+      schema: 'ui_endpoints',
       timestamps: false,
       paranoid: true,
       freezeTableName: true,

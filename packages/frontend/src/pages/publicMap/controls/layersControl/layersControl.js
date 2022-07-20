@@ -153,7 +153,7 @@ const LayerLegend = ({ item, open, onOpacityChange }) => {
  */
 const LayersControl = ({ items, onLayerChange, onOpacityChange }) => {
   const [expandedItems, setExpandedItems] = useState([
-    "SPWQAT Locations",
+    "Greeley Locations",
     "Search Circle Radius",
   ]);
 
@@ -171,8 +171,8 @@ const LayersControl = ({ items, onLayerChange, onOpacityChange }) => {
           .filter(
             (i) =>
               ![
-                "spwqat-locations-graph-mode-circle",
-                "spwqat-locations-graph-mode-symbol",
+                "greeley-locations-graph-mode-circle",
+                "greeley-locations-graph-mode-symbol",
               ].includes(i.id)
           )
           .map((item) => {

@@ -26,21 +26,21 @@ export const BASEMAP_STYLES = [
   },
 ];
 
-export const DEFAULT_MAP_CENTER = [-104.98518, 39.73871];
+export const DEFAULT_MAP_CENTER = [-105.13619, 40.41093];
 
 export const INIT_MAP_CONFIG = {
   style: BASEMAP_STYLES[0].url,
   center: DEFAULT_MAP_CENTER,
-  zoom: 7.7,
+  zoom: 9,
   preserveDrawingBuffer: true,
 };
 
-export const WELLS_LAYER_ID = "spwqat-locations-circle";
-export const WELLS_LABELS_LAYER_ID = "spwqat-locations-symbol";
+export const WELLS_LAYER_ID = "greeley-locations-circle";
+export const WELLS_LABELS_LAYER_ID = "greeley-locations-symbol";
 export const INIT_FILTER_VALUES = {
-  reach: {
+  locationTypes: {
     layerId: WELLS_LAYER_ID,
-    layerFieldName: "reach",
+    layerFieldName: "locationtype",
     options: [],
     type: "multi-select",
     value: [],

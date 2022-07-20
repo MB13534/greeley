@@ -40,20 +40,20 @@ const Popup = ({ features, layers }) => {
     return array.filter((el) => {
       if (
         existingFeatureKeys[
-          el[comparatorProperty1] + el.layer[comparatorProperty2]
+          el[comparatorProperty1] + el?.properties[comparatorProperty2]
         ]
       ) {
         return false;
       } else {
         existingFeatureKeys[
-          el[comparatorProperty1] + el.layer[comparatorProperty2]
+          el[comparatorProperty1] + el?.properties[comparatorProperty2]
         ] = true;
         return true;
       }
     });
   }
 
-  const uniqueFeatures = getUniqueFeatures(features, "id", "id");
+  const uniqueFeatures = getUniqueFeatures(features, "id", "ndx");
 
   const [page, setPage] = useState(1);
   const [feature, setFeature] = useState(uniqueFeatures?.[0]);
@@ -77,7 +77,7 @@ const Popup = ({ features, layers }) => {
   }, [feature, layers]);
 
   let popupData;
-  if (feature?.layer?.id === "spwqat-locations-circle") {
+  if (feature?.layer?.id === "greeley-locations-circle") {
     popupData = [
       [
         "Period of Record",
@@ -113,12 +113,12 @@ const Popup = ({ features, layers }) => {
   return (
     <>
       <h2 style={{ marginBottom: 0 }}>
-        {feature?.layer?.id === "spwqat-locations-circle"
+        {feature?.layer?.id === "greeley-locations-circle"
           ? feature?.properties.station_name
           : titleize(feature?.layer?.id)}
       </h2>
       <h3 style={{ marginTop: 0 }}>
-        {feature?.layer?.id === "spwqat-locations-circle" &&
+        {feature?.layer?.id === "greeley-locations-circle" &&
           feature?.properties.station_id}
       </h3>
       <PopupWrap>

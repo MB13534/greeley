@@ -29,13 +29,13 @@ const PrintMapFormat = forwardRef(({ title, mapImg, map }, ref) => {
         <Grid container justify={"space-between"} alignItems={"center"}>
           <Grid item xs={3} style={{ textAlign: "left" }}>
             <img
-              src="/static/img/spwqat-logo-full.png"
-              width="200px"
-              alt={"Denter Metro WQAT"}
+              src={"/static/img/greeley-logo-full.png"}
+              width="150px"
+              alt={"Greeley Water Quality Dashboard"}
             />
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="h5">SPWQAT Map</Typography>
+            <Typography variant="h5">Greeley Map</Typography>
             <Typography variant="h6">{title}</Typography>
             <Typography variant="subtitle2">
               Created: {moment().format("MMMM Do YYYY, h:mma")}
@@ -78,7 +78,7 @@ const PrintMapFormat = forwardRef(({ title, mapImg, map }, ref) => {
         <Grid item xs={2} style={{ textAlign: "right" }}>
           <div style={{ textAlign: "right" }}>
             <img
-              src="/static/img/lrewater-logo-full.png"
+              src={"/static/img/lrewater-logo-full.png"}
               width="75px"
               alt={"LRE Water"}
             />

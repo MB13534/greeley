@@ -1,7 +1,7 @@
 const express = require('express');
 const {checkAccessToken, checkRoles} = require('../../core/middleware/auth.js');
 const {
-  locations_map_mjb,
+  locations_map,
   /*MJB hide aggregated system control per client (probably temporary)*/
   // list_aggregate_systems,
 } = require('../../core/models');
@@ -44,30 +44,22 @@ const cleanLayer = (layer) => {
 };
 
 // TODO move to DB and key off of index instead
-const reachData = [
-  'South Platte Headwaters',
-  'Middle South Platte-Cherry Creek',
-  'Upper South Platte',
-  'Clear Creek',
+const locationTypesData = [
+  'Canal/Ditch',
+  'Facility Municipal Sewage (POTW)',
+  'Facility Privately Owned Non-Industrial',
+  'Reservoir/Lake',
+  'River/Stream',
 ];
 
 // TODO move to DB and key off of index instead
 const organizationsData = [
-  'DRMS',
-  'Denver Department of Environmental Health',
-  'South Adams County Water and Sanitation District (Colorado)',
-  'River Watch',
-  'SUNENCO',
-  'CCWF',
-  'Metro Waste Water Reclamation District (Colorado)',
-  'Standley Lake Watershed Group (Volunteer)',
-  'Littleton/Englewood Wastewater Treatment Plant (Colorado)',
-  'EPA National Aquatic Resource Survey Data',
-  'CWSD',
-  'City of Thornton (Colorado)',
-  'Groundwater Colorado',
-  'City of Aurora (Colorado)',
-  'Colorado Dept. of Public Health & Environment',
+  '21COL001_WQX',
+  'CORIVWCH_WQX',
+  'Fort Collins (via BTWF)',
+  'Loveland WQ Lab (via BTWF)',
+  'Northern Water (via BTWF)',
+  'USGS (via BTWF)',
 ];
 
 /**
@@ -105,9 +97,9 @@ const toGeoJSON = ({data, geometryField}) => {
  */
 router.get('/sources', async (req, res, next) => {
   try {
-    const wellsData = await locations_map_mjb.findAll();
+    const wellsData = await locations_map.findAll();
     const finalSources = sources.map((source) => {
-      if (source.id === 'spwqat-locations') {
+      if (source.id === 'greeley-locations') {
         return {
           ...source,
           data: toGeoJSON({
@@ -159,7 +151,7 @@ router.get(
  */
 router.get('/wells', async (req, res, next) => {
   try {
-    const wellsData = await locations_map_mjb.findAll();
+    const wellsData = await locations_map.findAll();
     res.json(wellsData);
   } catch (err) {
     next(err);
@@ -176,14 +168,17 @@ router.get('/wells', async (req, res, next) => {
  */
 router.get('/filters', async (req, res, next) => {
   try {
-    const reach = reachData.map((use) => ({display: use, value: use}));
+    const locationTypes = locationTypesData.map((use) => ({
+      display: use,
+      value: use,
+    }));
     const organizations = organizationsData.map((use) => ({
       display: use,
       value: use,
     }));
 
     res.json({
-      reach: reach || [],
+      locationTypes: locationTypes || [],
       organizations: organizations || [],
     });
   } catch (err) {

@@ -182,10 +182,10 @@ export function RightDrawerInfo({ links }) {
           }}
         >
           <BrandIcon
-            src={`/static/img/spwqat-logo-square.png`}
+            src={`/static/img/greeley-logo-square.jpg`}
             width="40"
             height="40"
-            alt="SPWQAT Icon"
+            alt="Greeley Icon"
           />
           More Information
         </Brand>

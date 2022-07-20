@@ -2,29 +2,21 @@ import { useState } from "react";
 import { scaleOrdinal } from "d3-scale";
 import { schemePaired } from "d3-scale-chromatic";
 
-const reachValues = [
-  "South Platte Headwaters",
-  "Middle South Platte-Cherry Creek",
-  "Upper South Platte",
-  "Clear Creek",
+const locationTypesValues = [
+  "Canal/Ditch",
+  "Facility Municipal Sewage (POTW)",
+  "Facility Privately Owned Non-Industrial",
+  "Reservoir/Lake",
+  "River/Stream",
 ];
 
 const organizationsValues = [
-  "DRMS",
-  "Denver Department of Environmental Health",
-  "South Adams County Water and Sanitation District (Colorado)",
-  "River Watch",
-  "SUNENCO",
-  "CCWF",
-  "Metro Waste Water Reclamation District (Colorado)",
-  "Standley Lake Watershed Group (Volunteer)",
-  "Littleton/Englewood Wastewater Treatment Plant (Colorado)",
-  "EPA National Aquatic Resource Survey Data",
-  "CWSD",
-  "City of Thornton (Colorado)",
-  "Groundwater Colorado",
-  "City of Aurora (Colorado)",
-  "Colorado Dept. of Public Health & Environment",
+  "21COL001_WQX",
+  "CORIVWCH_WQX",
+  "Fort Collins (via BTWF)",
+  "Loveland WQ Lab (via BTWF)",
+  "Northern Water (via BTWF)",
+  "USGS (via BTWF)",
 ];
 
 const buildScale = (values) => {
@@ -36,7 +28,7 @@ const buildScale = (values) => {
   }, []);
 };
 
-const layerId = "spwqat-locations-circle";
+const layerId = "greeley-locations-circle";
 export const styleValues = {
   default: {
     id: "default",
@@ -47,19 +39,19 @@ export const styleValues = {
       "circle-color": "#1e8dd2",
     },
   },
-  reach: {
-    id: "reach",
+  locationTypes: {
+    id: "locationTypes",
     layerId,
-    layerFieldName: "reach",
-    name: "Reach",
+    layerFieldName: "locationtype",
+    name: "Location Types",
     options: [],
     type: "multi-select",
     value: [],
     paint: {
       "circle-color": [
         "match",
-        ["get", "reach"],
-        ...buildScale(reachValues),
+        ["get", "locationtype"],
+        ...buildScale(locationTypesValues),
         "#000000",
       ],
     },

@@ -329,13 +329,13 @@ const Sidebar = ({
         }}
       >
         <BrandIcon
-          src={`/static/img/spwqat-logo-square.png`}
+          src={`/static/img/greeley-logo-square.jpg`}
           width="47"
           height="47"
-          alt="SPWQAT Logo"
+          alt="Greeley Logo"
         />
         <Box ml={1} style={{ fontSize: "0.9rem", display: "flex" }}>
-          Denver Metro WQAT
+          Greeley Water Quality Dashboard
         </Box>
       </Brand>
       <Scrollbar
