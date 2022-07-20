@@ -51,7 +51,9 @@ const useGraphMode = ({
     },
   ];
   const [parameterGroups, isParameterGroupsLoading] = useFetchData(
-    "list-parameter-groups-graph-mode"
+    "list-parameter-groups-graph-mode",
+    [],
+    false
   );
 
   const [hasParametersLoaded, setHasParametersLoaded] = useState(false);
@@ -86,7 +88,11 @@ const useGraphMode = ({
     }
   );
 
-  const [benchmarkScaleColors] = useFetchData("list-benchmark-scale-colors");
+  const [benchmarkScaleColors] = useFetchData(
+    "list-benchmark-scale-colors",
+    [],
+    false
+  );
   const getHexColorForScore = (score) => {
     return lineColors[
       benchmarkScaleColors.find((x) => x.benchmark_scale === score)
