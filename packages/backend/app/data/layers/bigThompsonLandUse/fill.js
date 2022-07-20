@@ -4,7 +4,6 @@ module.exports = {
   type: 'fill',
   source: 'big-thompson-land-use',
   'source-layer': 'BigThompson_MRCL_NLCD_2019-ccjdhi',
-  drawOrder: 100,
   paint: {
     'fill-opacity': 0,
     'fill-color': [
