@@ -340,7 +340,7 @@ const DataViz = ({
                           fill={
                             row.low_is_bad
                               ? lineData[0]?.bmk_color4
-                              : lineData[0]?.bmk_color0 || "grey"
+                              : lineData[0]?.bmk_color0 || "#EEEEEE"
                           }
                           fillOpacity={1}
                         />
@@ -468,7 +468,7 @@ const DataViz = ({
                           fill={
                             row.low_is_bad
                               ? lineData[0]?.bmk_color4
-                              : lineData[0]?.bmk_color0 || "grey"
+                              : lineData[0]?.bmk_color0 || "#EEEEEE"
                           }
                           fillOpacity={1}
                         />
