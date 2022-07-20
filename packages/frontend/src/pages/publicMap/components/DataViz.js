@@ -335,31 +335,11 @@ const DataViz = ({
                           }
                         />
                         <ReferenceArea
-                          y1={0}
-                          fill={
-                            row.low_is_bad ? lineData[0]?.bmk_color4 : "blue"
-                          }
-                          fillOpacity={1}
-                        />
-                        <ReferenceArea
-                          y1={row.low_is_bad ? 0 : lineData[0]?.bmk_line1}
+                          y1={row.low_is_bad ? lineData[0]?.bmk_line4 : 0}
                           fill={
                             row.low_is_bad
                               ? lineData[0]?.bmk_color4
-                              : lineData[0]?.bmk_color1
-                          }
-                          fillOpacity={1}
-                        />
-                        <ReferenceArea
-                          y1={
-                            row.low_is_bad
-                              ? lineData[0]?.bmk_line4
-                              : lineData[0]?.bmk_line2
-                          }
-                          fill={
-                            row.low_is_bad
-                              ? lineData[0]?.bmk_color3
-                              : lineData[0]?.bmk_color2
+                              : lineData[0]?.bmk_color0
                           }
                           fillOpacity={1}
                         />
@@ -367,24 +347,11 @@ const DataViz = ({
                           y1={
                             row.low_is_bad
                               ? lineData[0]?.bmk_line3
-                              : lineData[0]?.bmk_line3
+                              : lineData[0]?.bmk_line0
                           }
                           fill={
                             row.low_is_bad
-                              ? lineData[0]?.bmk_color2
-                              : lineData[0]?.bmk_color3
-                          }
-                          fillOpacity={1}
-                        />
-                        <ReferenceArea
-                          y1={
-                            row.low_is_bad
-                              ? lineData[0]?.bmk_line2
-                              : lineData[0]?.bmk_line4
-                          }
-                          fill={
-                            row.low_is_bad
-                              ? lineData[0]?.bmk_color1
+                              ? lineData[0]?.bmk_color3
                               : lineData[0]?.bmk_color1
                           }
                           fillOpacity={1}
@@ -392,14 +359,43 @@ const DataViz = ({
                         <ReferenceArea
                           y1={
                             row.low_is_bad
-                              ? lineData[0]?.bmk_line1
-                              : lineData[0]?.bmk_line4
+                              ? lineData[0]?.bmk_line2
+                              : lineData[0]?.bmk_line1
                           }
                           fill={
-                            row.low_is_bad ? "blue" : lineData[0]?.bmk_color4
+                            row.low_is_bad
+                              ? lineData[0]?.bmk_color2
+                              : lineData[0]?.bmk_color2
                           }
                           fillOpacity={1}
                         />
+                        <ReferenceArea
+                          y1={
+                            row.low_is_bad
+                              ? lineData[0]?.bmk_line1
+                              : lineData[0]?.bmk_line2
+                          }
+                          fill={
+                            row.low_is_bad
+                              ? lineData[0]?.bmk_color1
+                              : lineData[0]?.bmk_color3
+                          }
+                          fillOpacity={1}
+                        />
+                        <ReferenceArea
+                          y1={
+                            row.low_is_bad
+                              ? lineData[0]?.bmk_line0
+                              : lineData[0]?.bmk_line3
+                          }
+                          fill={
+                            row.low_is_bad
+                              ? lineData[0]?.bmk_color0
+                              : lineData[0]?.bmk_color4
+                          }
+                          fillOpacity={1}
+                        />
+
                         <CartesianGrid strokeDasharray="1 6" stroke="white" />
                         <ReferenceLine
                           y={formatStatistic(row)}
@@ -468,31 +464,11 @@ const DataViz = ({
                         />
 
                         <ReferenceArea
-                          y1={0}
-                          fill={
-                            row.low_is_bad ? lineData[0]?.bmk_color4 : "blue"
-                          }
-                          fillOpacity={1}
-                        />
-                        <ReferenceArea
-                          y1={row.low_is_bad ? 0 : lineData[0]?.bmk_line1}
+                          y1={row.low_is_bad ? lineData[0]?.bmk_line4 : 0}
                           fill={
                             row.low_is_bad
                               ? lineData[0]?.bmk_color4
-                              : lineData[0]?.bmk_color1
-                          }
-                          fillOpacity={1}
-                        />
-                        <ReferenceArea
-                          y1={
-                            row.low_is_bad
-                              ? lineData[0]?.bmk_line4
-                              : lineData[0]?.bmk_line2
-                          }
-                          fill={
-                            row.low_is_bad
-                              ? lineData[0]?.bmk_color3
-                              : lineData[0]?.bmk_color2
+                              : lineData[0]?.bmk_color0
                           }
                           fillOpacity={1}
                         />
@@ -500,24 +476,11 @@ const DataViz = ({
                           y1={
                             row.low_is_bad
                               ? lineData[0]?.bmk_line3
-                              : lineData[0]?.bmk_line3
+                              : lineData[0]?.bmk_line0
                           }
                           fill={
                             row.low_is_bad
-                              ? lineData[0]?.bmk_color2
-                              : lineData[0]?.bmk_color3
-                          }
-                          fillOpacity={1}
-                        />
-                        <ReferenceArea
-                          y1={
-                            row.low_is_bad
-                              ? lineData[0]?.bmk_line2
-                              : lineData[0]?.bmk_line4
-                          }
-                          fill={
-                            row.low_is_bad
-                              ? lineData[0]?.bmk_color1
+                              ? lineData[0]?.bmk_color3
                               : lineData[0]?.bmk_color1
                           }
                           fillOpacity={1}
@@ -525,11 +488,39 @@ const DataViz = ({
                         <ReferenceArea
                           y1={
                             row.low_is_bad
-                              ? lineData[0]?.bmk_line1
-                              : lineData[0]?.bmk_line4
+                              ? lineData[0]?.bmk_line2
+                              : lineData[0]?.bmk_line1
                           }
                           fill={
-                            row.low_is_bad ? "blue" : lineData[0]?.bmk_color4
+                            row.low_is_bad
+                              ? lineData[0]?.bmk_color2
+                              : lineData[0]?.bmk_color2
+                          }
+                          fillOpacity={1}
+                        />
+                        <ReferenceArea
+                          y1={
+                            row.low_is_bad
+                              ? lineData[0]?.bmk_line1
+                              : lineData[0]?.bmk_line2
+                          }
+                          fill={
+                            row.low_is_bad
+                              ? lineData[0]?.bmk_color1
+                              : lineData[0]?.bmk_color3
+                          }
+                          fillOpacity={1}
+                        />
+                        <ReferenceArea
+                          y1={
+                            row.low_is_bad
+                              ? lineData[0]?.bmk_line0
+                              : lineData[0]?.bmk_line3
+                          }
+                          fill={
+                            row.low_is_bad
+                              ? lineData[0]?.bmk_color0
+                              : lineData[0]?.bmk_color4
                           }
                           fillOpacity={1}
                         />

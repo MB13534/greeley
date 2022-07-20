@@ -24,6 +24,12 @@ module.exports = (sequelize, DataTypes) => {
       nondetect: {
         type: BOOLEAN,
       },
+      bmk_line0: {
+        type: REAL,
+      },
+      bmk_color0: {
+        type: TEXT,
+      },
       bmk_line1: {
         type: REAL,
       },

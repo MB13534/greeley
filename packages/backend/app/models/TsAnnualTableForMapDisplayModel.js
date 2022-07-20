@@ -18,6 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       units: {
         type: TEXT,
       },
+      bmk_line0: {
+        type: REAL,
+      },
+      bmk_color0: {
+        type: TEXT,
+      },
       bmk_line1: {
         type: REAL,
       },
