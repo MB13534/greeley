@@ -283,7 +283,11 @@ const useMap = (ref, mapConfig) => {
       //MJB add event listener for all circle and symbol layers
       // pointer on mouseover
       const cursorPointerLayerIds = layers
-        .filter((layer) => ["circle", "symbol"].includes(layer.type))
+        .filter(
+          (layer) =>
+            ["circle", "symbol"].includes(layer.type) &&
+            !layer.lreProperties?.popup?.excludePopup
+        )
         .map((layer) => layer.id);
       cursorPointerLayerIds.forEach((layerId) => {
         map.on("mouseenter", layerId, () => {
@@ -324,7 +328,9 @@ const useMap = (ref, mapConfig) => {
           : [e.lngLat.lng, e.lngLat.lat];
 
         //MJB add check for popups so they only appear on our dynamic layers
-        const popupLayerIds = layers.map((layer) => layer.id);
+        const popupLayerIds = layers
+          .filter((layer) => !layer?.lreProperties?.popup?.excludePopup)
+          .map((layer) => layer.id);
         if (
           features.length > 0 &&
           popupLayerIds.includes(features[0].layer.id)

@@ -128,9 +128,10 @@ const CustomizedDot = (props) => {
     <circle
       cx={cx}
       cy={cy}
-      r={4}
-      stroke="white"
-      fill={payload.nondetect ? "transparent" : "white"}
+      r={5}
+      stroke="black"
+      strokeWidth={3}
+      fill={payload.nondetect ? "transparent" : "black"}
     />
   );
 };
@@ -339,7 +340,7 @@ const DataViz = ({
                           fill={
                             row.low_is_bad
                               ? lineData[0]?.bmk_color4
-                              : lineData[0]?.bmk_color0
+                              : lineData[0]?.bmk_color0 || "grey"
                           }
                           fillOpacity={1}
                         />
@@ -399,7 +400,7 @@ const DataViz = ({
                         <CartesianGrid strokeDasharray="1 6" stroke="white" />
                         <ReferenceLine
                           y={formatStatistic(row)}
-                          stroke="white"
+                          stroke="black"
                           strokeWidth={3}
                           strokeDasharray="9 9"
                         >
@@ -410,7 +411,7 @@ const DataViz = ({
                                 : "85th Percentile"
                             }: ${formatStatistic(row)} ${row.units}`}
                             position="insideBottomRight"
-                            stroke="white"
+                            stroke="black"
                           />
                         </ReferenceLine>
                         {/*this line is just responsible for adding info to the*/}
@@ -426,7 +427,6 @@ const DataViz = ({
                           type="monotone"
                           dataKey="result"
                           stroke="none"
-                          strokeWidth={2}
                           name="Value"
                           isAnimationActive={false}
                           dot={<CustomizedDot />}
@@ -468,7 +468,7 @@ const DataViz = ({
                           fill={
                             row.low_is_bad
                               ? lineData[0]?.bmk_color4
-                              : lineData[0]?.bmk_color0
+                              : lineData[0]?.bmk_color0 || "grey"
                           }
                           fillOpacity={1}
                         />
@@ -551,7 +551,7 @@ const DataViz = ({
 
                         <ReferenceLine
                           y={formatStatistic(row)}
-                          stroke="white"
+                          stroke="black"
                           strokeWidth={3}
                           strokeDasharray="9 9"
                         >
@@ -562,7 +562,7 @@ const DataViz = ({
                                 : "85th Percentile"
                             }: ${formatStatistic(row)} ${row.units}`}
                             position="insideBottomRight"
-                            stroke="white"
+                            stroke="black"
                           />
                         </ReferenceLine>
 

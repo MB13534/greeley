@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import useFetchData from "../../../../hooks/useFetchData";
-import { groupByValue, lineColors } from "../../../../utils";
+import { groupByValue } from "../../../../utils";
 import { styleValues } from "../useLayerStyles/useLayerStyles";
 
 const useGraphMode = ({
@@ -94,10 +94,10 @@ const useGraphMode = ({
     false
   );
   const getHexColorForScore = (score) => {
-    return lineColors[
+    return (
       benchmarkScaleColors.find((x) => x.benchmark_scale === score)
         .symbol_color || "black"
-    ];
+    );
   };
 
   const handleGraphModeClick = () => {

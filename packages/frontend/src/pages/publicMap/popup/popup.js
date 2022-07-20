@@ -39,21 +39,19 @@ const Popup = ({ features, layers }) => {
     //concat two ids to make a unique id
     return array.filter((el) => {
       if (
-        existingFeatureKeys[
-          el[comparatorProperty1] + el?.properties[comparatorProperty2]
-        ]
+        existingFeatureKeys[el[comparatorProperty1] + el[comparatorProperty2]]
       ) {
         return false;
       } else {
         existingFeatureKeys[
-          el[comparatorProperty1] + el?.properties[comparatorProperty2]
+          el[comparatorProperty1] + el[comparatorProperty2]
         ] = true;
         return true;
       }
     });
   }
 
-  const uniqueFeatures = getUniqueFeatures(features, "id", "ndx");
+  const uniqueFeatures = getUniqueFeatures(features, "id", "id");
 
   const [page, setPage] = useState(1);
   const [feature, setFeature] = useState(uniqueFeatures?.[0]);
@@ -109,13 +107,28 @@ const Popup = ({ features, layers }) => {
       : Object.entries(feature?.properties);
   }
 
+  const [titleField, setTitleField] = useState("");
+
+  useEffect(() => {
+    const title = layers?.find((layer) => layer?.id === feature?.layer?.id)
+      ?.lreProperties?.popup?.titleField;
+    setTitleField(
+      (title &&
+        feature?.properties[title] &&
+        `${feature?.properties[title]} (${titleize(
+          feature?.layer?.source
+        )})`) ||
+        titleize(feature?.layer?.source)
+    );
+  }, [feature, layers]);
+
   if (!popupData) return null;
   return (
     <>
       <h2 style={{ marginBottom: 0 }}>
         {feature?.layer?.id === "greeley-locations-circle"
           ? feature?.properties.station_name
-          : titleize(feature?.layer?.id)}
+          : titleField}
       </h2>
       <h3 style={{ marginTop: 0 }}>
         {feature?.layer?.id === "greeley-locations-circle" &&
