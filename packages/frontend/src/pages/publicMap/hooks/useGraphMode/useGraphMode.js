@@ -490,6 +490,7 @@ const useGraphMode = ({
               parameters: cleanParams(filterValuesGraphMode.parameters).map(
                 (x) => getParameterIndexByName(x)
               ),
+              periodOfRecord: filterValuesGraphMode.periodOfRecord,
             }
           );
 
@@ -501,6 +502,7 @@ const useGraphMode = ({
               parameters: cleanParams(filterValuesGraphMode.parameters).map(
                 (x) => getParameterIndexByName(x)
               ),
+              periodOfRecord: filterValuesGraphMode.periodOfRecord,
             }
           );
 

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const {TEXT, DOUBLE, REAL, INTEGER} = DataTypes;
+  const {TEXT, DOUBLE, REAL, INTEGER, ARRAY} = DataTypes;
   const TsAnnualTableForMapDisplay = sequelize.define(
     'ts_annual_table_for_map_display',
     {
@@ -78,6 +78,9 @@ module.exports = (sequelize, DataTypes) => {
       ndx: {
         type: INTEGER,
         primaryKey: true,
+      },
+      pors: {
+        type: ARRAY(TEXT),
       },
     },
     {

@@ -307,9 +307,10 @@ const useMap = (ref, mapConfig) => {
 
         const features = map.queryRenderedFeatures(e.point);
 
-        setLastLocationIdClicked(features[0]?.properties.ndx);
-
-        setDataVizVisible(true);
+        if (features[0]?.layer?.id === "greeley-locations-circle") {
+          setLastLocationIdClicked(features[0]?.properties.ndx);
+          setDataVizVisible(true);
+        }
 
         addBuffersToMap({
           map: map,

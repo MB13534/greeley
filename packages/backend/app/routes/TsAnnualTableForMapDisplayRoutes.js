@@ -21,6 +21,7 @@ router.post('/:ndx', (req, res, next) => {
   where.parameter_ndx = {
     [Op.in]: req.body.parameters,
   };
+  where.pors = {[Op.contains]: [req.body.periodOfRecord]};
 
   model
     .findAll({where: where})
