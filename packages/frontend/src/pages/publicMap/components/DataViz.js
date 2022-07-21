@@ -86,6 +86,12 @@ const Viz = styled.div`
   max-width: 100%;
 `;
 
+const GraphTooltip = styled.div`
+  background-color: white;
+  padding: 10px;
+  border: 1px solid rgb(204, 204, 204);
+`;
+
 const TimeseriesContainer = styled.div`
   height: calc(${({ height }) => height} - 146px);
   width: 100%;
@@ -244,6 +250,39 @@ const DataViz = ({
       });
     };
 
+    function CustomDailyTooltip({ payload, active }) {
+      if (active) {
+        const item = payload[0].payload;
+        return (
+          <GraphTooltip>
+            <Typography variant="h4">{`Site : ${item.location_id}`}</Typography>
+            <Typography variant="body2">{`Date : ${dateFormatter(
+              item.collect_date,
+              "MM-DD-YYYY"
+            )}`}</Typography>
+            <Typography variant="body2">{`Organization : ${item.organization}`}</Typography>
+            <Typography variant="body2">{`Value : ${item.result} ${item.units}`}</Typography>
+          </GraphTooltip>
+        );
+      }
+      return null;
+    }
+
+    function CustomAnnualTooltip({ payload, active }) {
+      if (active) {
+        const item = payload[0].payload;
+        return (
+          <GraphTooltip>
+            <Typography variant="h4">{`Site : ${item.location_id}`}</Typography>
+            <Typography variant="body2">{`Year : ${item.collect_year}`}</Typography>
+            <Typography variant="body2">{`Median : ${item.result_median} ${item.units}`}</Typography>
+            <Typography variant="body2">{`85th Percentile : ${item.result_pctile85} ${item.units}`}</Typography>
+          </GraphTooltip>
+        );
+      }
+      return null;
+    }
+
     return (
       typeof timeSeriesResults !== "undefined" && (
         <React.Fragment>
@@ -343,11 +382,7 @@ const DataViz = ({
                             }}
                             data={dateToInt(lineData)}
                           >
-                            <RechartsTooltip
-                              labelFormatter={(unixTime) =>
-                                `Date: ${dateFormatter(unixTime, "MM-DD-YYYY")}`
-                              }
-                            />
+                            <RechartsTooltip content={<CustomDailyTooltip />} />
                             <ReferenceArea
                               y1={row.low_is_bad ? lineData[0]?.bmk_line4 : 0}
                               fill={
@@ -499,9 +534,8 @@ const DataViz = ({
                             data={barData}
                           >
                             <RechartsTooltip
-                              labelFormatter={(unixTime) => `Year: ${unixTime}`}
+                              content={<CustomAnnualTooltip />}
                             />
-
                             <ReferenceArea
                               y1={row.low_is_bad ? lineData[0]?.bmk_line4 : 0}
                               fill={
@@ -715,7 +749,7 @@ const DataViz = ({
                             Period of Record
                           </TableCell>
                           <TableCell style={{ fontWeight: 600 }} align="center">
-                            Organization
+                            Organizations
                           </TableCell>
                           <TableCell style={{ fontWeight: 600 }} align="center">
                             Visualizations

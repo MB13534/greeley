@@ -78,7 +78,7 @@ const BenchmarkPopover = ({ classes, data, lowIsBad }) => {
         }
       : {
           name: `No benchmarks available`,
-          color: "grey",
+          color: "cornflowerBlue",
         },
   ];
 

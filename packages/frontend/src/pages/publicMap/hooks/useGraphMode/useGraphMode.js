@@ -104,11 +104,12 @@ const useGraphMode = ({
   };
 
   const graphModeBenchmarkColorsDefaults = [
-    { name: `Above secondary benchmark`, color: `#FF0000` },
-    { name: `Above benchmark`, color: `#FFA500` },
-    { name: `Approaching benchmark`, color: `#FFFF00` },
-    { name: `Below benchmark`, color: `#3CB371` },
-    { name: `No benchmarks available`, color: `#0000FF` },
+    { name: `Above secondary benchmark`, color: `red` },
+    { name: `Above benchmark`, color: `orange` },
+    { name: `Approaching benchmark`, color: `yellow` },
+    { name: `Below benchmark`, color: `MediumSeaGreen` },
+    { name: `Below benchmark`, color: `PaleTurquoise` },
+    { name: `No benchmarks available`, color: `cornflowerblue` },
   ];
   const [graphModeBenchmarkColors, setGraphModeBenchmarkColors] = useState(
     graphModeBenchmarkColorsDefaults
@@ -118,23 +119,27 @@ const useGraphMode = ({
       setGraphModeBenchmarkColors([
         {
           name: `Above secondary benchmark`,
-          color: benchmarkScaleColors[5]?.symbol_color ?? `#FF0000`,
+          color: benchmarkScaleColors[5]?.symbol_color ?? `red`,
         },
         {
           name: `Above benchmark`,
-          color: benchmarkScaleColors[4]?.symbol_color ?? `#FFA500`,
+          color: benchmarkScaleColors[4]?.symbol_color ?? `orange`,
         },
         {
           name: `Approaching benchmark`,
-          color: benchmarkScaleColors[3]?.symbol_color ?? `#FFFF00`,
+          color: benchmarkScaleColors[3]?.symbol_color ?? `yellow`,
         },
         {
           name: `Below benchmark`,
-          color: benchmarkScaleColors[2]?.symbol_color ?? `#3CB371`,
+          color: benchmarkScaleColors[2]?.symbol_color ?? `MediumSeaGreen`,
+        },
+        {
+          name: `Below detection limits`,
+          color: benchmarkScaleColors[1]?.symbol_color ?? `PaleTurquoise`,
         },
         {
           name: `No benchmarks available`,
-          color: benchmarkScaleColors[1]?.symbol_color ?? `#0000FF`,
+          color: benchmarkScaleColors[0]?.symbol_color ?? `cornflowerblue`,
         },
       ]);
     }
@@ -290,7 +295,7 @@ const useGraphMode = ({
     data.forEach((row) => {
       // set a default score
       if (typeof locationValues[row.ndx] === "undefined") {
-        locationValues[row.ndx] = 0;
+        locationValues[row.ndx] = -1;
       }
 
       if (filterValuesGraphMode.analysis === "benchmark_scale_pctile85") {
