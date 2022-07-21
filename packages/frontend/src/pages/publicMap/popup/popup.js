@@ -4,6 +4,7 @@ import { isNullOrUndef } from "chart.js/helpers";
 import { Pagination } from "@material-ui/lab";
 import { titleize } from "inflected";
 import { formatBooleanTrueFalse } from "../../../utils";
+import Button from "@material-ui/core/Button";
 
 const PopupWrap = styled.div`
   height: 200px;
@@ -30,7 +31,7 @@ const PopupCell = styled.td`
   margin: 0;
 `;
 
-const Popup = ({ features, layers }) => {
+const Popup = ({ features, layers, handleGraphModeFromPoint }) => {
   function getUniqueFeatures(array, comparatorProperty1, comparatorProperty2) {
     const existingFeatureKeys = {};
     // Because features come from tiled vector data, feature geometries may be split
@@ -90,6 +91,17 @@ const Popup = ({ features, layers }) => {
       ["Huc12", feature?.properties.huc12 || "N/A"],
       ["Latitude", feature?.properties.x_lat],
       ["Longitude", feature?.properties.y_lon],
+      [
+        "Graph Mode",
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={() => handleGraphModeFromPoint(feature?.properties?.ndx)}
+        >
+          View Data
+        </Button>,
+      ],
     ];
   } else {
     popupData = excludeFields

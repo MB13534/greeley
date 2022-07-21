@@ -98,6 +98,8 @@ const PublicMap = () => {
     setLastLocationIdClicked,
     dataVizVisible,
     setDataVizVisible,
+    graphModeVisible,
+    setGraphModeVisible,
   } = useMap(mapContainer, INIT_MAP_CONFIG);
   const {
     filterValues,
@@ -117,7 +119,6 @@ const PublicMap = () => {
     onSelectNoneParameters,
     onSelectAllParameterGroups,
     onSelectNoneParameterGroups,
-    graphModeVisible,
     handleGraphModeClick,
     hasGraphDataLoaded,
     analyticsResults,
@@ -137,6 +138,8 @@ const PublicMap = () => {
     setDataVizVisible,
     lastLocationIdClicked,
     setLastLocationIdClicked,
+    graphModeVisible,
+    setGraphModeVisible,
   });
 
   const printRef = useRef();
@@ -289,6 +292,7 @@ const PublicMap = () => {
             isTimeSeriesResultsLoading={isTimeSeriesResultsLoading}
             getHexColorForScore={getHexColorForScore}
             isAnalyticsTableDataLoading={isAnalyticsTableDataLoading}
+            lastLocationIdClicked={lastLocationIdClicked}
           />
         )}
 

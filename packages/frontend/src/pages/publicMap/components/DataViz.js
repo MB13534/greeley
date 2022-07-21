@@ -147,6 +147,7 @@ const DataViz = ({
   isTimeSeriesResultsLoading,
   getHexColorForScore,
   isAnalyticsTableDataLoading,
+  lastLocationIdClicked,
 }) => {
   const [dataVizHeight, setDataVizHeight] = useState({
     viz: "460px",
@@ -668,7 +669,7 @@ const DataViz = ({
           {isAnalyticsTableDataLoading && <Loader />}
           <Paper>
             <TimeseriesContainer height={dataVizHeight.timeSeries}>
-              {analyticsResults?.length > 0 ? (
+              {analyticsResults?.length > 0 && lastLocationIdClicked ? (
                 <>
                   <Box ml={4} pt={2} pb={2} display="flex">
                     <CircleMarker>

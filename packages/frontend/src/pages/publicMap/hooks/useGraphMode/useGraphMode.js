@@ -14,9 +14,11 @@ const useGraphMode = ({
   lastLocationIdClicked,
   setLastLocationIdClicked,
   setDataVizVisible,
+  graphModeVisible,
+  setGraphModeVisible,
 }) => {
-  const [graphModeVisible, setGraphModeVisible] = useState(false);
   const [legendVisible, setLegendVisible] = useState(true);
+  const [lastLocationId, setLastLocationId] = useState(null);
 
   const initFilterValues = {
     periodOfRecord: "full",
@@ -188,17 +190,17 @@ const useGraphMode = ({
         }
       });
     }
-
-    setGraphModeVisible(!graphModeVisible);
     setLastLocationIdClicked(null);
     setLastLocationId(null);
+    setGraphModeVisible(!graphModeVisible);
   };
 
   useEffect(() => {
     if (!isParametersFetching && parameters?.length) {
       setHasParametersLoaded(true);
+      onSelectAllParameters();
     }
-  }, [isParametersFetching, parameters]);
+  }, [isParametersFetching, parameters]); //eslint-disable-line
 
   useEffect(() => {
     if (hasParametersLoaded) {
@@ -441,7 +443,6 @@ const useGraphMode = ({
     });
   };
 
-  const [lastLocationId, setLastLocationId] = useState(null);
   const [analyticsResults, setAnalyticsResults] = useState(null);
   const [timeSeriesResults, setTimeSeriesResults] = useState(null);
 
@@ -535,7 +536,6 @@ const useGraphMode = ({
     onSelectNoneParameters,
     onSelectAllParameterGroups,
     onSelectNoneParameterGroups,
-    graphModeVisible,
     handleGraphModeClick,
     hasGraphDataLoaded,
     analyticsResults,

@@ -60,6 +60,7 @@ const useMap = (ref, mapConfig) => {
   const [virtualBoreVisible, setVirtualBoreVisible] = useState(false);
   const [dataVizVisible, setDataVizVisible] = useState(false);
   const [lastLocationIdClicked, setLastLocationIdClicked] = useState(null);
+  const [graphModeVisible, setGraphModeVisible] = useState(false);
 
   const [eventsRegistered, setEventsRegistered] = useState(false);
   const popUpRef = useRef(
@@ -96,6 +97,36 @@ const useMap = (ref, mapConfig) => {
     handleClearSearchRadiusBuffers,
     resetSearchRadiusBuffers,
   } = useSearchRadius({ enabled: false });
+
+  const handleGraphModeFromPoint = (ndx) => {
+    layers.forEach((layer) => {
+      if (
+        ["greeley-locations-circle", "greeley-locations-symbol"].includes(
+          layer.id
+        )
+      ) {
+        map.setLayoutProperty(
+          layer?.lreProperties?.name || layer.id,
+          "visibility",
+          "visible"
+        );
+      } else {
+        map.setLayoutProperty(
+          layer?.lreProperties?.name || layer.id,
+          "visibility",
+          "none"
+        );
+      }
+    });
+    setDataVizVisible(true);
+    map.fire("closeAllPopups");
+
+    map.setFilter("greeley-locations-circle", null);
+    map.setFilter("greeley-locations-symbol", null);
+
+    setLastLocationIdClicked(ndx);
+    setGraphModeVisible(true);
+  };
 
   //adds control features as extended by MapboxDrawGeodesic (draw circle)
   let modes = MapboxDraw.modes;
@@ -346,7 +377,11 @@ const useMap = (ref, mapConfig) => {
             <StylesProvider jss={jss}>
               <MuiThemeProvider theme={createTheme(theme.currentTheme)}>
                 <ThemeProvider theme={createTheme(theme.currentTheme)}>
-                  <Popup layers={layers} features={myFeatures} />
+                  <Popup
+                    layers={layers}
+                    features={myFeatures}
+                    handleGraphModeFromPoint={handleGraphModeFromPoint}
+                  />
                 </ThemeProvider>
               </MuiThemeProvider>
             </StylesProvider>,
@@ -357,6 +392,9 @@ const useMap = (ref, mapConfig) => {
             .setDOMContent(popupNode)
             .addTo(map);
         }
+        map.on("closeAllPopups", () => {
+          popUpRef.current.remove();
+        });
       });
 
       // //handles copying coordinates and measurements to the clipboard
@@ -369,7 +407,7 @@ const useMap = (ref, mapConfig) => {
 
       setEventsRegistered(true);
       mapLogger.log("Event handlers attached to map");
-    }
+    } //eslint-disable-next-line
   }, [
     map,
     layers,
@@ -610,6 +648,8 @@ const useMap = (ref, mapConfig) => {
     setLastLocationIdClicked,
     dataVizVisible,
     setDataVizVisible,
+    setGraphModeVisible,
+    graphModeVisible,
   };
 };
 
