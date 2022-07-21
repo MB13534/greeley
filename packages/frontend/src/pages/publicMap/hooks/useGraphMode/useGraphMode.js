@@ -16,6 +16,7 @@ const useGraphMode = ({
   setDataVizVisible,
 }) => {
   const [graphModeVisible, setGraphModeVisible] = useState(false);
+  const [legendVisible, setLegendVisible] = useState(true);
 
   const initFilterValues = {
     periodOfRecord: "full",
@@ -99,6 +100,43 @@ const useGraphMode = ({
         .symbol_color || "black"
     );
   };
+
+  const graphModeBenchmarkColorsDefaults = [
+    { name: `Above secondary benchmark`, color: `#FF0000` },
+    { name: `Above benchmark`, color: `#FFA500` },
+    { name: `Approaching benchmark`, color: `#FFFF00` },
+    { name: `Below benchmark`, color: `#3CB371` },
+    { name: `No benchmarks available`, color: `#0000FF` },
+  ];
+  const [graphModeBenchmarkColors, setGraphModeBenchmarkColors] = useState(
+    graphModeBenchmarkColorsDefaults
+  );
+  useEffect(() => {
+    if (benchmarkScaleColors) {
+      setGraphModeBenchmarkColors([
+        {
+          name: `Above secondary benchmark`,
+          color: benchmarkScaleColors[5]?.symbol_color ?? `#FF0000`,
+        },
+        {
+          name: `Above benchmark`,
+          color: benchmarkScaleColors[4]?.symbol_color ?? `#FFA500`,
+        },
+        {
+          name: `Approaching benchmark`,
+          color: benchmarkScaleColors[3]?.symbol_color ?? `#FFFF00`,
+        },
+        {
+          name: `Below benchmark`,
+          color: benchmarkScaleColors[2]?.symbol_color ?? `#3CB371`,
+        },
+        {
+          name: `No benchmarks available`,
+          color: benchmarkScaleColors[1]?.symbol_color ?? `#0000FF`,
+        },
+      ]);
+    }
+  }, [benchmarkScaleColors]);
 
   const handleGraphModeClick = () => {
     if (!graphModeVisible) {
@@ -557,6 +595,9 @@ const useGraphMode = ({
     isTimeSeriesResultsLoading,
     getHexColorForScore,
     isAnalyticsTableDataLoading,
+    legendVisible,
+    setLegendVisible,
+    graphModeBenchmarkColors,
   };
 };
 

@@ -29,6 +29,8 @@ import CommaSeparatedWellsSearch from "./filters/commaSeparatedWellsSearch";
 import useGraphMode from "./hooks/useGraphMode";
 import DataViz from "./components/DataViz";
 import DataVizControl from "./controls/dataVizControl";
+import Legend from "./components/Legend";
+import LegendControl from "./controls/LegendControl";
 
 const FiltersBarRoot = styled(Paper)`
   align-items: center;
@@ -121,6 +123,9 @@ const PublicMap = () => {
     isTimeSeriesResultsLoading,
     getHexColorForScore,
     isAnalyticsTableDataLoading,
+    legendVisible,
+    setLegendVisible,
+    graphModeBenchmarkColors,
   } = useGraphMode({
     map,
     updateLayerFilters,
@@ -301,6 +306,13 @@ const PublicMap = () => {
               open={dataVizVisible}
               handleClick={() => setDataVizVisible(!dataVizVisible)}
             />
+            <LegendControl
+              open={legendVisible}
+              onToggle={() => setLegendVisible(!legendVisible)}
+            />
+            {legendVisible && (
+              <Legend legendColors={graphModeBenchmarkColors} />
+            )}
           </>
         )}
 
