@@ -115,6 +115,8 @@ const PublicMap = () => {
     handleFilterValuesGraphMode,
     onSelectAllParameters,
     onSelectNoneParameters,
+    onSelectAllParameterGroups,
+    onSelectNoneParameterGroups,
     graphModeVisible,
     handleGraphModeClick,
     hasGraphDataLoaded,
@@ -258,6 +260,8 @@ const PublicMap = () => {
             parameters={parameters}
             onSelectAllParameters={onSelectAllParameters}
             onSelectNoneParameters={onSelectNoneParameters}
+            onSelectAllParameterGroups={onSelectAllParameterGroups}
+            onSelectNoneParameterGroups={onSelectNoneParameterGroups}
           />
         ) : (
           <MainControl

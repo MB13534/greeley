@@ -49,7 +49,9 @@ const Legend = ({ legendColors }) => {
       <Typography variant="h3" color="primary">
         Legend
       </Typography>
-      <LegendSubtitle variant="caption">Percent of Median Peak</LegendSubtitle>
+      <LegendSubtitle variant="caption">
+        Monitoring Point's Benchmarks
+      </LegendSubtitle>
       <LegendList>
         {legendColors.map((data) => (
           <LegendListItem key={data.name}>

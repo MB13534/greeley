@@ -194,8 +194,6 @@ const useGraphMode = ({
     setLastLocationId(null);
   };
 
-  // const [renderedPointData, setRenderedPointData] = useState(null);
-
   useEffect(() => {
     if (!isParametersFetching && parameters?.length) {
       setHasParametersLoaded(true);
@@ -265,7 +263,6 @@ const useGraphMode = ({
 
   useEffect(() => {
     if (graphModeVisible) {
-      // updateRenderedPoints(data);
       setIsAnalyticsTableDataLoading(false);
       recolorPointsForLayers(data);
       fetchAnalyticsTableForLocation();
@@ -279,76 +276,8 @@ const useGraphMode = ({
     }
   }, [filterValuesGraphMode.analysis]); //eslint-disable-line
 
-  // const updateRenderedPoints = (myData) => {
-  //   // if (myData === null || typeof myData === "undefined") {
-  //   //   myData = monitoringPointData;
-  //   // }
-  //
-  //   const locationValues = {};
-  //   const parameterValues = {};
-  //
-  //   myData.forEach((row) => {
-  //     // set a default score
-  //     if (typeof locationValues[row.ndx] === "undefined") {
-  //       locationValues[row.ndx] = 0;
-  //     }
-  //
-  //     if (filterValuesGraphMode.analysis === "benchmark_scale_median") {
-  //       if (row.benchmark_scale_pctile85 > locationValues[row.ndx]) {
-  //         locationValues[row.ndx] = row.benchmark_scale_pctile85;
-  //       }
-  //     } else {
-  //       if (row.benchmark_scale_median > locationValues[row.ndx]) {
-  //         locationValues[row.ndx] = row.benchmark_scale_median;
-  //       }
-  //     }
-  //
-  //     // set a default score
-  //     if (typeof parameterValues[row.ndx] === "undefined") {
-  //       parameterValues[row.ndx] = [];
-  //     }
-  //     if (parameterValues[row.ndx].indexOf(row.parameter_ndx) === -1) {
-  //       parameterValues[row.ndx].push(row.parameter_ndx);
-  //     }
-  //   });
-  //
-  //   let features = map.queryRenderedFeatures({
-  //     layers: ["greeley-locations-circle"],
-  //     filter: [
-  //       "match",
-  //       ["get", "ndx"],
-  //       Object.keys(locationValues).map((x) => parseInt(x)).length
-  //         ? Object.keys(locationValues).map((x) => parseInt(x))
-  //         : "",
-  //       true,
-  //       false,
-  //     ],
-  //   });
-  //
-  //   features = features.map((x) => {
-  //     return {
-  //       ...x,
-  //       score: locationValues[x.properties.ndx],
-  //       parameters: parameterValues[x.properties.ndx],
-  //     };
-  //   });
-  //
-  //   features.sort((a, b) =>
-  //     a.score < b.score ? 1 : b.score < a.score ? -1 : 0
-  //   );
-  //
-  //   setRenderedPointData(features);
-  // };
-
   const recolorPointsForLayers = (data = null) => {
     const layerIds = ["greeley-locations-circle"];
-
-    // if (data === null) {
-    //   data = monitoringPointData;
-    // }
-    // if (data === null) {
-    //   return;
-    // }
 
     // sort by location_index ascending
     data.sort((a, b) => (a.ndx > b.ndx ? 1 : b.ndx > a.ndx ? -1 : 0));
@@ -494,6 +423,24 @@ const useGraphMode = ({
     });
   };
 
+  const onSelectAllParameterGroups = () => {
+    setFilterValuesGraphMode((prevState) => {
+      return {
+        ...prevState,
+        parameterGroups: parameterGroups.map((x) => x.parameter_group_name),
+      };
+    });
+  };
+
+  const onSelectNoneParameterGroups = () => {
+    setFilterValuesGraphMode((prevState) => {
+      return {
+        ...prevState,
+        parameterGroups: [],
+      };
+    });
+  };
+
   const [lastLocationId, setLastLocationId] = useState(null);
   const [analyticsResults, setAnalyticsResults] = useState(null);
   const [timeSeriesResults, setTimeSeriesResults] = useState(null);
@@ -586,7 +533,8 @@ const useGraphMode = ({
     handleFilterValuesGraphMode,
     onSelectAllParameters,
     onSelectNoneParameters,
-    // renderedPointData,
+    onSelectAllParameterGroups,
+    onSelectNoneParameterGroups,
     graphModeVisible,
     handleGraphModeClick,
     hasGraphDataLoaded,
