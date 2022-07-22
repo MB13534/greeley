@@ -778,10 +778,17 @@ const DataViz = ({
             </Paper>
           </Panel>
         </Viz>
-      ) : (
+      ) : (!lastLocationIdClicked && analyticsResults?.length > 0) ||
+        !lastLocationIdClicked ? (
         <Alert severity="info" style={{ marginBottom: "-18px" }}>
           <AlertTitle>Info</AlertTitle>
           <strong>Please select a monitoring location on the map above.</strong>
+        </Alert>
+      ) : (
+        <Alert severity="error" style={{ marginBottom: "-18px" }}>
+          <AlertTitle>Error</AlertTitle>
+          <strong>**There is no data available with this query.** — </strong>
+          please try again!
         </Alert>
       )}
     </OuterContainer>

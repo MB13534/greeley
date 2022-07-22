@@ -135,6 +135,8 @@ const PublicMap = () => {
     graphModeLayersVisible,
     graphModePopupVisible,
     setGraphModePopupVisible,
+    inputValue,
+    setInputValue,
   } = useGraphMode({
     map,
     updateLayerFilters,
@@ -222,6 +224,8 @@ const PublicMap = () => {
             periodOfRecords={periodOfRecords}
             analysisTypes={analysisTypes}
             handleFilterValues={handleFilterValuesGraphMode}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
           />
         ) : (
           <FiltersBar

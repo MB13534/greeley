@@ -19,12 +19,14 @@ const useGraphMode = ({
 }) => {
   const [legendVisible, setLegendVisible] = useState(true);
   const [lastLocationId, setLastLocationId] = useState(null);
+  const [inputValue, setInputValue] = useState(0);
 
   const initFilterValues = {
     periodOfRecord: "full",
     analysis: "benchmark_scale_median",
     parameterGroups: ["Bacteria", "Metals", "Nutrient", "Other", "Physical"],
     parameters: ["E. Coli"],
+    recordCount: 0,
   };
   const [filterValuesGraphMode, setFilterValuesGraphMode] =
     useState(initFilterValues);
@@ -236,6 +238,8 @@ const useGraphMode = ({
         }
       });
     }
+    handleFilterValuesGraphMode("recordCount", 0);
+    setInputValue(0);
     setGraphModePopupVisible(true);
     map.fire("closeAllPopups");
     setLastLocationIdClicked(null);
@@ -282,6 +286,7 @@ const useGraphMode = ({
     [
       "locations-map-graph-mode",
       filterValuesGraphMode.periodOfRecord,
+      filterValuesGraphMode.recordCount,
       filterValuesGraphMode.parameters,
       hasParametersLoaded,
     ],
@@ -293,6 +298,7 @@ const useGraphMode = ({
             `${process.env.REACT_APP_ENDPOINT}/api/locations-map-graph-mode`,
             {
               periodOfRecord: filterValuesGraphMode.periodOfRecord,
+              recordCount: filterValuesGraphMode.recordCount,
               parameters: filterValuesGraphMode.parameters.map((parameter) =>
                 getParameterIndexByName(parameter)
               ),
@@ -433,7 +439,7 @@ const useGraphMode = ({
   };
 
   const handleFilterValuesGraphMode = (name, value) => {
-    if (!["periodOfRecord", "analysis"].includes(name)) {
+    if (!["periodOfRecord", "analysis", "recordCount"].includes(name)) {
       setFilterValuesGraphMode((prevState) => {
         const existingVals = [...prevState[name]];
         const existingIndex = existingVals.indexOf(value);
@@ -599,6 +605,8 @@ const useGraphMode = ({
     graphModeLayersVisible,
     graphModePopupVisible,
     setGraphModePopupVisible,
+    inputValue,
+    setInputValue,
   };
 };
 
