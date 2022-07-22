@@ -74,6 +74,15 @@ module.exports = (sequelize, DataTypes) => {
       data_recent_b: {
         type: BOOLEAN,
       },
+      src_resultcount: {
+        type: BIGINT,
+      },
+      src_por_start: {
+        type: DATE,
+      },
+      src_por_end: {
+        type: DATE,
+      },
     },
     {
       schema: 'ui_endpoints',

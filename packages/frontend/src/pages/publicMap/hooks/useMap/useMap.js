@@ -65,7 +65,7 @@ const useMap = (ref, mapConfig) => {
   const [eventsRegistered, setEventsRegistered] = useState(false);
   const popUpRef = useRef(
     new mapboxgl.Popup({
-      maxWidth: "300px",
+      maxWidth: "276px",
       offset: 15,
       focusAfterOpen: false,
     })
@@ -119,7 +119,7 @@ const useMap = (ref, mapConfig) => {
       }
     });
     setDataVizVisible(true);
-    map.fire("closeAllPopups");
+    // map.fire("closeAllPopups");
 
     map.setFilter("greeley-locations-circle", null);
     map.setFilter("greeley-locations-symbol", null);

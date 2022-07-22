@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 const PopupWrap = styled.div`
   height: 132px;
   overflow-y: scroll;
-  width: 280px;
+  width: 256px;
 `;
 
 const PopupTable = styled.table`
@@ -80,13 +80,15 @@ const Popup = ({ features, layers, handleGraphModeFromPoint }) => {
     popupData = [
       [
         "Period of Record",
-        `${new Date(feature?.properties.por_start).getFullYear()} - ${new Date(
-          feature?.properties.por_end
+        `${new Date(
+          feature?.properties.src_por_start
+        ).getFullYear()} - ${new Date(
+          feature?.properties.src_por_end
         ).getFullYear()}`,
       ],
       ["Reach", feature?.properties.reach],
       ["Organization", feature?.properties.organization],
-      ["Record Count", feature?.properties.resultcount],
+      ["Record Count", feature?.properties.src_resultcount],
       ["Huc8", feature?.properties.huc8],
       ["Huc12", feature?.properties.huc12 || "N/A"],
       ["Latitude", feature?.properties.x_lat],
@@ -165,7 +167,7 @@ const Popup = ({ features, layers, handleGraphModeFromPoint }) => {
       <Pagination
         style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}
         count={uniqueFeatures.length}
-        size="medium"
+        size="small"
         page={page}
         variant="outlined"
         shape="rounded"
