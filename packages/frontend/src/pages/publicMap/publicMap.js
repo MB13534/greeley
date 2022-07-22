@@ -31,6 +31,8 @@ import DataViz from "./components/DataViz";
 import DataVizControl from "./controls/dataVizControl";
 import Legend from "./components/Legend";
 import LegendControl from "./controls/LegendControl";
+import GraphModeLayersToggle from "./controls/GraphModeLayersToggle";
+import GraphModePopupToggle from "./controls/GraphModePopupToggle";
 
 const FiltersBarRoot = styled(Paper)`
   align-items: center;
@@ -129,6 +131,10 @@ const PublicMap = () => {
     legendVisible,
     setLegendVisible,
     graphModeBenchmarkColors,
+    handleGraphModeLayersToggleClick,
+    graphModeLayersVisible,
+    graphModePopupVisible,
+    setGraphModePopupVisible,
   } = useGraphMode({
     map,
     updateLayerFilters,
@@ -305,11 +311,6 @@ const PublicMap = () => {
 
         {graphModeVisible && (
           <>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: "<style>.mapboxgl-popup { display: none; }</style>",
-              }}
-            />
             <DataVizControl
               open={dataVizVisible}
               handleClick={() => setDataVizVisible(!dataVizVisible)}
@@ -320,6 +321,21 @@ const PublicMap = () => {
             />
             {legendVisible && (
               <Legend legendColors={graphModeBenchmarkColors} />
+            )}
+            <GraphModeLayersToggle
+              open={graphModeLayersVisible}
+              onToggle={handleGraphModeLayersToggleClick}
+            />
+            <GraphModePopupToggle
+              open={graphModePopupVisible}
+              onToggle={() => setGraphModePopupVisible(!graphModePopupVisible)}
+            />
+            {!graphModePopupVisible && (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: "<style>.mapboxgl-popup { display: none; }</style>",
+                }}
+              />
             )}
           </>
         )}

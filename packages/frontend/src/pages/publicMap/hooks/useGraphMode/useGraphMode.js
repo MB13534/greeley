@@ -145,8 +145,10 @@ const useGraphMode = ({
     }
   }, [benchmarkScaleColors]);
 
-  const handleGraphModeClick = () => {
-    if (!graphModeVisible) {
+  const [graphModePopupVisible, setGraphModePopupVisible] = useState(true);
+  const [graphModeLayersVisible, setGraphModeLayersVisible] = useState(true);
+  const handleGraphModeLayersToggleClick = () => {
+    if (graphModeLayersVisible) {
       layers.forEach((layer) => {
         if (
           ["greeley-locations-circle", "greeley-locations-symbol"].includes(
@@ -166,9 +168,48 @@ const useGraphMode = ({
           );
         }
       });
+    } else {
+      layers.forEach((layer) => {
+        if (layer?.layout?.visibility === "visible") {
+          map.setLayoutProperty(
+            layer?.lreProperties?.name || layer.id,
+            "visibility",
+            "visible"
+          );
+        } else {
+          map.setLayoutProperty(
+            layer?.lreProperties?.name || layer.id,
+            "visibility",
+            "none"
+          );
+        }
+      });
+    }
+    setGraphModeLayersVisible(!graphModeLayersVisible);
+  };
 
-      setDataVizVisible(false);
-
+  const handleGraphModeClick = () => {
+    if (!graphModeVisible) {
+      // layers.forEach((layer) => {
+      //   if (
+      //     ["greeley-locations-circle", "greeley-locations-symbol"].includes(
+      //       layer.id
+      //     )
+      //   ) {
+      //     map.setLayoutProperty(
+      //       layer?.lreProperties?.name || layer.id,
+      //       "visibility",
+      //       "visible"
+      //     );
+      //   } else {
+      //     map.setLayoutProperty(
+      //       layer?.lreProperties?.name || layer.id,
+      //       "visibility",
+      //       "none"
+      //     );
+      //   }
+      // });
+      setDataVizVisible(true);
       map.setFilter("greeley-locations-circle", null);
       map.setFilter("greeley-locations-symbol", null);
     } else {
@@ -195,9 +236,12 @@ const useGraphMode = ({
         }
       });
     }
+    setGraphModePopupVisible(true);
+    map.fire("closeAllPopups");
     setLastLocationIdClicked(null);
     setLastLocationId(null);
     setGraphModeVisible(!graphModeVisible);
+    setGraphModeLayersVisible(true);
   };
 
   useEffect(() => {
@@ -551,6 +595,10 @@ const useGraphMode = ({
     legendVisible,
     setLegendVisible,
     graphModeBenchmarkColors,
+    handleGraphModeLayersToggleClick,
+    graphModeLayersVisible,
+    graphModePopupVisible,
+    setGraphModePopupVisible,
   };
 };
 

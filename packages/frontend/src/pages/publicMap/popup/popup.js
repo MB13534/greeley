@@ -7,9 +7,9 @@ import { formatBooleanTrueFalse } from "../../../utils";
 import Button from "@material-ui/core/Button";
 
 const PopupWrap = styled.div`
-  height: 200px;
+  height: 132px;
   overflow-y: scroll;
-  width: 380px;
+  width: 280px;
 `;
 
 const PopupTable = styled.table`

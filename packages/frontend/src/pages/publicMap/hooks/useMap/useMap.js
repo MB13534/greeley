@@ -58,14 +58,14 @@ const useMap = (ref, mapConfig) => {
   const [measurementsVisible, setMeasurementsVisible] = useState(false);
   const [virtualBoreCoordinates, setVirtualBoreCoordinates] = useState(null);
   const [virtualBoreVisible, setVirtualBoreVisible] = useState(false);
-  const [dataVizVisible, setDataVizVisible] = useState(false);
+  const [dataVizVisible, setDataVizVisible] = useState(true);
   const [lastLocationIdClicked, setLastLocationIdClicked] = useState(null);
   const [graphModeVisible, setGraphModeVisible] = useState(false);
 
   const [eventsRegistered, setEventsRegistered] = useState(false);
   const popUpRef = useRef(
     new mapboxgl.Popup({
-      maxWidth: "400px",
+      maxWidth: "300px",
       offset: 15,
       focusAfterOpen: false,
     })

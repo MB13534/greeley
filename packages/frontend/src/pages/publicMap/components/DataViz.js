@@ -682,116 +682,108 @@ const DataViz = ({
       borderRadius={4}
       open={open}
     >
-      <Viz height={dataVizHeight.viz}>
-        <CloseContainer>
-          <ExpandButton
-            handleExpand={handleExpand}
-            expanded={dataVizHeight.viz !== "460px"}
-          />
-          <Tooltip title="Close" arrow>
-            <IconButton
-              size="small"
-              onClick={onClose}
-              style={{ marginLeft: "4px" }}
-            >
-              <Close />
-            </IconButton>
-          </Tooltip>
-        </CloseContainer>
+      {analyticsResults?.length > 0 && lastLocationIdClicked ? (
+        <Viz height={dataVizHeight.viz}>
+          <CloseContainer>
+            <ExpandButton
+              handleExpand={handleExpand}
+              expanded={dataVizHeight.viz !== "460px"}
+            />
+            <Tooltip title="Close" arrow>
+              <IconButton
+                size="small"
+                onClick={onClose}
+                style={{ marginLeft: "4px" }}
+              >
+                <Close />
+              </IconButton>
+            </Tooltip>
+          </CloseContainer>
 
-        <Panel overflowY="scroll" overflowX="hidden">
-          {isAnalyticsTableDataLoading && <Loader />}
-          <Paper>
-            <TimeseriesContainer height={dataVizHeight.timeSeries}>
-              {analyticsResults?.length > 0 && lastLocationIdClicked ? (
-                <>
-                  <Box ml={4} pt={2} pb={2} display="flex">
-                    <CircleMarker>
-                      <Room />
-                    </CircleMarker>
-                    <Box flexDirection="column" display="flex">
-                      <Typography variant="h4">
-                        <strong>{`${analyticsResults[0].location_name} (${analyticsResults[0].location_id})`}</strong>
-                      </Typography>
-                      <Typography variant="h4">
-                        {analyticsResults[0].reach_name}
-                      </Typography>
-                    </Box>
+          <Panel overflowY="scroll" overflowX="hidden">
+            {isAnalyticsTableDataLoading && <Loader />}
+            <Paper>
+              <TimeseriesContainer height={dataVizHeight.timeSeries}>
+                <Box ml={4} pt={2} pb={2} display="flex">
+                  <CircleMarker>
+                    <Room />
+                  </CircleMarker>
+                  <Box flexDirection="column" display="flex">
+                    <Typography variant="h4">
+                      <strong>{`${analyticsResults[0].location_name} (${analyticsResults[0].location_id})`}</strong>
+                    </Typography>
+                    <Typography variant="h4">
+                      {analyticsResults[0].reach_name}
+                    </Typography>
                   </Box>
+                </Box>
 
-                  <TableContainer
-                    style={{
-                      overflowY: "scroll",
-                      height: "100%",
-                    }}
-                  >
-                    <Table size="small">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell style={{ fontWeight: 600 }}>
-                            Parameter
-                          </TableCell>
-                          <TableCell style={{ fontWeight: 600 }} align="center">
-                            {filterValues.analysis === "benchmark_scale_median"
-                              ? "Median"
-                              : "85th Percentile"}
-                          </TableCell>
-                          <TableCell style={{ fontWeight: 600 }} align="center">
-                            Benchmarks
-                          </TableCell>
-                          <TableCell style={{ fontWeight: 600 }} align="center">
-                            Trend
-                          </TableCell>
-                          <TableCell style={{ fontWeight: 600 }} align="center">
-                            Count
-                          </TableCell>
-                          <TableCell style={{ fontWeight: 600 }} align="center">
-                            Period of Record
-                          </TableCell>
-                          <TableCell style={{ fontWeight: 600 }} align="center">
-                            Organizations
-                          </TableCell>
-                          <TableCell style={{ fontWeight: 600 }} align="center">
-                            Visualizations
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
+                <TableContainer
+                  style={{
+                    overflowY: "scroll",
+                    height: "100%",
+                  }}
+                >
+                  <Table size="small">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell style={{ fontWeight: 600 }}>
+                          Parameter
+                        </TableCell>
+                        <TableCell style={{ fontWeight: 600 }} align="center">
+                          {filterValues.analysis === "benchmark_scale_median"
+                            ? "Median"
+                            : "85th Percentile"}
+                        </TableCell>
+                        <TableCell style={{ fontWeight: 600 }} align="center">
+                          Benchmarks
+                        </TableCell>
+                        <TableCell style={{ fontWeight: 600 }} align="center">
+                          Trend
+                        </TableCell>
+                        <TableCell style={{ fontWeight: 600 }} align="center">
+                          Count
+                        </TableCell>
+                        <TableCell style={{ fontWeight: 600 }} align="center">
+                          Period of Record
+                        </TableCell>
+                        <TableCell style={{ fontWeight: 600 }} align="center">
+                          Organizations
+                        </TableCell>
+                        <TableCell style={{ fontWeight: 600 }} align="center">
+                          Visualizations
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
 
-                      <TableBody>
-                        {analyticsResults
-                          .sort((a, b) =>
-                            a[filterValues.analysis] < b[filterValues.analysis]
-                              ? 1
-                              : b[filterValues.analysis] <
-                                a[filterValues.analysis]
-                              ? -1
-                              : 0
-                          )
-                          .map((row) => {
-                            return (
-                              <TimeSeriesGraphRow
-                                row={row}
-                                key={row.parameter}
-                              />
-                            );
-                          })}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                  {/*)}*/}
-                </>
-              ) : (
-                <Alert severity="info">
-                  <AlertTitle>Info</AlertTitle>
-                  <strong>
-                    Please select a monitoring location on the map above.
-                  </strong>
-                </Alert>
-              )}
-            </TimeseriesContainer>
-          </Paper>
-        </Panel>
-      </Viz>
+                    <TableBody>
+                      {analyticsResults
+                        .sort((a, b) =>
+                          a[filterValues.analysis] < b[filterValues.analysis]
+                            ? 1
+                            : b[filterValues.analysis] <
+                              a[filterValues.analysis]
+                            ? -1
+                            : 0
+                        )
+                        .map((row) => {
+                          return (
+                            <TimeSeriesGraphRow row={row} key={row.parameter} />
+                          );
+                        })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </TimeseriesContainer>
+            </Paper>
+          </Panel>
+        </Viz>
+      ) : (
+        <Alert severity="info" style={{ marginBottom: "-18px" }}>
+          <AlertTitle>Info</AlertTitle>
+          <strong>Please select a monitoring location on the map above.</strong>
+        </Alert>
+      )}
     </OuterContainer>
   );
 };
