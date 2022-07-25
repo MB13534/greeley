@@ -137,6 +137,7 @@ const PublicMap = () => {
     setGraphModePopupVisible,
     inputValue,
     setInputValue,
+    handleExportClick,
   } = useGraphMode({
     map,
     updateLayerFilters,
@@ -165,9 +166,17 @@ const PublicMap = () => {
     a.click();
   };
 
-  const splitButtonOptions = ["Print PDF", "Save PNG"];
+  const splitButtonOptions = [
+    "Print PDF",
+    "Save PNG",
+    "Export Time Series",
+    "Export Stats & Benchmarks",
+  ];
   const handleSplitButtonClick = (index) => {
-    if (![0, 1].includes(index)) return;
+    if ([2, 3].includes(index)) {
+      handleExportClick(index);
+      return;
+    }
 
     if (index === 0) {
       setPrintReportDialogOpen(true);
@@ -242,6 +251,7 @@ const PublicMap = () => {
               <SplitButton
                 options={splitButtonOptions}
                 handleExportClick={handleSplitButtonClick}
+                graphModeVisible={graphModeVisible}
               />
               <PrintReportDialog
                 downloadCallback={handlePrintMapClick}

@@ -25,7 +25,7 @@ const FiltersContainer = styled.div`
 `;
 
 const TextField = styled(MuiTextField)`
-  width: 175px;
+  width: 150px;
   min-width: 125px;
   display: flex;
 `;
@@ -81,7 +81,7 @@ const FiltersBarGraphMode = ({
           </TextField>
 
           <FormControl variant="outlined">
-            <InputLabel htmlFor="record-count">Record Count</InputLabel>
+            <InputLabel htmlFor="record-count">Min Records</InputLabel>
             <OutlinedInput
               style={{ width: "120px" }}
               type="number"

@@ -99,25 +99,25 @@ const useMap = (ref, mapConfig) => {
   } = useSearchRadius({ enabled: false });
 
   const handleGraphModeFromPoint = (ndx) => {
-    layers.forEach((layer) => {
-      if (
-        ["greeley-locations-circle", "greeley-locations-symbol"].includes(
-          layer.id
-        )
-      ) {
-        map.setLayoutProperty(
-          layer?.lreProperties?.name || layer.id,
-          "visibility",
-          "visible"
-        );
-      } else {
-        map.setLayoutProperty(
-          layer?.lreProperties?.name || layer.id,
-          "visibility",
-          "none"
-        );
-      }
-    });
+    // layers.forEach((layer) => {
+    //   if (
+    //     ["greeley-locations-circle", "greeley-locations-symbol"].includes(
+    //       layer.id
+    //     )
+    //   ) {
+    //     map.setLayoutProperty(
+    //       layer?.lreProperties?.name || layer.id,
+    //       "visibility",
+    //       "visible"
+    //     );
+    //   } else {
+    //     map.setLayoutProperty(
+    //       layer?.lreProperties?.name || layer.id,
+    //       "visibility",
+    //       "none"
+    //     );
+    //   }
+    // });
     setDataVizVisible(true);
     // map.fire("closeAllPopups");
 

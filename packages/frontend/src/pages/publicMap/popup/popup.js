@@ -79,21 +79,6 @@ const Popup = ({ features, layers, handleGraphModeFromPoint }) => {
   if (feature?.layer?.id === "greeley-locations-circle") {
     popupData = [
       [
-        "Period of Record",
-        `${new Date(
-          feature?.properties.src_por_start
-        ).getFullYear()} - ${new Date(
-          feature?.properties.src_por_end
-        ).getFullYear()}`,
-      ],
-      ["Reach", feature?.properties.reach],
-      ["Organization", feature?.properties.organization],
-      ["Record Count", feature?.properties.src_resultcount],
-      ["Huc8", feature?.properties.huc8],
-      ["Huc12", feature?.properties.huc12 || "N/A"],
-      ["Latitude", feature?.properties.x_lat],
-      ["Longitude", feature?.properties.y_lon],
-      [
         "Graph Mode",
         <Button
           size="small"
@@ -104,6 +89,19 @@ const Popup = ({ features, layers, handleGraphModeFromPoint }) => {
           View Data
         </Button>,
       ],
+      [
+        "Period of Record",
+        `${new Date(
+          feature?.properties.src_por_start
+        ).getFullYear()} - ${new Date(
+          feature?.properties.src_por_end
+        ).getFullYear()}`,
+      ],
+      ["Organization", feature?.properties.organization],
+      ["Record Count", feature?.properties.src_resultcount],
+      ["Huc8", feature?.properties.huc8],
+      ["Latitude", feature?.properties.x_lat],
+      ["Longitude", feature?.properties.y_lon],
     ];
   } else {
     popupData = excludeFields

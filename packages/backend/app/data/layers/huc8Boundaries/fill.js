@@ -9,7 +9,7 @@ module.exports = {
     'fill-opacity': 0,
   },
   layout: {
-    visibility: 'none',
+    visibility: 'visible',
   },
   lreProperties: {
     layerGroup: 'huc-8-boundaries',

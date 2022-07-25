@@ -14,6 +14,27 @@ router.get('/', (req, res, next) => {
     });
 });
 
+router.post('/', (req, res, next) => {
+  const where = {};
+
+  where.parameter_ndx = {
+    [Op.in]: req.body.parameters,
+  };
+  where.pors = {[Op.contains]: [req.body.periodOfRecord]};
+  where.ndx = {
+    [Op.in]: req.body.indexes,
+  };
+
+  model
+    .findAll({where: where})
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 router.post('/:ndx', (req, res, next) => {
   const where = {};
 

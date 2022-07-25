@@ -155,6 +155,7 @@ const LayersControl = ({ items, onLayerChange, onOpacityChange }) => {
   const [expandedItems, setExpandedItems] = useState([
     "Greeley Locations",
     "Search Circle Radius",
+    "HUC 8 Boundaries",
   ]);
 
   /**

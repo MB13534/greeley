@@ -4,6 +4,7 @@ import axios from "axios";
 import useFetchData from "../../../../hooks/useFetchData";
 import { groupByValue } from "../../../../utils";
 import { styleValues } from "../useLayerStyles/useLayerStyles";
+import { titleize } from "inflected";
 
 const useGraphMode = ({
   map,
@@ -580,6 +581,153 @@ const useGraphMode = ({
     fetchAnalyticsTimeSeriesForLocation(lastLocationIdClicked);
   }, [lastLocationIdClicked]); //eslint-disable-line
 
+  const handleExportClick = (index) => {
+    if (![2, 3].includes(index)) return;
+    async function send() {
+      try {
+        if (index === 2) {
+          let { data: timeseriesData } = await axios.post(
+            `${process.env.REACT_APP_ENDPOINT}/api/ts-daily-table-for-map-display`,
+            {
+              parameters: cleanParams(filterValuesGraphMode.parameters).map(
+                (x) => getParameterIndexByName(x)
+              ),
+              periodOfRecord: filterValuesGraphMode.periodOfRecord,
+              indexes: [...new Set(data.map((item) => item.ndx))],
+            }
+          );
+
+          const timeseriesDataCsvString = [
+            [
+              `"Results for parameters: ${filterValuesGraphMode.parameters.join(
+                ", "
+              )}"`,
+            ],
+            [
+              `"Time Series Data for the ${titleize(
+                filterValuesGraphMode.periodOfRecord
+              )} Period"`,
+            ],
+            [
+              "Location ID",
+              "Location Name",
+              "Parameter",
+              "Activity Date",
+              "Data Value",
+              "Units",
+              // "Source",
+              "Organization",
+            ],
+            ...timeseriesData.map((item) => [
+              item.location_id,
+              item.location_name.replaceAll(",", "."),
+              item.param_abbrev.replaceAll(",", "."),
+              item.collect_date,
+              item.result,
+              item.units,
+              // item.source,
+              item.organization,
+            ]),
+          ]
+            .map((e) => e.join(","))
+            .join("\n");
+
+          const a = document.createElement("a");
+          a.href =
+            "data:attachment/csv," +
+            encodeURIComponent(timeseriesDataCsvString);
+          a.target = "_blank";
+          a.download = `Time Series Data for the ${titleize(
+            filterValuesGraphMode.periodOfRecord
+          )} Period.csv`;
+          document.body.appendChild(a);
+          a.click();
+          // return csvString;
+        }
+
+        if (index === 3) {
+          let tableData = [...data];
+          console.log(data);
+          console.log(tableData);
+          const tableDataCsvString = [
+            [
+              `"Results for parameters: ${filterValuesGraphMode.parameters.join(
+                ", "
+              )}"`,
+            ],
+            [
+              `"Stats & Benchmarks Data for the ${titleize(
+                filterValuesGraphMode.periodOfRecord
+              )} Period"`,
+            ],
+            [
+              "Location ID",
+              "Location Name",
+              "Parameter",
+              "Units",
+              "Count of Results (Statistics)",
+              "85th or 15th percentile",
+              "Benchmark Classification: 85th/15th",
+              "Median",
+              "Benchamrk Classification: Median",
+              "Analysis Period (Statistics)",
+              "From",
+              "To",
+              "Benchmark 0",
+              "Benchmark 1",
+              "Benchmark 2",
+              "Benchmark 3",
+              "Benchmark 4",
+              "Trend (all data)",
+              "Organizations",
+            ],
+            ...tableData.map((item) => [
+              item.location_id,
+              item.location_name.replaceAll(",", "."),
+              item.parameter.replaceAll(",", "."),
+              item.units,
+              item.recordcount,
+              item.pctile85,
+              item.benchmark_scale_pctile85,
+              item.median,
+              item.benchmark_scale_median,
+              item.stats_period,
+              item.por_start,
+              item.por_end,
+              item.bmk_line0,
+              item.bmk_line1,
+              item.bmk_line2,
+              item.bmk_line3,
+              item.bmk_line4,
+              item.trend,
+              item.organization_name.replaceAll(",", "."),
+            ]),
+          ]
+            .map((e) => e.join(","))
+            .join("\n");
+
+          const a = document.createElement("a");
+          a.href =
+            "data:attachment/csv," + encodeURIComponent(tableDataCsvString);
+          a.target = "_blank";
+          a.download = `Stats & Benchmarks Data for the ${titleize(
+            filterValuesGraphMode.periodOfRecord
+          )} Period.csv`;
+          document.body.appendChild(a);
+          a.click();
+        }
+      } catch (err) {
+        // Is this error because we cancelled it ourselves?
+        if (axios.isCancel(err)) {
+          console.log(`call was cancelled`);
+        } else {
+          console.error(err);
+        }
+      }
+    }
+    send();
+  };
+
   return {
     filterValuesGraphMode,
     periodOfRecords,
@@ -607,6 +755,7 @@ const useGraphMode = ({
     setGraphModePopupVisible,
     inputValue,
     setInputValue,
+    handleExportClick,
   };
 };
 

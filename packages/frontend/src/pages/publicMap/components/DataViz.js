@@ -230,7 +230,7 @@ const DataViz = ({
 
     const setTrendIcon = (trend) => {
       const val = trend ? trend.toLowerCase() : "";
-      if (val.includes(`trend`)) {
+      if (val === "no trend") {
         return `swap_vert`;
       } else if (val.includes(`increasing`)) {
         return `arrow_upward`;
@@ -238,7 +238,7 @@ const DataViz = ({
         return `arrow_downward`;
       } else if (val === "stable") {
         return `trending_flat`;
-      } else if (val === `<4`) {
+      } else {
         return "not_interested";
       }
     };
@@ -337,7 +337,7 @@ const DataViz = ({
             <TableCell align="center">
               <Icon>{setTrendIcon(row.trend)}</Icon>
               <br />
-              {row.trend}
+              {row.trend === "No Current Trend" ? "NA" : row.trend}
             </TableCell>
             <TableCell align="center">{row.recordcount}</TableCell>
             <TableCell align="center">{`${dateFormatter(
