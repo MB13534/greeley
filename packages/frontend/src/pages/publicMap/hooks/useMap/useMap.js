@@ -60,7 +60,7 @@ const useMap = (ref, mapConfig) => {
   const [virtualBoreVisible, setVirtualBoreVisible] = useState(false);
   const [dataVizVisible, setDataVizVisible] = useState(true);
   const [lastLocationIdClicked, setLastLocationIdClicked] = useState(null);
-  const [graphModeVisible, setGraphModeVisible] = useState(false);
+  const [graphModeVisible, setGraphModeVisible] = useState(null);
 
   const [eventsRegistered, setEventsRegistered] = useState(false);
   const popUpRef = useRef(

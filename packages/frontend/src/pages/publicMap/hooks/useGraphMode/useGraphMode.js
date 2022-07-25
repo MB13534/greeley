@@ -250,7 +250,7 @@ const useGraphMode = ({
   };
 
   useEffect(() => {
-    if (!isParametersFetching && parameters?.length) {
+    if (!isParametersFetching && parameters?.length && !hasParametersLoaded) {
       setHasParametersLoaded(true);
       onSelectAllParameters();
     }
@@ -498,6 +498,13 @@ const useGraphMode = ({
       };
     });
   };
+
+  useEffect(() => {
+    if (graphModeVisible !== null) {
+      onSelectAllParameters();
+      onSelectAllParameterGroups();
+    }
+  }, [graphModeVisible]); //eslint-disable-line
 
   const [analyticsResults, setAnalyticsResults] = useState(null);
   const [timeSeriesResults, setTimeSeriesResults] = useState(null);
