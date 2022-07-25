@@ -307,6 +307,8 @@ const DataViz = ({
               </div>
             </TableCell>
             <Popover
+              disableAutoFocus
+              disableEnforceFocus
               id="mouse-over-popover"
               className={classes.popover}
               classes={{

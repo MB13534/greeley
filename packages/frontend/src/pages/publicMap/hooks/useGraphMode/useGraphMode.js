@@ -654,8 +654,6 @@ const useGraphMode = ({
 
         if (index === 3) {
           let tableData = [...data];
-          console.log(data);
-          console.log(tableData);
           const tableDataCsvString = [
             [
               `"Results for parameters: ${filterValuesGraphMode.parameters.join(
