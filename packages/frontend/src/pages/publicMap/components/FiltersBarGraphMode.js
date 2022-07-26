@@ -1,15 +1,13 @@
 import {
   FormControl,
-  IconButton,
-  InputAdornment,
   InputLabel,
   MenuItem,
   OutlinedInput,
   TextField as MuiTextField,
 } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/macro";
-import SearchIcon from "@material-ui/icons/Search";
+import useDebounce from "../../../hooks/useDebounce";
 
 const FiltersSection = styled.div`
   display: flex;
@@ -42,6 +40,13 @@ const FiltersBarGraphMode = ({
     const { value } = event.target;
     setInputValue(+value);
   };
+
+  const debouncedSearchValue = useDebounce(inputValue, 1000);
+
+  useEffect(() => {
+    handleFilterValues("recordCount", debouncedSearchValue);
+  }, [debouncedSearchValue]); //eslint-disable-line
+
   return (
     <>
       <FiltersSection>
@@ -91,19 +96,19 @@ const FiltersBarGraphMode = ({
               label="Record Count"
               value={inputValue}
               onChange={handleInput}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    size="small"
-                    aria-label="record count"
-                    onClick={() =>
-                      handleFilterValues("recordCount", inputValue)
-                    }
-                  >
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              }
+              // endAdornment={
+              //   <InputAdornment position="end">
+              //     <IconButton
+              //       size="small"
+              //       aria-label="record count"
+              //       onClick={() =>
+              //         handleFilterValues("recordCount", inputValue)
+              //       }
+              //     >
+              //       <SearchIcon />
+              //     </IconButton>
+              //   </InputAdornment>
+              // }
             />
           </FormControl>
         </FiltersContainer>
